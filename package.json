@@ -1,0 +1,28 @@
+{
+  "name": "pos-restaurant",
+  "version": "1.0.0",
+  "description": "Product Owner: Manuel",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js --watch server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/draktovus/pos-restaurant.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/draktovus/pos-restaurant/issues"
+  },
+  "homepage": "https://github.com/draktovus/pos-restaurant#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
