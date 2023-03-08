@@ -7,6 +7,9 @@ import { RouterLink } from 'vue-router'
       <div class="navbar-start">
         <div class="navbar-item">
           <div class="buttons">
+            <a class="button is-light">
+              <strong>Admin</strong>
+            </a>
             <RouterLink class="button is-light" to="/login">
               <strong>Login</strong>
             </RouterLink>
@@ -25,9 +28,6 @@ import { RouterLink } from 'vue-router'
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-light">
-              <strong>Admin</strong>
-            </a>
             <a class="button is-danger">
               <strong>Checkout</strong>
             </a>
@@ -38,4 +38,8 @@ import { RouterLink } from 'vue-router'
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+  .tabs li a{
+    color: white;
+  }
+</style>
