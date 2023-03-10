@@ -38,3 +38,9 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### Format Pages
+
+```sh
+npm run format
+```

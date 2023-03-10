@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { RouterLink } from 'vue-router'
+const categories = ["Breakfast", "Lunch", "Dinner", "Sides", "Drinks"]
+const currentTab = ref(categories[0])
 </script>
 <template>
   <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
@@ -7,9 +10,9 @@ import { RouterLink } from 'vue-router'
       <div class="navbar-start">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-light">
+            <RouterLink class="button is-light" to="/admin">
               <strong>Admin</strong>
-            </a>
+            </RouterLink>
             <RouterLink class="button is-light" to="/login">
               <strong>Login</strong>
             </RouterLink>
@@ -18,11 +21,11 @@ import { RouterLink } from 'vue-router'
       </div>
       <div class="tabs mb-0 is-toggle">
         <ul>
-          <li class="is-active"><a>Breakfast</a></li>
-          <li><a>Lunch</a></li>
-          <li><a>Dinner</a></li>
-          <li><a>Sides</a></li>
-          <li><a>Drinks</a></li>
+          <li v-for="category in categories" :class="{'is-active':currentTab==category}" @click="currentTab=category">
+            <RouterLink class="is-light" to="/">
+              {{category}}
+            </RouterLink>
+          </li>
         </ul>
       </div>
       <div class="navbar-end">
