@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { getProducts, type Product } from '../models/products'
+import { quantity } from '../models/cart';
 import { RouterLink } from 'vue-router'
 const categories = ["Breakfast", "Lunch", "Dinner", "Sides", "Drinks"]
 const currentTab = ref(categories[0])
@@ -30,6 +32,14 @@ const currentTab = ref(categories[0])
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
+                  <RouterLink class="button is-light" to="/cart">
+                    <span class="icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="tag is-danger tag is-rounded quantity-tag">{{ quantity }}</span>
+                    </span>
+                  </RouterLink>
+            </div>
+        <div class="navbar-item">
           <div class="buttons">
             <a class="button is-danger">
               <strong>Checkout</strong>
@@ -42,7 +52,5 @@ const currentTab = ref(categories[0])
 </template>
 
 <style scoped>
-  .tabs li a{
-    color: white;
-  }
+
 </style>

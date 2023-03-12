@@ -35,6 +35,6 @@ export interface Product{
     images: Array<string>;
 }
 
-export function useProducts():Product[]{
+export function getProducts():Product[]{
     return products.products
 }

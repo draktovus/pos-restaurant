@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { useProducts } from '@/models/products';
-const products = useProducts()
+import { ref } from 'vue';
+import { getProducts } from '@/models/products';
+import { addToCart } from '../models/cart';
+const products = getProducts()
 </script>
 
 <template>
@@ -15,19 +17,41 @@ const products = useProducts()
         </div>
     </div>
 
-    <div class="columns is-multiline is-mobile">
-        <template v-for="product, index in products" :key="product.id">
-            <div class="column is-full-mobile is-half-tablet is-one-quarter-desktop">
-                <div class="button has-background-dark is-fullwidth">
-                    <p class="content has-text-centered has-text-light">
-                        {{ product.title }}
-                    </p>
-                </div>
+    <div class="product-list">
+            <div class="product" v-for="product in products" :key="product.id">
+                <img :src="product.thumbnail" :alt="product.title" />
+                <h3>{{ product.title }}</h3>
+                <p>{{ product.description }}</p>
+                <p>
+                    <span>$</span>
+                    <i class="price">
+                        {{ product.price }}
+                    </i>
+                </p>
+                <button class="button is-primary" @click="addToCart(product)">+</button>
             </div>
-        </template>
-    </div>
+        </div>
 </template>
 
-<style scoped>
 
+<style scoped>
+    .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        background-color: aliceblue;
+    }
+    .product {
+        flex-basis: 12rem;
+        flex-grow: 1;
+        padding: .5rem;
+        margin: 1rem;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    }
+    .price {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
 </style>
