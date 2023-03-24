@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import { getProducts, type Product } from '../models/products'
 import { quantity } from '../models/cart'
 import { RouterLink } from 'vue-router'
+import { useSession } from '../models/session'
+
+const session = useSession();
 const categories = ['Breakfast', 'Lunch', 'Dinner', 'Sides', 'Drinks']
 const currentTab = ref(categories[0])
 const searchQuery = ref('')
@@ -13,7 +16,7 @@ const searchQuery = ref('')
       <div class="navbar-start">
         <div class="navbar-item">
           <div class="buttons">
-            <RouterLink class="button is-light" to="/admin">
+            <RouterLink class="button is-light" to="/admin" v-if="session.user">
               <strong>Admin</strong>
             </RouterLink>
             <RouterLink class="button is-light" to="/login">
