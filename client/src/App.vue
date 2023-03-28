@@ -10,10 +10,6 @@ import IDModal  from "./components/IDModal.vue";
     <RouterView />
   </div>
 
-    <div class="container">
-      <RouterView />
-    </div>
-
   <IDModal />
     
 </template>

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Button to trigger the modal -->
     <button class="button is-success" v-if="isCartPage() && IDRequired()" @click="showModal = true">Verify Age</button>
     <div class="modal" :class="{'is-active': showModal}">
       <div class="modal-background"></div>
