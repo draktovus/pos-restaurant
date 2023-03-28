@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import NavBar from './components/NavBar.vue';
+import IDModal  from "./components/IDModal.vue";
 </script>
 
 <template>
@@ -10,6 +11,8 @@ import NavBar from './components/NavBar.vue';
     <div class="container">
       <RouterView />
     </div>
+
+  <IDModal />
     
 </template>
 

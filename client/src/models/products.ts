@@ -33,6 +33,8 @@ export interface Product{
     category: string;
     thumbnail: string;
     images: Array<string>;
+    requiresId?: boolean;
+    ageRequirement?: number;
 }
 
 export function getProducts():Product[]{
