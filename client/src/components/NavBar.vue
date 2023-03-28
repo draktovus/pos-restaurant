@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { getProducts, type Product } from '../models/products'
-import { quantity } from '../models/cart';
+import { quantity } from '../models/cart'
 import { RouterLink } from 'vue-router'
-const categories = ["Breakfast", "Lunch", "Dinner", "Sides", "Drinks"]
+import { useSession } from '../models/session'
+
+const session = useSession();
+const categories = ['Breakfast', 'Lunch', 'Dinner', 'Sides', 'Drinks']
 const currentTab = ref(categories[0])
 const searchQuery = ref('')
 </script>
@@ -13,7 +16,7 @@ const searchQuery = ref('')
       <div class="navbar-start">
         <div class="navbar-item">
           <div class="buttons">
-            <RouterLink class="button is-light" to="/admin">
+            <RouterLink class="button is-light" to="/admin" v-if="session.user">
               <strong>Admin</strong>
             </RouterLink>
             <RouterLink class="button is-light" to="/login">
@@ -24,9 +27,13 @@ const searchQuery = ref('')
       </div>
       <div class="tabs mb-0 is-toggle">
         <ul>
-          <li v-for="category in categories" :class="{'is-active':currentTab==category}" @click="currentTab=category">
+          <li
+            v-for="category in categories"
+            :class="{ 'is-active': currentTab == category }"
+            @click="currentTab = category"
+          >
             <RouterLink class="is-light" to="/">
-              {{category}}
+              {{ category }}
             </RouterLink>
           </li>
         </ul>
@@ -35,23 +42,26 @@ const searchQuery = ref('')
         <div class="navbar-item">
           <div class="field is-grouped">
             <div class="control">
-              <input class="input is-rounded" type="text" v-model="searchQuery" placeholder="Search...">
+              <input
+                class="input is-rounded"
+                type="text"
+                v-model="searchQuery"
+                placeholder="Search..."
+              />
             </div>
             <div class="control">
-              <button class="button is-info" @click="search">
-                Search
-              </button>
+              <button class="button is-info" @click="search">Search</button>
             </div>
           </div>
         </div>
         <div class="navbar-item">
-                  <RouterLink class="button is-light" to="/cart">
-                    <span class="icon">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="tag is-danger tag is-rounded quantity-tag">{{ quantity }}</span>
-                    </span>
-                  </RouterLink>
-            </div>
+          <RouterLink class="button is-light" to="/cart">
+            <span class="icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="tag is-danger tag is-rounded quantity-tag">{{ quantity }}</span>
+            </span>
+          </RouterLink>
+        </div>
         <div class="navbar-item">
           <div class="buttons">
             <a class="button is-danger">
@@ -64,9 +74,7 @@ const searchQuery = ref('')
   </nav>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <script lang="ts">
 export default {

@@ -5,8 +5,10 @@ import IDModal  from "./components/IDModal.vue";
 </script>
 
 <template>
-
   <NavBar />
+  <div class="section">
+    <RouterView />
+  </div>
 
     <div class="container">
       <RouterView />
@@ -16,6 +18,4 @@ import IDModal  from "./components/IDModal.vue";
     
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

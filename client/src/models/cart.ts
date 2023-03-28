@@ -1,5 +1,5 @@
-import { computed, ref } from "vue";
-import type { Product } from "./products";
+import { computed, ref } from 'vue'
+import type { Product } from './products'
 
 const cart = ref([] as CartItem[]);
 const showIDModal = ref(false);

@@ -37,6 +37,6 @@ export interface Product{
     ageRequirement?: number;
 }
 
-export function getProducts():Product[]{
-    return products.products
+export function getProducts(): Product[] {
+  return products.products
 }
