@@ -4,6 +4,7 @@ import { getProducts, type Product } from '../models/products'
 import { quantity } from '../models/cart'
 import { RouterLink } from 'vue-router'
 import { useSession } from '../models/session'
+import LoginBadge from './LoginBadge.vue'
 
 const session = useSession();
 const categories = ['Breakfast', 'Lunch', 'Dinner', 'Sides', 'Drinks']
@@ -14,16 +15,7 @@ const searchQuery = ref('')
   <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
     <div class="navbar-menu">
       <div class="navbar-start">
-        <div class="navbar-item">
-          <div class="buttons">
-            <RouterLink class="button is-light" to="/admin" v-if="session.user">
-              <strong>Admin</strong>
-            </RouterLink>
-            <RouterLink class="button is-light" to="/login">
-              <strong>Login</strong>
-            </RouterLink>
-          </div>
-        </div>
+        <LoginBadge />
       </div>
       <div class="tabs mb-0 is-toggle">
         <ul>
@@ -74,14 +66,18 @@ const searchQuery = ref('')
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+.tabs li a{
+  color: white;
+}
+</style>
 
 <script lang="ts">
 export default {
-  methods: {
-    search: () => {
-      console.log(`Searching for ${searchQuery.value}`)
-    }
-  }
+    methods: {
+        search: () => {
+            console.log(`Searching for ${searchQuery.value}`);
+        }
+    },
 }
 </script>

@@ -18,6 +18,15 @@ export function useSession() {
     return session;
 }
 
+export function useLogout() {
+    const router = useRouter();
+    return function logout() {
+        session.user = null;
+        router.push("/login");
+    }
+}
+
+
 export function login(users: User) {
     session.user = {
         id: users.id,
