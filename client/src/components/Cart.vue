@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useCart, total, removeFromCart } from '@/models/cart';
+import { quantity } from '../models/cart'
 
 export default defineComponent({
   setup() {
@@ -9,6 +10,7 @@ export default defineComponent({
       cart,
       total,
       removeFromCart,
+      quantity,
     };
   },
 });
@@ -20,14 +22,15 @@ export default defineComponent({
         Cart
         <small>
           ${{ total }}
-          ({{ cart.length }} items)
+          ({{ quantity }} items)
         </small>
       </h1>
       <p></p>
       <div class="cart-item" v-for="item, i in cart">
-        <img :src="item.product.thumbnail" alt="product image" />
         <div>
-          <b>{{ item.product.title }}</b>
+           <b>{{ item.product.title }}</b> 
+        </div>
+        <div>
           <p>
             ${{ item.product.price }}
             x
@@ -47,27 +50,24 @@ export default defineComponent({
     
   <style scoped>
   .cart {
-    margin: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .cart-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin: 5px;
-    padding-right: 5px;
-    border-radius: 15px;
-    overflow: hidden;
-    background-color: lavenderblush;
-  }
-  .cart-item img {
-    width: 100px;
-    height: 100px;
-  }
-  small {
-    font-size: 0.5em;
-  }
+        margin: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        background-color: white;
+        border-color: black;
+    }
+    .cart-item {
+        display: grid;
+        grid-template-columns: 2fr 1fr 50px;
+        margin: 5px;
+        padding-right: 5px;
+        border-radius: 5px;
+        overflow: hidden;
+        background-color:rgb(244, 239, 239);
+    }
+    
+    small {
+        font-size: 0.5em;
+    }
   </style> 
