@@ -8,16 +8,16 @@ import Cart from '@/components/Cart.vue'
     <div class="column is-8">
       <ProductsVue />
     </div>
-    <div class="column is-1">
+    <!-- <div class="column is-1">
       Additional Options/Buttons go here
       <div class="tile is-ancestor">
         <div class="tile is-vertical is-parent">
-          <!-- Add content or other tiles -->
+           //Add content or other tiles 
           <div class="tile is-child button">Discount</div>
           <div class="tile is-child button">Tax Exempt</div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="column">
       <div class="container max-height">
         <Cart />
