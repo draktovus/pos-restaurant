@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const http = require('http');
-const routes = require('../routes/routes');
 const mongoose = require('mongoose');
 const mongoString = process.env.DATABASE_URL;
 const express =  require('express');
@@ -9,12 +8,9 @@ const path = require('path')
 const app = express();
 const products = require('./controllers/products')
 const users = require('./controllers/users')
+const routes = require('./routes/routes');
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 3000;
-
-app.use(express.json());
-app.use('/api', routes);
-
 
 mongoose.connect(mongoString);
 const database = mongoose.connection
@@ -42,6 +38,7 @@ app
 app
     .use('/api/v1/products', products)
     .use('/api/v1/users', users)
+app.use('/api', routes);
 
 // Catch all (called deep linking)
 app
@@ -63,10 +60,6 @@ app
 
 app.listen(port, ()=>{
     console.log(`Listening at http://${hostname}:${port}`);
-})
-
-app.listen(3001, () => {
-    console.log(`Server Started at ${3001}`)
 })
 
 database.on('error', (error) => {
