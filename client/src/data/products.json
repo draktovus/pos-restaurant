@@ -37,7 +37,9 @@
         "https://i.dummyjson.com/data/products/2/2.jpg",
         "https://i.dummyjson.com/data/products/2/3.jpg",
         "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
-      ]
+      ],
+      "requiresId": true,
+      "ageRequirements": 21
     },
     {
       "id": 3,

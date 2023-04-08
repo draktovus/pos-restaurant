@@ -9,9 +9,6 @@ import IDModal  from "./components/IDModal.vue";
   <div class="section">
     <RouterView />
   </div>
-
-  <IDModal />
-    
 </template>
 
 <style scoped></style>

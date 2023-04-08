@@ -25,9 +25,6 @@ export function addToCart(product: Product) {
       quantity: 1,
     });
   }
-  if (product.requiresId) {
-    setShowIDModal(true);
-  }
 }
 
 export function setShowIDModal(value: boolean) {

@@ -1,92 +1,93 @@
+<script setup lang="ts">
+import { ref, watch, reactive, defineEmits } from 'vue';
+import { getShowIDModal } from "@/models/cart";
+import type { Product } from '@/models/products';
+import { computed } from '@vue/reactivity';
+
+let showModal = ref(false);
+let showSecondModal = ref(false);
+const birthday = ref("");
+const ofAge = ref(false);
+const maxDate = computed(() => {
+  const currentDate = new Date()
+  const year = currentDate.getFullYear() + 1
+  const month = currentDate.getMonth() < 9 ? `0${currentDate.getMonth() + 1}` : currentDate.getMonth() + 1
+  const day = currentDate.getDate() < 10 ? `0${currentDate.getDate()}` : currentDate.getDate()
+  return `${year}-${month}-${day}`
+})
+
+function IDRequired(){
+  return getShowIDModal();
+}
+
+watch([IDRequired], ([IDReq]) => {
+  if (IDReq) {
+    showModal.value = true;
+  }
+});
+
+const emit = defineEmits(['canBuy']);
+
+function isOver21(birthday: string) {
+  const age = computed(() => {
+    const date = new Date(birthday);
+    const now = new Date();
+    
+    let timeDiff = now.getTime() - date.getTime();
+    if (timeDiff < 0) { // if birthday is in the future
+      date.setFullYear(now.getFullYear()); // set the year to current year
+      timeDiff = now.getTime() - date.getTime(); // recalculate time difference
+    }
+    
+    const age = Math.floor(timeDiff / (1000 * 3600 * 24 * 365.25));
+    return age;
+  });
+  console.log(age.value);
+  if(age.value >= 21) {
+    ofAge.value = true;
+  }else{
+    ofAge.value = false;
+  }
+  checkAge();
+  emit('canBuy', ofAge.value);
+  showSecondModal.value = true;
+}
+
+const checkAge=()=>{
+  console.log("checkAge in child");
+  showModal.value = false;
+}
+
+function closeSecondModal() {
+  showSecondModal.value = false;
+}
+</script>
+
 <template>
   <div>
-    <button class="button is-success" v-if="isCartPage() && IDRequired()" @click="showModal = true">Verify Age</button>
-    <div class="modal" :class="{'is-active': showModal}">
+    <div class="modal" :class="{'is-active': showModal }">
       <div class="modal-background"></div>
       <div class="modal-content">
         <div class="box">
-          <h1 class="title">Enter Your Birthday</h1>
+          <h1 class="title">Product Requires Identification</h1>
           <div class="field">
-            <label class="label">Month</label>
+            <label class="label">Enter Your Birthday</label>
             <div class="control">
-              <div class="select">
-                <select v-model="selectedMonth">
-                  <option value="1">January</option>
-                  <option value="2">February</option>
-                  <option value="3">March</option>
-                  <option value="4">April</option>
-                  <option value="5">May</option>
-                  <option value="6">June</option>
-                  <option value="7">July</option>
-                  <option value="8">August</option>
-                  <option value="9">September</option>
-                  <option value="10">October</option>
-                  <option value="11">November</option>
-                  <option value="12">December</option>
-                </select>
-              </div>
+              <input class="input" type="date" v-model="birthday" :max="maxDate">
             </div>
           </div>
-          <div class="field">
-            <label class="label">Day</label>
-            <div class="control">
-              <input class="input" type="number" min="1" max="31" :class="{'is-danger': selectedDay < 1 || selectedDay > 31}" v-model.number="selectedDay">
-            </div>
-            <p class="help is-danger" v-if="selectedDay < 1 || selectedDay > 31">Please enter a valid day (1-31).</p>
-          </div>
-          <div class="field">
-            <label class="label">Year</label>
-            <div class="control">
-              <input class="input" type="number" min="1900" max="2023" :class="{'is-danger': selectedYear < 1900 || selectedYear > 2023}" v-model.number="selectedYear">
-            </div>
-            <p class="help is-danger" v-if="selectedYear < 1900 || selectedYear > 2023">Please enter a valid year (1900-2023).</p>
-          </div>
-          <button class="button is-success" @click="saveBirthday" :disabled="selectedDay < 1 || selectedDay > 31 || selectedYear < 1900 || selectedYear > 2023">Save changes</button>
+          <button class="button is-success" @click="isOver21(birthday)">Save changes</button>       
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { getShowIDModal } from "@/models/cart";
-
-export default defineComponent({
-  setup() {
-    const route = useRoute();
-    const showModal = ref(false);
-
-    const isCartPage = () => {
-      return route.path === '/cart';
-    };
-
-    const IDRequired = () => {
-      if(getShowIDModal()){
-        return true;
-      }
-    }
-
-    const selectedMonth = ref(1);
-    const selectedDay = ref(1);
-    const selectedYear = ref(1900);
-
-    const saveBirthday = () => {
-      const birthday = `${selectedMonth.value}/${selectedDay.value}/${selectedYear.value}`;
-      console.log(`Saved birthday: ${birthday}`);
-      showModal.value = false;
-    };
-
-    return {
-      isCartPage,
-      showModal,
-      IDRequired,
-      selectedDay,
-      selectedMonth,
-      selectedYear,
-      saveBirthday,
-    };
-  },
-});
-</script>
+<style scoped>
+.delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.5rem;
+}
+</style>

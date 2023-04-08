@@ -9,7 +9,6 @@ import LoginBadge from './LoginBadge.vue'
 const session = useSession();
 const categories = ['Breakfast', 'Lunch', 'Dinner', 'Sides', 'Drinks']
 const currentTab = ref(categories[0])
-const searchQuery = ref('')
 </script>
 <template>
   <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
@@ -17,35 +16,24 @@ const searchQuery = ref('')
       <div class="navbar-start">
         <LoginBadge />
       </div>
-      <div class="tabs mb-0 is-toggle">
-        <ul>
-          <li
-            v-for="category in categories"
-            :class="{ 'is-active': currentTab == category }"
-            @click="currentTab = category"
-          >
-            <RouterLink class="is-light" to="/">
-              {{ category }}
-            </RouterLink>
-          </li>
-        </ul>
-      </div>
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="field is-grouped">
-            <div class="control">
-              <input
-                class="input is-rounded"
-                type="text"
-                v-model="searchQuery"
-                placeholder="Search..."
-              />
-            </div>
-            <div class="control">
-              <button class="button is-info" @click="search">Search</button>
-            </div>
+      <div class="navbar-center">
+        <div class="navbar-item is-flex-grow-1">
+          <div class="tabs mb-0 is-toggle">
+            <ul>
+              <li
+                v-for="category in categories"
+                :class="{ 'is-active': currentTab == category }"
+                @click="currentTab = category"
+              >
+                <RouterLink class="is-light" to="/">
+                  {{ category }}
+                </RouterLink>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
+      <div class="navbar-end">
         <div class="navbar-item">
           <RouterLink class="button is-light" to="/cart">
             <span class="icon">
@@ -73,11 +61,4 @@ const searchQuery = ref('')
 </style>
 
 <script lang="ts">
-export default {
-    methods: {
-        search: () => {
-            console.log(`Searching for ${searchQuery.value}`);
-        }
-    },
-}
 </script>

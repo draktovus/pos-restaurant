@@ -1,8 +1,37 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getProducts } from '@/models/products'
-import { addToCart } from '../models/cart'
+import { getProducts, type Product } from '@/models/products'
+import { addToCart, setShowIDModal } from '../models/cart'
+import IDModal from '@/components/IDModal.vue'
+
 const products = getProducts()
+const selectedProduct = ref<Product>()
+let isOfAge = ref(false);
+let isOfAge2 = ref(false);
+
+function canBuy(ofAge: boolean) {
+  console.log("canBuy in parent: " + ofAge);
+  isOfAge.value = ofAge;
+  isOfAge2.value = ofAge;
+  if(ofAge) {
+    console.log("ofAge: " + ofAge);
+  }
+}
+
+function setIsOfAge(product: Product) {
+  setShowIDModal(true);
+  selectedProduct.value = product;
+  addProduct(selectedProduct.value);
+}
+
+function addProduct(product: Product) {
+  if(isOfAge.value && selectedProduct.value) {
+    console.log("addProduct product: " + product.title);
+    addToCart(selectedProduct.value);
+    isOfAge2.value = false;
+  }
+}
+
 </script>
 
 <template>
@@ -16,11 +45,20 @@ const products = getProducts()
       </span>
     </div>
   </div>
+  <IDModal @can-buy="canBuy"/>
 
   <div class="columns is-multiline is-mobile">
     <template v-for="(product, index) in products" :key="product.id">
       <div class="column is-full-mobile is-half-tablet is-one-quarter-desktop">
-        <div class="button is-primary is-fullwidth" @click="addToCart(product)">
+        <div v-if="product.requiresId" class="button is-primary is-fullwidth" @click="setIsOfAge(product)">
+          <p class="content has-text-centered has-text-justified is-clipped is-small-tablet">
+            {{ product.title }}
+          </p>
+          <div v-if="isOfAge2">
+            {{ addProduct(product) }}
+          </div>
+        </div>
+        <div v-else class="button is-primary is-fullwidth" @click="addToCart(product)">
           <p class="content has-text-centered has-text-justified is-clipped is-small-tablet">
             {{ product.title }}
           </p>
@@ -28,22 +66,7 @@ const products = getProducts()
       </div>
     </template>
   </div>
-  <!--
-  <div class="product-list">
-    <div class="product" v-for="product in products" :key="product.id">
-      <img :src="product.thumbnail" :alt="product.title" />
-      <h3>{{ product.title }}</h3>
-      <p>{{ product.description }}</p>
-      <p>
-        <span>$</span>
-        <i class="price">
-          {{ product.price }}
-        </i>
-      </p>
-      <button class="button is-primary" @click="addToCart(product)">+</button>
-    </div>
-  </div>
---></template>
+</template>
 
 <style scoped>
 .product-list {
