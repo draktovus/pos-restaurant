@@ -10,12 +10,8 @@ let isOfAge = ref(false);
 let isOfAge2 = ref(false);
 
 function canBuy(ofAge: boolean) {
-  console.log("canBuy in parent: " + ofAge);
   isOfAge.value = ofAge;
   isOfAge2.value = ofAge;
-  if(ofAge) {
-    console.log("ofAge: " + ofAge);
-  }
 }
 
 function setIsOfAge(product: Product) {
@@ -26,7 +22,6 @@ function setIsOfAge(product: Product) {
 
 function addProduct(product: Product) {
   if(isOfAge.value && selectedProduct.value) {
-    console.log("addProduct product: " + product.title);
     addToCart(selectedProduct.value);
     isOfAge2.value = false;
   }

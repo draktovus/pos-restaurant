@@ -42,7 +42,6 @@ function isOver21(birthday: string) {
     const age = Math.floor(timeDiff / (1000 * 3600 * 24 * 365.25));
     return age;
   });
-  console.log(age.value);
   if(age.value >= 21) {
     ofAge.value = true;
   }else{
@@ -54,12 +53,7 @@ function isOver21(birthday: string) {
 }
 
 const checkAge=()=>{
-  console.log("checkAge in child");
   showModal.value = false;
-}
-
-function closeSecondModal() {
-  showSecondModal.value = false;
 }
 </script>
 
