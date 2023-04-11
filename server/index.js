@@ -50,7 +50,7 @@ app.get("*", (req, res) => {
 app.use((err, req, res, next) => {
   console.log(err);
   if (err.code == 11000) {
-    const field = Object.keys(err.keyValue)
+    const field = Object.keys(err.keyValue);
     const msg = {
       status: 409,
       error: `Duplicate key error as ${field} already exists`,
