@@ -20,7 +20,7 @@ router.get("/", async (req, res, next) => {
 //Get by ID
 router.get("/:id", async (req, res, next) => {
   try {
-    const data = await User.findOne({id: +req.params.id})
+    const data = await User.findOne({ id: +req.params.id });
     //const data = await User.findById(req.params.id);
     const dataEnvelope = {
       data: data,
@@ -34,18 +34,18 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //Post Method
-router.post("/", async (req, res, next) => {
+router.post("/create", async (req, res, next) => {
   try {
     const data = new User({
       ...req.body,
     });
     const dataToSave = await data.save();
     const dataEnvelope = {
-        data: dataToSave,
-        total: 1,
-        isSuccess: true,
-      };
-    res.send(dataEnvelope)
+      data: dataToSave,
+      total: 1,
+      isSuccess: true,
+    };
+    res.send(dataEnvelope);
   } catch (err) {
     next(err);
   }
@@ -53,39 +53,46 @@ router.post("/", async (req, res, next) => {
 
 //Login Post Method
 router.post("/login", async (req, res, next) => {
-    try {
-      const data = new User({
-        ...req.body,
-      });
-      
-      const dataToSave = await data.save();
-      const dataEnvelope = {
-        data: dataToSave,
-        total: 1,
-        isSuccess: true,
-      }
+  try {
+    const data = { ...req.body };
 
-      res.send(dataEnvelope)
-    } catch (err) {
-      next(err);
-    }
-  });
+    const user = await User.findOne({ username: data.username }).exec();
+
+    user.comparePassword(data.password, (err, isMatch) => {
+      if (err) {
+        next(err);
+      } else if (isMatch) {
+        const dataEnvelope = {
+          data: user,
+          total: 1,
+          isSuccess: true,
+        };
+        res.send(dataEnvelope);
+      } else {
+        next(new Error("Password didn't match."));
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+});
 
 //Update by ID Method
-router.patch("/update/:id", async (req, res, next) => {
+router.patch("/update", async (req, res, next) => {
   try {
-    const id = +req.params.id;
-    const updatedData = req.body;
-    const options = { new: true };
+    const data = { ...req.body };
 
-    const result = await User.findOneAndUpdate({id: id}, updatedData, options);
-
+    const user = await User.findOne({
+      username: data.username,
+      id: data.id,
+    }).exec();
+    user.password = data.password;
+    await user.save();
     const dataEnvelope = {
-      data: result,
+      data: user,
       total: 1,
       isSuccess: true,
     };
-
     res.send(dataEnvelope);
   } catch (err) {
     next(err);
@@ -96,13 +103,13 @@ router.patch("/update/:id", async (req, res, next) => {
 router.delete("/delete/:id", async (req, res, next) => {
   try {
     const id = +req.params.id;
-    const data = await User.findOneAndDelete({id:id});
+    const data = await User.findOneAndDelete({ id: id });
     const dataEnvelope = {
-        data: data,
-        total: 1,
-        isSuccess: true,
-    }
-    res.send(dataEnvelope)
+      data: data,
+      total: 1,
+      isSuccess: true,
+    };
+    res.send(dataEnvelope);
   } catch (err) {
     next(err);
   }
