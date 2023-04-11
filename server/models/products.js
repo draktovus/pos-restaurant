@@ -1,39 +1,49 @@
-const data = require('../data/products.json')
+const mongoose = require('mongoose');
+const { Schema, model } = mongoose;
 
-function getProducts(){
-    return data.products;
-}
+// Generate fields for mongoose for product schema
+const productSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, "Product needs a name."],
+    },
+    requiresId: {
+        type: Boolean,
+        required: [false, "Product needs to indicate if Identification is required."],
+    },
+    quantity: {
+        type: Number,
+        required: [true, "Product needs a quantity for stock keeping purposes."],
+        default: 0
+    },
+    SKU: {
+        type: String,
+        required: [true, "Product needs a SKU."],
+        unique: true
+    },
+    UPC: {
+        type: String,
+        required: [true, "Product needs a UPC."],
+        unique: true
+    },
+    description: {
+        type: String,
+        required: [true, "Product needs a description."],
+    },
+    price: {
+        type: Number,
+        required: [true, "Product needs a price."],
+        default: 0
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    }
+});
 
-function getProductById(id){
-    return data.products.find(product => product.id === id);
-}
-
-function addProduct(product){
-    product.id = data.products.length + 1;
-    data.products.push(product);
-}
-
-function updateProduct(product){
-    const index = data.products.findIndex(p => p.id === product.id);
-    data.products[index] = product;
-}
-
-function deleteProduct(product){
-    const index = data.products.findIndex(p => p.id === product.id);
-    data.products.splice(index, 1);
-}
-
-//search function for product in json
-function searchProduct(searchTerm){
-    const products = data.products.filter(product => product.title.toLowerCase().includes(searchTerm.toLowerCase()));
-    return products;
-}
-
-module.exports = {
-    getProducts,
-    getProductById,
-    addProduct,
-    updateProduct,
-    deleteProduct,
-    searchProduct,
-}
+const Product = model("Product", productSchema)
+module.exports = Product
