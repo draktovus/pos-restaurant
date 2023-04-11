@@ -1,15 +1,28 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
+const idSchema = new Schema({
+    requiresId: {
+        type:Boolean
+    },
+    ageRequirement: {
+        type:Number,
+        required: function(){
+            return this.requiresId
+        }
+    }
+})
+
 // Generate fields for mongoose for product schema
 const productSchema = new Schema({
     name: {
         type: String,
         required: [true, "Product needs a name."],
+        minLength: [1, "Product name length must be greater or equal to 1."]
     },
-    requiresId: {
-        type: Boolean,
-        required: [false, "Product needs to indicate if Identification is required."],
+    identification: {
+        type: idSchema,
+        required: false,
     },
     quantity: {
         type: Number,
@@ -18,22 +31,24 @@ const productSchema = new Schema({
     },
     SKU: {
         type: String,
-        required: [true, "Product needs a SKU."],
-        unique: true
+        required: [true, "Product needs a Stock Keeping Unit."],
+        unique: true,
+        minLength: [1, "Product SKU length must be greater or equal to 1."]
     },
     UPC: {
         type: String,
-        required: [true, "Product needs a UPC."],
-        unique: true
+        required: [true, "Product needs a Universal Product Code."],
+        unique: true,
+        minLength: [1, "Product UPC length must be greater or equal to 1."]
     },
     description: {
         type: String,
-        required: [true, "Product needs a description."],
+        required: [true, "Product needs a description, even if empty."],
     },
     price: {
         type: Number,
         required: [true, "Product needs a price."],
-        default: 0
+        default: 1.000
     },
     createdAt: {
         type: Date,

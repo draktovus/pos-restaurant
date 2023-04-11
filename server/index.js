@@ -8,7 +8,6 @@ const path = require("path");
 const app = express();
 const products = require("./controllers/products");
 const users = require("./controllers/users");
-const routes = require("./routes/routes");
 const hostname = "127.0.0.1";
 const port = process.env.PORT || 3000;
 
