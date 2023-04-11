@@ -8,14 +8,18 @@ const products = getProducts()
 const selectedProduct = ref<Product>()
 let isOfAge = ref(false)
 let isOfAge2 = ref(false)
+let isChecked = 0
 
 function canBuy(ofAge: boolean) {
   isOfAge.value = ofAge
   isOfAge2.value = ofAge
+  isChecked = 1
 }
 
 function setIsOfAge(product: Product) {
-  setShowIDModal(true)
+  if (isChecked < 1) {
+    setShowIDModal(true)
+  }
   selectedProduct.value = product
   addProduct(selectedProduct.value)
 }
@@ -39,7 +43,7 @@ function addProduct(product: Product) {
       </span>
     </div>
   </div>
-  <IDModal @can-buy="canBuy" />
+  <IDModal @can-buy="canBuy"/>
 
   <div class="columns is-multiline is-mobile">
     <template v-for="(product, index) in products" :key="product.id">
