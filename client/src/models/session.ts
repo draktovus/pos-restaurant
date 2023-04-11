@@ -6,9 +6,9 @@ const session = reactive({
   user: null as User | null,
   isLoading: false as boolean,
   messages: [] as {
-    msg: string,
-    type: "success" | "danger" | "warning" | "info",
-}[],
+    msg: string
+    type: 'success' | 'danger' | 'warning' | 'info'
+  }[]
 })
 
 interface User {

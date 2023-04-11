@@ -1,54 +1,49 @@
 import { computed, ref } from 'vue'
 import type { Product } from './products'
 
-const cart = ref([] as CartItem[]);
-const showIDModal = ref(false);
+const cart = ref([] as CartItem[])
+const showIDModal = ref(false)
 
 export function useCart() {
-  return cart;
+  return cart
 }
 
 export interface CartItem {
-  productId: number;
-  product: Product;
-  quantity: number;
+  productId: number
+  product: Product
+  quantity: number
 }
 
 export function addToCart(product: Product) {
-  const item = cart.value.find((p) => p.productId == product.id);
+  const item = cart.value.find((p) => p.productId == product.id)
   if (item) {
-    item.quantity++;
+    item.quantity++
   } else {
     cart.value.push({
       productId: product.id,
       product,
-      quantity: 1,
-    });
+      quantity: 1
+    })
   }
 }
 
 export function setShowIDModal(value: boolean) {
-  showIDModal.value = value;
+  showIDModal.value = value
 }
 
 export function getShowIDModal() {
-  return showIDModal.value;
+  return showIDModal.value
 }
 
 export function removeFromCart(index: number, product: Product) {
-  cart.value.splice(index, 1);
+  cart.value.splice(index, 1)
   if (product.requiresId) {
-    setShowIDModal(false);
+    setShowIDModal(false)
   }
 }
 
-export const quantity = computed(() =>
-  cart.value.reduce((total, item) => total + item.quantity, 0)
-);
+export const quantity = computed(() => cart.value.reduce((total, item) => total + item.quantity, 0))
 
 export const total = computed(() =>
-  cart.value.reduce(
-    (total, item) => total + item.product.price * item.quantity,
-    0
-  )
-);
+  cart.value.reduce((total, item) => total + item.product.price * item.quantity, 0)
+)

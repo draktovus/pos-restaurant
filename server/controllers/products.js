@@ -4,7 +4,6 @@ const router = express.Router();
 
 router
     .get('/', (req,res) => {
-
         const list = model.getProducts();
         const data = {
             data: list, 

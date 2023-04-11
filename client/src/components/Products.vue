@@ -6,27 +6,26 @@ import IDModal from '@/components/IDModal.vue'
 
 const products = getProducts()
 const selectedProduct = ref<Product>()
-let isOfAge = ref(false);
-let isOfAge2 = ref(false);
+let isOfAge = ref(false)
+let isOfAge2 = ref(false)
 
 function canBuy(ofAge: boolean) {
-  isOfAge.value = ofAge;
-  isOfAge2.value = ofAge;
+  isOfAge.value = ofAge
+  isOfAge2.value = ofAge
 }
 
 function setIsOfAge(product: Product) {
-  setShowIDModal(true);
-  selectedProduct.value = product;
-  addProduct(selectedProduct.value);
+  setShowIDModal(true)
+  selectedProduct.value = product
+  addProduct(selectedProduct.value)
 }
 
 function addProduct(product: Product) {
-  if(isOfAge.value && selectedProduct.value) {
-    addToCart(selectedProduct.value);
-    isOfAge2.value = false;
+  if (isOfAge.value && selectedProduct.value) {
+    addToCart(selectedProduct.value)
+    isOfAge2.value = false
   }
 }
-
 </script>
 
 <template>
@@ -40,12 +39,16 @@ function addProduct(product: Product) {
       </span>
     </div>
   </div>
-  <IDModal @can-buy="canBuy"/>
+  <IDModal @can-buy="canBuy" />
 
   <div class="columns is-multiline is-mobile">
     <template v-for="(product, index) in products" :key="product.id">
       <div class="column is-full-mobile is-half-tablet is-one-quarter-desktop">
-        <div v-if="product.requiresId" class="button is-primary is-fullwidth" @click="setIsOfAge(product)">
+        <div
+          v-if="product.requiresId"
+          class="button is-primary is-fullwidth"
+          @click="setIsOfAge(product)"
+        >
           <p class="content has-text-centered has-text-justified is-clipped is-small-tablet">
             {{ product.title }}
           </p>

@@ -6,7 +6,7 @@ import { RouterLink } from 'vue-router'
 import { useSession } from '../models/session'
 import LoginBadge from './LoginBadge.vue'
 
-const session = useSession();
+const session = useSession()
 const categories = ['Breakfast', 'Lunch', 'Dinner', 'Sides', 'Drinks']
 const currentTab = ref(categories[0])
 </script>
@@ -38,7 +38,7 @@ const currentTab = ref(categories[0])
           <RouterLink class="button is-light" to="/cart">
             <span class="icon">
               <i class="fas fa-shopping-cart"></i>
-              <span class="tag is-danger tag is-rounded quantity-tag">{{ quantity }}</span>
+              <span class="tag is-danger is-rounded quantity-tag">{{ quantity }}</span>
             </span>
           </RouterLink>
         </div>
@@ -55,10 +55,13 @@ const currentTab = ref(categories[0])
 </template>
 
 <style scoped>
-.tabs li a{
+.tabs li a {
   color: white;
 }
+.quantity-tag {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  border-radius: 1rem;
+}
 </style>
-
-<script lang="ts">
-</script>

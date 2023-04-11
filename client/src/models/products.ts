@@ -21,20 +21,20 @@ import products from '@/data/products.json'
       ]
     },
  */
-export interface Product{
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    category: string;
-    thumbnail: string;
-    images: Array<string>;
-    requiresId?: boolean;
-    ageRequirement?: number;
+export interface Product {
+  id: number
+  title: string
+  description: string
+  price: number
+  discountPercentage: number
+  rating: number
+  stock: number
+  brand: string
+  category: string
+  thumbnail: string
+  images: Array<string>
+  requiresId?: boolean
+  ageRequirement?: number
 }
 
 export function getProducts(): Product[] {

@@ -1,60 +1,111 @@
-const express = require('express');
-const model = require('../models/users')
+const express = require("express");
+const User = require("../models/users");
 const router = express.Router();
 
-router
-    .get('/', (req,res) => {
-        const list = model.getUsers();
-        const data = {
-            data: list, 
-            total: list.length,
-            isSuccess: true
-        };
-        res.send(data)
-    })
+//Get all
+router.get("/", async (req, res, next) => {
+  try {
+    const data = await User.find();
+    const dataEnvelope = {
+      data: data,
+      total: data.length,
+      isSuccess: true,
+    };
+    res.send(dataEnvelope);
+  } catch (err) {
+    next(err);
+  }
+});
 
-    .get('/search/:q', (req, res) => {
-        const term = req.params.q;
-        console.log(term)
-        const list = model.searchUsers(term);
-        const data = {
-            data: list,
-            total: list.length,
-            isSuccess: true
-        }
-        res.send(data)
-    })
+//Get by ID
+router.get("/:id", async (req, res, next) => {
+  try {
+    const data = await User.findOne({id: +req.params.id})
+    //const data = await User.findById(req.params.id);
+    const dataEnvelope = {
+      data: data,
+      total: 1,
+      isSuccess: true,
+    };
+    res.send(dataEnvelope);
+  } catch (err) {
+    next(err);
+  }
+});
 
-    .get('/:id', (req,res) => {
-        const id = +req.params.id
-        const product = model.getUserById(id);
-        const data = { data:product, total: 1, isSuccess: true}
-        res.send(data)
-    })
+//Post Method
+router.post("/", async (req, res, next) => {
+  try {
+    const data = new User({
+      ...req.body,
+    });
+    const dataToSave = await data.save();
+    const dataEnvelope = {
+        data: dataToSave,
+        total: 1,
+        isSuccess: true,
+      };
+    res.send(dataEnvelope)
+  } catch (err) {
+    next(err);
+  }
+});
 
-    .post('/', (req,res) => {
-        const product = req.body;
+//Login Post Method
+router.post("/login", async (req, res, next) => {
+    try {
+      const data = new User({
+        ...req.body,
+      });
+      
+      const dataToSave = await data.save();
+      const dataEnvelope = {
+        data: dataToSave,
+        total: 1,
+        isSuccess: true,
+      }
 
-        console.log(req.query)
-        console.log(req.headers)
-        console.log(req.body)
+      res.send(dataEnvelope)
+    } catch (err) {
+      next(err);
+    }
+  });
 
-        model.addUser(product);
-        const data = { data:product, total: 1, isSuccess: true}
-        res.send(data)
-    })
+//Update by ID Method
+router.patch("/update/:id", async (req, res, next) => {
+  try {
+    const id = +req.params.id;
+    const updatedData = req.body;
+    const options = { new: true };
 
-    .patch('/:id', (req,res) => {
-        const product = req.body;
-        model.updateUser(product);
-        res.send(product)
-    })
+    const result = await User.findOneAndUpdate({id: id}, updatedData, options);
 
-    .delete('/:id', (req,res) => {
-        const id = +req.params.id
-        model.deleteUser(id);
-        const data = { data:id, total: 1, isSuccess: true}
-        res.send(data)
-    })
+    const dataEnvelope = {
+      data: result,
+      total: 1,
+      isSuccess: true,
+    };
+
+    res.send(dataEnvelope);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//Delete by ID Method
+router.delete("/delete/:id", async (req, res, next) => {
+  try {
+    const id = +req.params.id;
+    const data = await User.findOneAndDelete({id:id});
+    const dataEnvelope = {
+        data: data,
+        total: 1,
+        isSuccess: true,
+    }
+    res.send(dataEnvelope)
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;
