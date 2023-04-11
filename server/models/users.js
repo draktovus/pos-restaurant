@@ -55,16 +55,14 @@ userSchema.pre("save", function (next) {
           if (hashError) {
             return next(hashError);
           }
-
           user.password = hash;
           next();
         });
       }
     });
   } else {
-    return next();
+    next();
   }
 });
-
 const User = model("User", userSchema);
 module.exports = User;
