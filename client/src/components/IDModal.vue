@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, reactive, defineEmits } from 'vue'
+import { ref, watch, reactive } from 'vue'
 import { getShowIDModal } from '@/models/cart'
 import type { Product } from '@/models/products'
 import { computed } from '@vue/reactivity'

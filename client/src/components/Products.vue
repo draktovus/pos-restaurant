@@ -4,11 +4,18 @@ import { getProducts, type Product } from '@/models/products'
 import { addToCart, setShowIDModal } from '../models/cart'
 import IDModal from '@/components/IDModal.vue'
 
-const products = getProducts()
+const products = ref<Product[]>(getProducts())
 const selectedProduct = ref<Product>()
 let isOfAge = ref(false)
 let isOfAge2 = ref(false)
 let isChecked = 0
+const input = ref("")
+
+function filteredList() {
+    products.value = getProducts().filter((product: Product) =>
+    product.title.toLowerCase().includes(input.value.toLowerCase())
+  );
+}
 
 function canBuy(ofAge: boolean) {
   isOfAge.value = ofAge
@@ -33,16 +40,16 @@ function addProduct(product: Product) {
 </script>
 
 <template>
-  <div class="search block">
-    <div class="control has-icons-left">
-      <span class="searchbar">
-        <input class="input is-rounded" type="text" placeholder="Search" />
-      </span>
-      <span class="icon is-small is-left">
-        <i class="fas fa-search"></i>
-      </span>
+    <div class="search block">
+      <div class="control has-icons-left">
+        <span class="searchbar">
+          <input class="input is-rounded" type="text" v-model="input" placeholder="Search..." @input="filteredList()">
+        </span>
+        <span class="icon is-small is-left">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
     </div>
-  </div>
   <IDModal @can-buy="canBuy"/>
 
   <div class="columns is-multiline is-mobile">
