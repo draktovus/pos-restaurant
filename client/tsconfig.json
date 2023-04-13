@@ -6,8 +6,10 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "lib": ["ES2020", "DOM"]
+    "lib": ["ES2020", "DOM"],
+    "ignoreDeprecations": "5.0"
   },
+
 
   "references": [
     {
