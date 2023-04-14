@@ -67,7 +67,7 @@ app.use((err, req, res, next) => {
     case "StripeRateLimitError": {
       // Too many requests made to the API too quickly
       const msg = {
-        status: 400,
+        status: 429,
         error: `${err.raw.message}`,
         isSuccess: false,
       };
@@ -87,7 +87,7 @@ app.use((err, req, res, next) => {
     case "StripeAPIError": {
       // An error occurred internally with Stripe's API
       const msg = {
-        status: 400,
+        status: 500,
         error: `${err.raw.message}`,
         isSuccess: false,
       };
@@ -97,7 +97,7 @@ app.use((err, req, res, next) => {
     case "StripeConnectionError": {
       // Some kind of error occurred during the HTTPS communication
       const msg = {
-        status: 400,
+        status: 500,
         error: `${err.raw.message}`,
         isSuccess: false,
       };
@@ -107,7 +107,7 @@ app.use((err, req, res, next) => {
     case "StripeAuthenticationError": {
       // You probably used an incorrect API key
       const msg = {
-        status: 400,
+        status: 500,
         error: `${err.raw.message}`,
         isSuccess: false,
       };
@@ -117,7 +117,7 @@ app.use((err, req, res, next) => {
     case "StripeCardError": {
       // Stripe Error
       const msg = {
-        status: 400,
+        status: 500,
         error: `${err.raw.message}`,
         isSuccess: false,
       };
