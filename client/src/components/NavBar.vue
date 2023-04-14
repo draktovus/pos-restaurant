@@ -15,7 +15,23 @@ const currentTab = ref(categories[0])
     <div class="navbar-menu">
       <div class="navbar-start">
         <LoginBadge />
+        
+        <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link" href="">
+                Admin
+              </a>
+              <div class="navbar-dropdown">
+                <RouterLink class="navbar-item" to="/admin/products">
+                  Products
+                </RouterLink>
+                <RouterLink class="navbar-item" to="/admin/users">
+                  Users
+                </RouterLink>
+                
+              </div>
+            </div>
       </div>
+      
       <div class="navbar-center">
         <div class="navbar-item is-flex-grow-1">
           <div class="tabs mb-0 is-toggle">

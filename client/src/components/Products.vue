@@ -3,26 +3,22 @@ import { ref } from 'vue'
 import { getProducts, type Product } from '@/models/products'
 import { addToCart, setShowIDModal } from '../models/cart'
 import IDModal from '@/components/IDModal.vue'
-
 const products = ref<Product[]>(getProducts())
 const selectedProduct = ref<Product>()
 let isOfAge = ref(false)
 let isOfAge2 = ref(false)
 let isChecked = 0
 const input = ref("")
-
 function filteredList() {
     products.value = getProducts().filter((product: Product) =>
     product.title.toLowerCase().includes(input.value.toLowerCase())
   );
 }
-
 function canBuy(ofAge: boolean) {
   isOfAge.value = ofAge
   isOfAge2.value = ofAge
   isChecked = 1
 }
-
 function setIsOfAge(product: Product) {
   if (isChecked < 1) {
     setShowIDModal(true)
@@ -30,7 +26,6 @@ function setIsOfAge(product: Product) {
   selectedProduct.value = product
   addProduct(selectedProduct.value)
 }
-
 function addProduct(product: Product) {
   if (isOfAge.value && selectedProduct.value) {
     addToCart(selectedProduct.value)

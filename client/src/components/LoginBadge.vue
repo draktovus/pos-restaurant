@@ -19,9 +19,6 @@ const logout = useLogout()
           <strong>Logout</strong>
         </a>
       </div>
-      <RouterLink class="button is-light" to="/admin">
-        <strong>Admin</strong>
-      </RouterLink>
     </div>
   </div>
 </template>
