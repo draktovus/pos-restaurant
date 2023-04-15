@@ -1,25 +1,51 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue';
+import { api, useLogin, useSession } from '../models/session'
+import router from '@/router';
+
+const session = useSession();
+const error = ref(false);
+const username = ref('');
+const password = ref('');
+
+async function loginUser() {
+  const response = await api('users/login', {
+    "username": username.value,
+    "password": password.value
+  }, 'POST');
+  if(response != undefined){
+    useLogin(response.data);
+    router.push(session.redirectUrl ?? "/");
+    session.redirectUrl = null;
+  }
+  else{
+    error.value = false;
+    window.location.reload();
+  }
+};
+
+</script>
 <template>
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-half">
         <div class="box">
           <h1 class="title">Login</h1>
-          <form>
+          <form submit.prevent="loginUser()">
             <div class="field">
               <label class="label">Username</label>
               <div class="control">
-                <input class="input" type="text" placeholder="Username" />
+                <input v-model="username" class="input" type="text" placeholder="Username" />
               </div>
             </div>
             <div class="field">
               <label class="label">Password</label>
               <div class="control">
-                <input class="input" type="password" placeholder="Password" />
+                <input v-model="password" class="input" type="password" placeholder="Password" />
               </div>
             </div>
             <div class="field">
-              <button class="button is-primary">Login</button>
+              <button type="submit" class="button is-primary" >Login</button>
             </div>
           </form>
         </div>
