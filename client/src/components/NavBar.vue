@@ -21,10 +21,10 @@ const currentTab = ref(categories[0])
                 Admin
               </a>
               <div class="navbar-dropdown">
-                <RouterLink class="navbar-item" to="/admin/products">
+                <RouterLink class="navbar-item" to="/admin/products" v-if="session.user?.isAdmin == true">
                   Products
                 </RouterLink>
-                <RouterLink class="navbar-item" to="/admin/users">
+                <RouterLink class="navbar-item" to="/admin/users" v-if="session.user?.isAdmin == true">
                   Users
                 </RouterLink>
                 

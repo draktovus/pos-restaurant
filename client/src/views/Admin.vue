@@ -1,8 +1,16 @@
 <script setup lang="ts">
-import { getUsers } from '@/models/users'
+import { getUsers, type User } from '@/models/users'
 import { ref } from 'vue'
 
-const users = ref(getUsers())
+
+const users = ref<User[]>([]);
+
+getUsers().then((data) => {
+  users.value = data.data;
+});
+
+
+
 </script>
 
 <template>
@@ -28,7 +36,7 @@ const users = ref(getUsers())
             <td>{{ user.lastName }}</td>
             <td>{{ user.username }}</td>
             <td>{{ user.password }}</td>
-            <td>{{ user.admin }}</td>
+            <td>{{ user.isAdmin }}</td>
             <td>
               <button class="button is-primary">Edit</button>
               <button class="button is-danger">Delete</button>

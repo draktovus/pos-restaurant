@@ -11,9 +11,9 @@ const logout = useLogout()
       <RouterLink to="/login" class="button is-light" v-if="!session.user">
         <strong>Login</strong>
       </RouterLink>
-      <div v-else>
+      <div  v-if="session.user">
         <a>
-          #<strong>{{ session.user.id }}</strong>
+          <strong class="sessionUser">Logged in as: {{ session.user.username }}</strong>
         </a>
         <a class="button is-light" @click="logout()">
           <strong>Logout</strong>
@@ -23,4 +23,11 @@ const logout = useLogout()
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.sessionUser{
+  vertical-align: middle;
+  padding: 1rem;
+  align-items: center;
+  color: white;
+}
+</style>

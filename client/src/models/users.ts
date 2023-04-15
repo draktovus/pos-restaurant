@@ -1,4 +1,6 @@
-import data from '../data/users.json'
+
+import { api } from './session'
+import type { DataEnvelope, DataListEnvelope } from './fetch'
 
 export interface User {
   id: number
@@ -6,9 +8,9 @@ export interface User {
   lastName: string
   username: string
   password: string
-  admin: boolean
+  isAdmin: boolean
 }
 
-export function getUsers(): User[] {
-  return data.Users
+export function getUsers(): Promise<DataListEnvelope<User>> {
+  return api('users')
 }

@@ -16,11 +16,12 @@ const session = reactive({
 })
 
 interface User {
-    id?: number;
-    name: string;
-    email?: string;
-    photo?: string;
-    token?: string;
+    id: number
+    firstName: string
+    lastName: string
+    username: string
+    password: string
+    isAdmin: boolean
 }
 
 export function useSession() {
@@ -42,17 +43,20 @@ export function api(url: string, data?: any, method?: string, headers?: any) {
         })
 }
 
-export function useLogin() {
+export function useLogin(users: User) {
     const router = useRouter();
+    session.user = {
+        ...users
+    }
 
     return function() {
         session.user = {
-            name: "John Doe",
+            ...users
         }
-
         router.push(session.redirectUrl ?? "/");
         session.redirectUrl = null;
     }
+    
 }
 
 export function useLogout() {
