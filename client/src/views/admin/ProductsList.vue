@@ -1,18 +1,16 @@
 
- 
-
 <script setup lang="ts">
 import { ref } from 'vue';
 import { getProducts, type Product } from '@/models/products'
 import GenModals from '@/components/GeneralModals.vue';
 import { confirm } from '@/models/generalModals'
 
-const products = ref<Product[]>(getProducts());
-// const products = ref<Product[]>([]);
-// getProducts().then((data) => {
-//     products.value = data.data;
-// });
-function deleteProduct(id: number) {
+
+const products = ref<Product[]>([]);
+getProducts().then((data) => {
+    products.value = data.data;
+ });
+function deleteProduct(id: string) {
     confirm('Are you sure you want to delete this?', 'Question', )
     .then(() => {
         console.log('delete: ' + id);
@@ -48,26 +46,26 @@ function deleteProduct(id: number) {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="product in products" :key="product.id">
+                <tr v-for="product in products">
                     <td> 
-                        <img :src="product.thumbnail" alt="" class="admin-product-img">
+                        <!-- <img :src="product.thumbnail" alt="" class="admin-product-img"> -->
                     </td>
-                    <td>{{ product.title }}</td>
+                    <td>{{ product.name }}</td>
                     <td>${{ product.price }}</td>
-                    <td>{{ product.category }} / {{  product.brand }}</td>
-                    <td>{{ product.stock }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>{{ product.quantity }}</td>
                     <td>
 
-                            <router-link :to="'/admin/products/edit/' + product.id" class="button" >
+                            <router-link :to="'/admin/products/edit/' + product._id" class="button" >
                                 <div class="icon">
                                     <i class="fas fa-edit"></i>
                                 </div>
                             </router-link>
-                            <button class="button" @click="deleteProduct(product.id)" >
+                            <button class="button" @click="deleteProduct(product._id)" >
                                 <div class="icon">
                                     <i class="fas fa-trash"></i>
                                 </div>
-                            </button>
+                            </button> 
                     </td>
                 </tr>
             </tbody>
