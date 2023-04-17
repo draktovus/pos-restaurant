@@ -31,7 +31,7 @@ async function loginUser() {
       <div class="column is-half">
         <div class="box">
           <h1 class="title">Login</h1>
-          <form submit.prevent="loginUser()">
+          <form @submit.prevent="loginUser()">
             <div class="field">
               <label class="label">Username</label>
               <div class="control">
