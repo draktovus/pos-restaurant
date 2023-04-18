@@ -59,6 +59,7 @@ async function loginUser() {
 </template>
 <style scoped>
 .help {
+  text-shadow: 1px 1px 2px , 0 0 1em darkred;
   margin-top: 2rem;
   text-align: center;
   font-size: 18px;
