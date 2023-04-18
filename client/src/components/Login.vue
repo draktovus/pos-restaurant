@@ -4,7 +4,7 @@ import { api, useLogin, useSession } from '../models/session'
 import router from '@/router'
 
 const session = useSession()
-const error = ref(false)
+let error = ref(false)
 const username = ref('')
 const password = ref('')
 const login = useLogin()
@@ -21,7 +21,11 @@ async function loginUser() {
   if (response != undefined) {
     session.redirectUrl = '/'
     login(response.data)
+    error.value = false
+  }else{
+    error.value = true
   }
+  
 }
 </script>
 <template>
@@ -41,6 +45,7 @@ async function loginUser() {
               <label class="label">Password</label>
               <div class="control">
                 <input v-model="password" class="input" type="password" placeholder="Password" />
+                <p class="help is-danger" v-if="error">Invalid username or password</p>
               </div>
             </div>
             <div class="field">
@@ -52,4 +57,24 @@ async function loginUser() {
     </div>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.help {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 18px;
+  animation:fade 1.5s infinite;
+  -webkit-animation:fade 1.5s infinite;
+}
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    to { opacity: 1.0; }
+}                                                                                                                                                                                                                                  
+
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    to { opacity: 1.0; }
+}
+
+</style>
