@@ -15,32 +15,27 @@ const currentTab = ref(categories[0])
     <div class="navbar-menu">
       <div class="navbar-start">
         <LoginBadge />
-        
-        <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link" href="">
-                Admin
-              </a>
-              <div class="navbar-dropdown">
-                <RouterLink class="navbar-item" to="/admin/products">
-                  Products
-                </RouterLink>
-                <RouterLink class="navbar-item" to="/admin/users">
-                  Users
-                </RouterLink>
-                
-              </div>
-            </div>
+
+        <div class="navbar-item has-dropdown is-hoverable" v-if="session.user && session.user.isAdmin">
+          <a class="navbar-link">Admin</a>
+          <div class="navbar-dropdown is-boxed">
+            <RouterLink class="navbar-item" to="/admin/products">
+              Products
+            </RouterLink>
+            <hr class="navbar-divider">
+            <RouterLink class="navbar-item" to="/admin/users">
+              Users
+            </RouterLink>
+          </div>
+        </div>
       </div>
-      
+
       <div class="navbar-center">
         <div class="navbar-item is-flex-grow-1">
           <div class="tabs mb-0 is-toggle">
             <ul>
-              <li
-                v-for="category in categories"
-                :class="{ 'is-active': currentTab == category }"
-                @click="currentTab = category"
-              >
+              <li v-for="category in categories" :class="{ 'is-active': currentTab == category }"
+                @click="currentTab = category">
                 <RouterLink class="is-light" to="/">
                   {{ category }}
                 </RouterLink>
@@ -74,6 +69,7 @@ const currentTab = ref(categories[0])
 .tabs li a {
   color: white;
 }
+
 .quantity-tag {
   position: absolute;
   top: -5px;

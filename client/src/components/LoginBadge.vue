@@ -6,19 +6,16 @@ const logout = useLogout()
 </script>
 
 <template>
-  <div class="navbar-item">
+  <div class="navbar-item" v-if="!session.user">
+    <RouterLink to="/login" class="button is-light" v-if="!session.user">
+      <strong>Login</strong>
+    </RouterLink>
+  </div>
+
+  <div class="navbar-item" v-else>
     <div class="buttons">
-      <RouterLink to="/login" class="button is-light" v-if="!session.user">
-        <strong>Login</strong>
-      </RouterLink>
-      <div  v-if="session.user">
-        <a>
-          <strong class="sessionUser">Logged in as: {{ session.user.username }}</strong>
-        </a>
-        <a class="button is-light" @click="logout()">
-          <strong>Logout</strong>
-        </a>
-      </div>
+      <button class="button is-dark is-inverted is-outlined"> <strong>{{ session.user.username }}</strong></button>
+      <button class="button is-dark is-inverted is-outlined" @click="logout"><strong>Logout</strong></button>
     </div>
   </div>
 </template>
