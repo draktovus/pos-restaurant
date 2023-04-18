@@ -43,15 +43,12 @@ export function api(url: string, data?: any, method?: string, headers?: any) {
         })
 }
 
-export function useLogin(users: User) {
+export function useLogin(){
     const router = useRouter();
-    session.user = {
-        ...users
-    }
 
-    return function() {
+    return function(user:User) {
         session.user = {
-            ...users
+            ...user
         }
         router.push(session.redirectUrl ?? "/");
         session.redirectUrl = null;

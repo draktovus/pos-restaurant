@@ -12,8 +12,10 @@ const stripeController = require("./controllers/stripe");
 const hostname = "127.0.0.1";
 const port = process.env.PORT || 3000;
 
-mongoose.connect(mongoString);
-const database = mongoose.connection;
+  mongoose.connect(mongoString).catch(err => {
+    console.log("Error, could not connect to database.")
+  })
+  const database = mongoose.connection;
 
 app.get("/", (req, res) => {
   res.send("Server was accessed");

@@ -7,6 +7,7 @@ const session = useSession();
 const error = ref(false);
 const username = ref('');
 const password = ref('');
+const login = useLogin()
 
 async function loginUser() {
   const response = await api('users/login', {
@@ -14,13 +15,8 @@ async function loginUser() {
     "password": password.value
   }, 'POST');
   if(response != undefined){
-    useLogin(response.data);
-    router.push(session.redirectUrl ?? "/");
-    session.redirectUrl = null;
-  }
-  else{
-    error.value = false;
-    window.location.reload();
+    session.redirectUrl = '/'
+    login(response.data)
   }
 };
 
@@ -31,7 +27,7 @@ async function loginUser() {
       <div class="column is-half">
         <div class="box">
           <h1 class="title">Login</h1>
-          <form @submit.prevent="loginUser()">
+          <form @submit.prevent="loginUser">
             <div class="field">
               <label class="label">Username</label>
               <div class="control">
