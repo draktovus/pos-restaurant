@@ -13,13 +13,13 @@ import Cart from '@/components/Cart.vue'
       <div class="tile is-ancestor">
         <div class="tile is-vertical is-parent">
            //Add content or other tiles 
-          <div class="tile is-child button">Discount</div>
-          <div class="tile is-child button">Tax Exempt</div>
+            <div class="tile is-child button">Discount</div>
+            <div class="tile is-child button">Tax Exempt</div>
+          </div>
         </div>
-      </div>
-    </div> -->
+      </div> -->
     <div class="column">
-      <div class="container max-height">
+      <div class="container max-height has-background-grey-darker box">
         <Cart />
       </div>
       <div class="container">
@@ -52,7 +52,7 @@ import Cart from '@/components/Cart.vue'
 
 <style scoped>
 .max-height {
-  height: calc(100vh - 20vh);
+  height: calc(100vh - 28vh);
   overflow-y: scroll;
 }
 </style>

@@ -17,30 +17,47 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="cart">
-    <h1 class="title">
+  <div class="cart has-background-grey-darker">
+    <h1 class="title has-text-light">
       Cart
       <small> ${{ total }} ({{ quantity }} items) </small>
     </h1>
     <p></p>
-    <div class="cart-item" v-for="(item, i) in cart">
-      <div>
-        <b>{{ item.product.title }}</b>
+
+    <div class="has-background-grey-dark" v-for="(item, i) in cart">
+      <div class="columns is-centered is-vcentered">
+        <div class="column is-half">
+          <div class="content has-text-light has-text-centered">
+            {{ item.product.title }}
+          </div>
+        </div>
+        <div class="column is-one-quarter">
+          <div class="has-text-light mt-2 has-text-centered">
+            ${{ item.product.price }} @ {{ item.quantity }}
+          </div>
+        </div>
+        <div class="column is-auto">
+          <field class="field is-grouped">
+            <p class="control is-expanded">
+              <button class="button is-light is-outlined is-fullwidth">
+                <span class="icon">
+                  <i class="fas fa-edit" />
+                </span>
+              </button>
+            </p>
+            <p class="control is-expanded">
+              <button
+                class="button is-fullwidth is-danger is-outlined"
+                @click="removeFromCart(i, item.product)"
+              >
+                <span class="icon">
+                  <i class="fas fa-trash"></i>
+                </span>
+              </button>
+            </p>
+          </field>
+        </div>
       </div>
-      <div>
-        <p>
-          ${{ item.product.price }}
-          x
-          <select v-model="item.quantity" class="quantity-dropdown">
-            <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
-          </select>
-        </p>
-      </div>
-      <button class="button is-danger" @click="removeFromCart(i, item.product)">
-        <span class="icon">
-          <i class="fas fa-trash"></i>
-        </span>
-      </button>
     </div>
   </div>
 </template>

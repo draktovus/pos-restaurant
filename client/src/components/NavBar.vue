@@ -11,36 +11,36 @@ const categories = ['Breakfast', 'Lunch', 'Dinner', 'Sides', 'Drinks']
 const currentTab = ref(categories[0])
 </script>
 <template>
-  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <nav class="navbar has-background-grey-darker" role="navigation" aria-label="main navigation">
     <div class="navbar-menu">
       <div class="navbar-start">
         <LoginBadge />
 
-        <div class="navbar-item has-dropdown is-hoverable" v-if="session.user && session.user.isAdmin">
+        <div
+          class="navbar-item has-dropdown is-hoverable"
+          v-if="session.user && session.user.isAdmin"
+        >
           <a class="navbar-link">Admin</a>
           <div class="navbar-dropdown is-boxed">
-            <RouterLink class="navbar-item" to="/admin/products">
-              Products
-            </RouterLink>
-            <hr class="navbar-divider">
-            <RouterLink class="navbar-item" to="/admin/users">
-              Users
-            </RouterLink>
+            <RouterLink class="navbar-item" to="/admin/products"> Products </RouterLink>
+            <hr class="navbar-divider" />
+            <RouterLink class="navbar-item" to="/admin/users"> Users </RouterLink>
           </div>
         </div>
       </div>
 
       <div class="navbar-center">
         <div class="navbar-item is-flex-grow-1">
-          <div class="tabs mb-0 is-toggle">
-            <ul>
-              <li v-for="category in categories" :class="{ 'is-active': currentTab == category }"
-                @click="currentTab = category">
-                <RouterLink class="is-light" to="/">
-                  {{ category }}
-                </RouterLink>
-              </li>
-            </ul>
+          <div class="buttons has-addons is-centered">
+            <template v-for="category in categories">
+              <RouterLink
+                :to="`/`"
+                class="button is-dark is-inverted is-outlined"
+                :class="{ 'is-primary is-selected': currentTab == category }"
+                @click="currentTab = category"
+                >{{ category }}</RouterLink
+              >
+            </template>
           </div>
         </div>
       </div>

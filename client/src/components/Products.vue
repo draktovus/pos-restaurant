@@ -8,11 +8,11 @@ const selectedProduct = ref<Product>()
 let isOfAge = ref(false)
 let isOfAge2 = ref(false)
 let isChecked = 0
-const input = ref("")
+const input = ref('')
 function filteredList() {
-    products.value = getProducts().filter((product: Product) =>
+  products.value = getProducts().filter((product: Product) =>
     product.title.toLowerCase().includes(input.value.toLowerCase())
-  );
+  )
 }
 function canBuy(ofAge: boolean) {
   isOfAge.value = ofAge
@@ -35,24 +35,30 @@ function addProduct(product: Product) {
 </script>
 
 <template>
-    <div class="search block">
-      <div class="control has-icons-left">
-        <span class="searchbar">
-          <input class="input is-rounded" type="text" v-model="input" placeholder="Search..." @input="filteredList()">
-        </span>
-        <span class="icon is-small is-left">
-          <i class="fas fa-search"></i>
-        </span>
-      </div>
+  <div class="search block">
+    <div class="control has-icons-left">
+      <span class="searchbar">
+        <input
+          class="input is-rounded"
+          type="text"
+          v-model="input"
+          placeholder="Search..."
+          @input="filteredList()"
+        />
+      </span>
+      <span class="icon is-small is-left">
+        <i class="fas fa-search"></i>
+      </span>
     </div>
-  <IDModal @can-buy="canBuy"/>
+  </div>
+  <IDModal @can-buy="canBuy" />
 
   <div class="columns is-multiline is-mobile">
     <template v-for="(product, index) in products" :key="product.id">
       <div class="column is-full-mobile is-half-tablet is-one-quarter-desktop">
         <div
           v-if="product.requiresId"
-          class="button is-primary is-fullwidth"
+          class="button is-dark is-inverted is-outlined is-fullwidth"
           @click="setIsOfAge(product)"
         >
           <p class="content has-text-centered has-text-justified is-clipped is-small-tablet">
@@ -62,7 +68,11 @@ function addProduct(product: Product) {
             {{ addProduct(product) }}
           </div>
         </div>
-        <div v-else class="button is-primary is-fullwidth" @click="addToCart(product)">
+        <div
+          v-else
+          class="button is-dark is-inverted is-outlined is-fullwidth"
+          @click="addToCart(product)"
+        >
           <p class="content has-text-centered has-text-justified is-clipped is-small-tablet">
             {{ product.title }}
           </p>

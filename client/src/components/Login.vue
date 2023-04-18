@@ -1,25 +1,28 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { api, useLogin, useSession } from '../models/session'
-import router from '@/router';
+import router from '@/router'
 
-const session = useSession();
-const error = ref(false);
-const username = ref('');
-const password = ref('');
+const session = useSession()
+const error = ref(false)
+const username = ref('')
+const password = ref('')
 const login = useLogin()
 
 async function loginUser() {
-  const response = await api('users/login', {
-    "username": username.value,
-    "password": password.value
-  }, 'POST');
-  if(response != undefined){
+  const response = await api(
+    'users/login',
+    {
+      username: username.value,
+      password: password.value
+    },
+    'POST'
+  )
+  if (response != undefined) {
     session.redirectUrl = '/'
     login(response.data)
   }
-};
-
+}
 </script>
 <template>
   <div class="container">
@@ -41,7 +44,7 @@ async function loginUser() {
               </div>
             </div>
             <div class="field">
-              <button type="submit" class="button is-primary" >Login</button>
+              <button type="submit" class="button is-primary">Login</button>
             </div>
           </form>
         </div>

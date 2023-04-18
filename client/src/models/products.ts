@@ -1,6 +1,6 @@
 import products from '@/data/products.json'
 import type { DataListEnvelope, DataEnvelope } from './fetch'
-import { api } from "./session";
+import { api } from './session'
 
 /**
  * {
@@ -42,9 +42,7 @@ export function getProducts(): Product[] {
   return products.products
 }
 export function getProducts2(): Promise<DataListEnvelope<Product>> {
-
   return api('products')
-
 }
 
 export function getProduct(id: number): Promise<DataEnvelope<Product>> {

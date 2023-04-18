@@ -2,15 +2,11 @@
 import { getUsers, type User } from '@/models/users'
 import { ref } from 'vue'
 
-
-const users = ref<User[]>([]);
+const users = ref<User[]>([])
 
 getUsers().then((data) => {
-  users.value = data.data;
-});
-
-
-
+  users.value = data.data
+})
 </script>
 
 <template>

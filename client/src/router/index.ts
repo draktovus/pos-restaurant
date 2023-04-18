@@ -26,14 +26,14 @@ const router = createRouter({
       name: 'cart',
       component: () => import('../components/Cart.vue')
     },
-    { 
-      path: '/admin/products', 
-      name: 'admin-products', 
+    {
+      path: '/admin/products',
+      name: 'admin-products',
       component: () => import('../views/admin/ProductsList.vue')
     },
-    { 
-      path: '/admin/products/edit/:id?', 
-      name: 'admin-products-edit', 
+    {
+      path: '/admin/products/edit/:id?',
+      name: 'admin-products-edit',
       component: () => import('../views/admin/ProductEdit.vue')
     },
     {
