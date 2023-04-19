@@ -40,7 +40,12 @@ const router = createRouter({
       path: '/admin/users',
       name: 'admin-users',
       component: AdminVue
-    }
+    },
+    {
+      path: '/admin/users/edit/:id?',
+      name: 'admin-users-edit',
+      component: () => import('../views/admin/UserEdit.vue')
+    },
   ]
 })
 
