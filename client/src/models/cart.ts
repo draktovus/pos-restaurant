@@ -37,7 +37,7 @@ export function getShowIDModal() {
 
 export function removeFromCart(index: number, product: Product) {
   cart.value.splice(index, 1)
-  if (product.requiresId) {
+  if (product.identification) {
     setShowIDModal(false)
   }
 }

@@ -5,6 +5,7 @@ import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import type { User as User} from '@/models/users'
 import * as myFetch from './fetch'
+import type { User } from './users'
 
 const session = reactive({
   user: null as User | null,
@@ -16,17 +17,6 @@ const session = reactive({
   redirectUrl: null as string | null
 })
 
-/*
-interface User{
-  _id: string
-  id: number
-  firstName: string
-  lastName: string
-  username: string
-  password: string
-  isAdmin: boolean
-}
-*/
 export function useSession() {
   return session
 }

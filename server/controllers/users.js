@@ -77,8 +77,10 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
+
+
 //Update by ID Method
-router.patch("/update", async (req, res, next) => {
+router.patch("/update/password", async (req, res, next) => {
   try {
     const data = { ...req.body };
 
@@ -90,6 +92,27 @@ router.patch("/update", async (req, res, next) => {
     await user.save();
     const dataEnvelope = {
       data: user,
+      total: 1,
+      isSuccess: true,
+    };
+    res.send(dataEnvelope);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//Update by ID Method
+router.patch("/update/stripe-data", async (req, res, next) => {
+  try {
+    const data = { ...req.body };
+    console.log(data)
+    const user = await User.findOne({_id:data._id}).exec();
+
+    await user.updateOne({stripe_data:data.stripe_data}).exec();
+    // send new user data back
+    const newUser = await User.findOne({username:data.username, id:data.id})
+    const dataEnvelope = {
+      data: newUser,
       total: 1,
       isSuccess: true,
     };

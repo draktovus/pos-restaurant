@@ -47,6 +47,11 @@ const router = createRouter({
       name: 'admin-users-edit',
       component: () => import('../views/admin/UserEdit.vue')
     },
+    {
+      path: '/readers',
+      name: 'readers',
+      component: () => import('../views/Readers.vue')
+    }
   ]
 })
 

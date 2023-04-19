@@ -16,11 +16,10 @@ const currentTab = ref(categories[0])
       <div class="navbar-start">
         <LoginBadge />
 
-        <div
-          class="navbar-item has-dropdown is-hoverable"
-          v-if="session.user && session.user.isAdmin">
-          <a class="navbar-link">Admin</a>
-          <div class="navbar-dropdown is-boxed">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <!-- v-if="session.user && session.user.isAdmin"> -->
+          <a class="navbar-link has-text-light has-background-grey-darker is-arrowless">Admin</a>
+          <div class="navbar-dropdown">
             <RouterLink class="navbar-item" to="/admin/products"> Products </RouterLink>
             <hr class="navbar-divider" />
             <RouterLink class="navbar-item" to="/admin/users"> Users </RouterLink>
@@ -33,9 +32,9 @@ const currentTab = ref(categories[0])
           <div class="buttons has-addons is-centered">
             <template v-for="category in categories">
               <RouterLink
-                :to="`/`"
-                class="button is-dark is-inverted is-outlined"
-                :class="{ 'is-primary is-selected': currentTab == category }"
+                to="/"
+                class="button is-light is-outlined"
+                :class="{ 'is-info is-selected': currentTab == category }"
                 @click="currentTab = category"
                 >{{ category }}</RouterLink
               >
@@ -43,21 +42,12 @@ const currentTab = ref(categories[0])
           </div>
         </div>
       </div>
+
       <div class="navbar-end">
         <div class="navbar-item">
-          <RouterLink class="button is-light" to="/cart">
-            <span class="icon">
-              <i class="fas fa-shopping-cart"></i>
-              <span class="tag is-danger is-rounded quantity-tag">{{ quantity }}</span>
-            </span>
+          <RouterLink class="navbar-item button is-outlined is-light" to="/readers">
+            Readers
           </RouterLink>
-        </div>
-        <div class="navbar-item">
-          <div class="buttons">
-            <a class="button is-danger">
-              <strong>Checkout</strong>
-            </a>
-          </div>
         </div>
       </div>
     </div>

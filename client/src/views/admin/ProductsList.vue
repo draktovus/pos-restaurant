@@ -1,83 +1,80 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { getProducts, type Product } from '@/models/products'
-import GenModals from '@/components/GeneralModals.vue';
+import GenModals from '@/components/GeneralModals.vue'
 import { confirm } from '@/models/generalModals'
-const products = ref<Product[]>([]);
+const products = ref<Product[]>([])
 getProducts().then((data) => {
-    products.value = data.data;
- });
+  products.value = data.data
+})
 function deleteProduct(id: string) {
-    confirm('Are you sure you want to delete this?', 'Question', )
+  confirm('Are you sure you want to delete this?', 'Question')
     .then(() => {
-        console.log('delete: ' + id);
-    }).catch(() => {
-        console.log('didn\'t do it to: ' + id);
+      console.log('delete: ' + id)
+    })
+    .catch(() => {
+      console.log("didn't do it to: " + id)
     })
 }
 </script>
 
 <template>
-    <gen-modals></gen-modals>
-    <div class="admin-products-list">
-        <router-link to="/admin/products/edit" class="button is-primary admin-add-product">
-            <div class="icon">
-                <i class="fas fa-plus"></i>
-            </div>
-            <span>Add a Product</span>
-        </router-link>
-        
-        <h1 class="title">
-            Products
-        </h1>
+  <gen-modals></gen-modals>
+  <div class="admin-products-list">
+    <router-link to="/admin/products/edit" class="button is-primary admin-add-product">
+      <div class="icon">
+        <i class="fas fa-plus"></i>
+      </div>
+      <span>Add a Product</span>
+    </router-link>
 
-        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth ">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Category</th>
-                    <th>Stock</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="product in products">
-                    <td> 
-                        <!-- <img :src="product.thumbnail" alt="" class="admin-product-img"> -->
-                    </td>
-                    <td>{{ product.name }}</td>
-                    <td>${{ product.price }}</td>
-                    <td>{{ product.category }}</td>
-                    <td>{{ product.quantity }}</td>
-                    <td>
+    <h1 class="title">Products</h1>
 
-                            <router-link :to="'/admin/products/edit/' + product._id" class="button" >
-                                <div class="icon">
-                                    <i class="fas fa-edit"></i>
-                                </div>
-                            </router-link>
-                            <button class="button" @click="deleteProduct(product._id)" >
-                                <div class="icon">
-                                    <i class="fas fa-trash"></i>
-                                </div>
-                            </button> 
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          <th></th>
+          <th scope="col">Title</th>
+          <th scope="col">Price</th>
+          <th scope="col">Category</th>
+          <th>Stock</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="product in products">
+          <td>
+            <!-- <img :src="product.thumbnail" alt="" class="admin-product-img"> -->
+          </td>
+          <td>{{ product.name }}</td>
+          <td>${{ product.price }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>
+            <router-link :to="'/admin/products/edit/' + product._id" class="button">
+              <div class="icon">
+                <i class="fas fa-edit"></i>
+              </div>
+            </router-link>
+            <button class="button" @click="deleteProduct(product._id)">
+              <div class="icon">
+                <i class="fas fa-trash"></i>
+              </div>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
-
 <style scoped>
-    .admin-product-img {
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
-    }
-    .admin-add-product {
-        float: right;
-    }
+.admin-product-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+.admin-add-product {
+  float: right;
+}
 </style>

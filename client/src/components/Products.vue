@@ -3,15 +3,22 @@ import { ref } from 'vue'
 import { getProducts, type Product } from '@/models/products'
 import { addToCart, setShowIDModal } from '../models/cart'
 import IDModal from '@/components/IDModal.vue'
-const products = ref<Product[]>(getProducts())
+const products = ref<Product[]>([])
+const filteredProducts = ref<Product[]>([])
 const selectedProduct = ref<Product>()
 let isOfAge = ref(false)
 let isOfAge2 = ref(false)
 let isChecked = 0
 const input = ref('')
+
+getProducts().then((res) => {
+  products.value = res.data
+  filteredProducts.value = res.data
+})
+
 function filteredList() {
-  products.value = getProducts().filter((product: Product) =>
-    product.title.toLowerCase().includes(input.value.toLowerCase())
+  filteredProducts.value = products.value.filter((product: Product) =>
+    product.name.toLowerCase().includes(input.value.toLowerCase())
   )
 }
 function canBuy(ofAge: boolean) {
@@ -26,6 +33,7 @@ function setIsOfAge(product: Product) {
   selectedProduct.value = product
   addProduct(selectedProduct.value)
 }
+
 function addProduct(product: Product) {
   if (isOfAge.value && selectedProduct.value) {
     addToCart(selectedProduct.value)
@@ -42,8 +50,8 @@ function addProduct(product: Product) {
           class="input is-rounded"
           type="text"
           v-model="input"
-          placeholder="Search..."
-          @input="filteredList()"
+          placeholder="Search"
+          @input="filteredList"
         />
       </span>
       <span class="icon is-small is-left">
@@ -54,15 +62,15 @@ function addProduct(product: Product) {
   <IDModal @can-buy="canBuy" />
 
   <div class="columns is-multiline is-mobile">
-    <template v-for="(product, index) in products" :key="product.id">
+    <template v-for="(product, index) in filteredProducts" :key="product.id">
       <div class="column is-full-mobile is-half-tablet is-one-quarter-desktop">
         <div
-          v-if="product.requiresId"
+          v-if="product.identification"
           class="button is-dark is-inverted is-outlined is-fullwidth"
           @click="setIsOfAge(product)"
         >
           <p class="content has-text-centered has-text-justified is-clipped is-small-tablet">
-            {{ product.title }}
+            {{ product.name }}
           </p>
           <div v-if="isOfAge2">
             {{ addProduct(product) }}
@@ -74,7 +82,7 @@ function addProduct(product: Product) {
           @click="addToCart(product)"
         >
           <p class="content has-text-centered has-text-justified is-clipped is-small-tablet">
-            {{ product.title }}
+            {{ product.name }}
           </p>
         </div>
       </div>
