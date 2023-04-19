@@ -61,7 +61,7 @@ const stripe = Stripe(process.env.STRIPE_TEST_SECRET_KEY);
     },
  */
 
-router.get('/', async (req, res, next) => {
+router.get('/customers', async(req, res, next) => {
   try {
     const customers = await stripe.customers.list()
 
@@ -77,7 +77,27 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.post('/create', async (req, res, next) => {
+router.get('/locations', async(req,res,next)=>{
+  const locations = await stripe.terminal.locations.list()
+  const dataEnvelope = {
+    data: locations,
+    total: locations.length,
+    isSuccess: true,
+    }
+    res.send(dataEnvelope)
+})
+
+router.get('/readers', async(req,res,next)=>{
+  const readers = await stripe.terminal.readers.list()
+  const dataEnvelope = {
+    data: readers,
+    total: readers.length,
+    isSuccess: true,
+    }
+    res.send(dataEnvelope)
+})
+
+router.post('/create-customer', async (req, res, next) => {
   try {
     const customer = await stripe.customers.create({
       description: 'My First Test Customer (created for API docs at https://www.stripe.com/docs/api)',

@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import ProductsVue from '../views/Products.vue'
 import Cart from '@/components/Cart.vue'
+
+function payCash(){
+  console.log("Paying with cash")
+}
+
+function payCard(){
+  console.log("Paying with card")
+}
+
 </script>
 
 <template>
@@ -25,10 +34,10 @@ import Cart from '@/components/Cart.vue'
       <div class="container">
         <div class="field is-grouped">
           <div class="control is-expanded">
-            <button class="button is-success is-fullwidth">Pay Cash</button>
+            <button class="button is-success is-fullwidth" @click="payCash">Pay Cash</button>
           </div>
           <div class="control is-expanded">
-            <button class="button is-info is-fullwidth">Pay Card</button>
+            <button class="button is-info is-fullwidth" @click="payCard">Pay Card</button>
           </div>
         </div>
         <div class="field is-grouped">
