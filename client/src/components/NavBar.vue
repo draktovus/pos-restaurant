@@ -17,8 +17,8 @@ const currentTab = ref(categories[0])
         <LoginBadge />
 
         <div
-          class="navbar-item has-dropdown is-hoverable">
-          <!-- v-if="session.user && session.user.isAdmin"> -->
+          class="navbar-item has-dropdown is-hoverable"
+          v-if="session.user && session.user.isAdmin">
           <a class="navbar-link">Admin</a>
           <div class="navbar-dropdown is-boxed">
             <RouterLink class="navbar-item" to="/admin/products"> Products </RouterLink>

@@ -9,18 +9,18 @@ export function useCart() {
 }
 
 export interface CartItem {
-  productId: number
+  productId: string
   product: Product
   quantity: number
 }
 
 export function addToCart(product: Product) {
-  const item = cart.value.find((p) => p.productId == product.id)
+  const item = cart.value.find((p) => p.productId == product._id)
   if (item) {
     item.quantity++
   } else {
     cart.value.push({
-      productId: product.id,
+      productId: product._id,
       product,
       quantity: 1
     })

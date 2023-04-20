@@ -28,7 +28,7 @@ export default defineComponent({
       <div class="columns is-centered is-vcentered">
         <div class="column is-half">
           <div class="content has-text-light has-text-centered">
-            {{ item.product.title }}
+            {{ item.product.name}}
           </div>
         </div>
         <div class="column is-one-quarter">

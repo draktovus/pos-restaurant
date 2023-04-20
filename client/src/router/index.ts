@@ -2,6 +2,7 @@ import LoginVue from '@/components/Login.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import POSView from '@/views/POSView.vue'
 import AdminVue from '@/views/Admin.vue'
+import ProductsVue from '@/views/Products.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
