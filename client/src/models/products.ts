@@ -40,6 +40,7 @@ import { api } from "./session";
     }
  */
     export interface Product {
+      requiresId: any;
       _id: string;
       name: string;
       quantity: number;
