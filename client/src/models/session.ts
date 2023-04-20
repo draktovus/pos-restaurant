@@ -3,7 +3,6 @@
 
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import type { User as User} from '@/models/users'
 import * as myFetch from './fetch'
 import type { User } from './users'
 
