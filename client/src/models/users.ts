@@ -10,8 +10,8 @@ export interface Users {
   password: string
   isAdmin: boolean
   stripe_data: {
-    stripe_location_id: string
-    stripe_reader_id: string
+  stripe_location_id: string
+  stripe_reader_id: string
   }
 }
 
@@ -31,7 +31,11 @@ export async function createUser(id: number, firstName: string, lastName: string
    "lastName": lastName,
    "username": username,
    "password": password,
-   "isAdmin": isAdmin
+   "isAdmin": isAdmin,
+    "stripe_data": {
+      "stripe_location_id": "string",
+      "stripe_reader_id": "string"
+    }
   },
   'POST')
 }
