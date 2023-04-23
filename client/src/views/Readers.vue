@@ -1,11 +1,33 @@
 <script setup lang="ts">
-import { readersList, locationsList } from '@/models/stripe'
+import { getLocations, getReaders, type StripeLocation, type StripeReader } from '@/models/stripe'
 import { ref } from 'vue'
-import { useSession } from '@/models/session'
-import { api } from '@/models/fetch'
+import { useSession, api } from '@/models/session'
 const session = useSession()
-const locationId = ref(null)
-const readerId = ref(null)
+
+const locationsList = ref<StripeLocation[]>([])
+const readersList = ref<StripeReader[]>([])
+
+const locationId = ref('none')
+const readerId = ref('none')
+
+getLocations().then(res=>{
+  locationsList.value = res.data
+  const currentLocation = res.data.find(ele=>{
+    const u = session.user ? session.user.stripe_data.stripe_location_id:''
+    return ele.id == u
+  })
+  locationId.value = currentLocation ? currentLocation.id : 'none'
+})
+getReaders().then(res=>{
+  readersList.value=res.data
+  const currentReader = res.data.find(ele => {
+    const u = session.user ? session.user.stripe_data.stripe_reader_id:''
+    return ele.id == u
+  })
+  readerId.value = currentReader ? currentReader.id : 'none'
+  console.log(readerId.value)
+})
+
 // will tell the server to update the user's reader, user must be logged in.
 async function changeReader() {
   await api(
@@ -52,7 +74,7 @@ async function changeLocation() {
       <div class="control">
         <div class="select">
           <select v-model="locationId">
-            <option value="none" selected disabled>Select a reader</option>
+            <option value="none" disabled>Select a reader</option>
             <option v-for="location in locationsList" :value="location.id">
               {{ location.display_name }} ({{ location.id }})
             </option>
