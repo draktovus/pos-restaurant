@@ -1,33 +1,44 @@
 <script setup lang="ts">
-import { getUsers, type User } from '@/models/users'
+import { getUsers, deleteUser, type Users } from '@/models/users'
 import { ref } from 'vue'
-import { confirm } from '@/models/generalModals'
+import GenModals from '@/components/GeneralModals.vue'
+import { closeModal, confirm } from '@/models/generalModals'
+import { RouterLink } from 'vue-router'
+import { useSession } from '@/models/session'
 
-const users = ref<User[]>([])
+const users = ref<Users[]>([])
+const session = useSession()
 
 getUsers().then((data) => {
   users.value = data.data
 })
 
-function deleteUser(_id: string) {
-  confirm('Are you sure you want to delete this?', 'Question')
+function deleteUserFunc(id: number) {
+  confirm("Are you sure you want remove this user?", 'Delete User')
     .then(() => {
-      console.log('delete: ' + _id)
+      deleteUser(id)
+      console.log('delete: ' + id)
+      closeModal()
+      location.reload() 
     })
     .catch(() => {
-      console.log('didn\'t do it to: ' + _id)
+      console.log('didn\'t do it to: ' + id)
     })
 }
 </script>
 
 <template>
+    <gen-modals></gen-modals>
     <h1 class="title">Users</h1>
-    <router-link to="/admin/users/edit" class="button is-primary add-user">
       <div class="icon">
           <i class="fas fa-plus"></i>
       </div>
-      <span>Add User</span>
-    </router-link>
+      <RouterLink to="/admin/users/addUser" class="button is-primary add-user">
+        <div class="icon">
+                <i class="fas fa-plus"></i>
+        </div>
+        <span>Add User</span>
+      </RouterLink>
 
     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
       <thead>
@@ -53,7 +64,7 @@ function deleteUser(_id: string) {
           <td>{{ user.isAdmin }}</td>
           <td>
             <button class="button is-primary">Edit</button>
-            <button class="button is-danger" @click="deleteUser(user._id)">Delete</button>
+            <button class="button is-danger" @click="deleteUserFunc(user.id)">Delete</button>
           </td>
         </tr>
       </tbody>

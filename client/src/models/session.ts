@@ -3,7 +3,7 @@
 
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import type { User as User} from '@/models/users'
+import type { Users as User} from '@/models/users'
 import * as myFetch from './fetch'
 
 const session = reactive({
@@ -27,6 +27,7 @@ interface User{
   isAdmin: boolean
 }
 */
+
 export function useSession() {
   return session
 }
