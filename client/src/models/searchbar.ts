@@ -16,16 +16,23 @@ getProducts().then((data) => {
 })
 
 export function filteredList(i: string) {
-  let filtered = products.value.filter(
-    (product) => {
-      return (product.category == (breakfastBox.value ? 'Breakfast' : ''))
-        || (product.category == (lunchBox.value ? "Lunch" : ''))
-        || (product.category == (dinnerBox.value ? "Dinner" : ''))
-        || (product.category == (sidesBox.value ? "Sides" : ''))
-        || (product.category == (drinksBox.value ? "Drinks" : ''))
-        || (requiresIdBox.value ? product.identification : false)
-    }
-  )
+  let filtered = null
+  if (!breakfastBox.value && !lunchBox.value && !dinnerBox.value && !sidesBox.value && !drinksBox.value && !requiresIdBox.value) {
+    // fixes the case if no boxes are checked, make it so all boxes are checked so all show
+    filtered = products.value
+  }
+  else {
+    filtered = products.value.filter(
+      (product) => {
+        return (product.category == (breakfastBox.value ? 'Breakfast' : ''))
+          || (product.category == (lunchBox.value ? "Lunch" : ''))
+          || (product.category == (dinnerBox.value ? "Dinner" : ''))
+          || (product.category == (sidesBox.value ? "Sides" : ''))
+          || (product.category == (drinksBox.value ? "Drinks" : ''))
+          || (requiresIdBox.value ? product.identification : false)
+      }
+    )
+  }
 
   filtered = filtered.filter((product: Product) =>
     product.name.toLowerCase().includes(i.toLowerCase())
