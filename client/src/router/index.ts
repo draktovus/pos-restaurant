@@ -4,7 +4,7 @@ import POSView from '@/views/POSView.vue'
 import AdminVue from '@/views/Admin.vue'
 import AddUserVue from '@/views/admin/AddUser.vue'
 import ProductsVue from '@/views/Products.vue'
->>>>>>> a4f69cf415331f1051607936f68ec314d23b71ee
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,12 +54,12 @@ const router = createRouter({
       name: 'admin-users-add',
       component: AddUserVue
     },
-=======
+    {
       path: '/readers',
       name: 'readers',
       component: () => import('../views/Readers.vue')
     }
->>>>>>> a4f69cf415331f1051607936f68ec314d23b71ee
+
   ]
 })
 

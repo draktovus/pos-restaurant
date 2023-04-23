@@ -3,10 +3,10 @@
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import * as myFetch from './fetch'
-import type { User } from './users'
+import type { Users } from './users'
 
 const session = reactive({
-  user: null as User | null,
+  user: null as Users | null,
   isLoading: false,
   messages: [] as {
     msg: string
@@ -38,7 +38,7 @@ export function api(url: string, data?: any, method?: string, headers?: any) {
 export function useLogin() {
   const router = useRouter()
 
-  return function (user: User) {
+  return function (user: Users) {
     session.user = {
       ...user
     }
