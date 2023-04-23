@@ -31,24 +31,24 @@ async function loginUser() {
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-half">
-        <div class="box">
-          <h1 class="title">Login</h1>
+        <div class="box has-background-grey-darker">
+          <h1 class="title has-text-light">Login</h1>
           <form @submit.prevent="loginUser">
             <div class="field">
-              <label class="label">Username</label>
+              <label class="label has-text-light">Username</label>
               <div class="control">
-                <input v-model="username" class="input" type="text" placeholder="Username" />
+                <input v-model="username" class="input has-background-dark has-text-light" type="text" placeholder="Username" />
               </div>
             </div>
             <div class="field">
-              <label class="label">Password</label>
+              <label class="label has-text-light">Password</label>
               <div class="control">
-                <input v-model="password" class="input" type="password" placeholder="Password" />
+                <input v-model="password" class="input has-background-dark has-text-light" type="password" placeholder="Password" />
                 <p class="help is-danger" v-if="error">Invalid username or password</p>
               </div>
             </div>
             <div class="field">
-              <button type="submit" class="button is-primary">Login</button>
+              <button type="submit" class="button is-light is-outlined">Login</button>
             </div>
           </form>
         </div>
