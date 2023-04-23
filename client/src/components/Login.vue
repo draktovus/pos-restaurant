@@ -22,10 +22,9 @@ async function loginUser() {
     session.redirectUrl = '/'
     login(response.data)
     error.value = false
-  }else{
+  } else {
     error.value = true
   }
-  
 }
 </script>
 <template>
@@ -59,23 +58,34 @@ async function loginUser() {
 </template>
 <style scoped>
 .help {
-  text-shadow: 1px 1px 2px , 0 0 1em darkred;
+  text-shadow: 1px 1px 2px, 0 0 1em darkred;
   margin-top: 2rem;
   text-align: center;
   font-size: 18px;
-  animation:fade 1.5s infinite;
-  -webkit-animation:fade 1.5s infinite;
+  animation: fade 1.5s infinite;
+  -webkit-animation: fade 1.5s infinite;
 }
 @keyframes fade {
-    from { opacity: 1.0; }
-    50% { opacity: 0.5; }
-    to { opacity: 1.0; }
-}                                                                                                                                                                                                                                  
-
-@-webkit-keyframes fade {
-    from { opacity: 1.0; }
-    50% { opacity: 0.5; }
-    to { opacity: 1.0; }
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
+@-webkit-keyframes fade {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
 </style>

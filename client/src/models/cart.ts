@@ -9,18 +9,18 @@ export function useCart() {
 }
 
 export interface CartItem {
-  productId: number
+  productId: string
   product: Product
   quantity: number
 }
 
 export function addToCart(product: Product) {
-  const item = cart.value.find((p) => p.productId == product.id)
+  const item = cart.value.find((p) => p.productId == product._id)
   if (item) {
     item.quantity++
   } else {
     cart.value.push({
-      productId: product.id,
+      productId: product._id,
       product,
       quantity: 1
     })
@@ -37,7 +37,7 @@ export function getShowIDModal() {
 
 export function removeFromCart(index: number, product: Product) {
   cart.value.splice(index, 1)
-  if (product.requiresId) {
+  if (product.identification) {
     setShowIDModal(false)
   }
 }

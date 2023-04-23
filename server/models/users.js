@@ -31,6 +31,16 @@ const userSchema = new Schema({
     required: true,
     default: false,
   },
+  stripe_data: {
+    stripe_location_id:{
+      type:String,
+      required: true,
+    },
+    stripe_reader_id:{
+      type:String,
+      required: true,
+    },
+  }
 });
 
 userSchema.methods.comparePassword = function (password, callback) {
@@ -45,7 +55,6 @@ userSchema.methods.comparePassword = function (password, callback) {
 
 userSchema.pre("save", function (next) {
   const user = this;
-
   if (this.isModified("password") || this.isNew) {
     bcrypt.genSalt(SALT_ROUNDS, function (saltError, salt) {
       if (saltError) {

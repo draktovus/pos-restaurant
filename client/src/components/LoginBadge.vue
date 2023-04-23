@@ -7,17 +7,17 @@ const logout = useLogout()
 
 <template>
   <div class="navbar-item" v-if="!session.user">
-    <RouterLink to="/login" class="button is-dark is-inverted is-outlined" v-if="!session.user">
+    <RouterLink to="/login" class="button is-light is-outlined" v-if="!session.user">
       <strong>Login</strong>
     </RouterLink>
   </div>
 
   <div class="navbar-item" v-else>
     <div class="buttons">
-      <button class="button is-dark is-inverted is-outlined">
+      <button class="button is-light is-outlined">
         <strong>{{ session.user.username }}</strong>
       </button>
-      <button class="button is-dark is-inverted is-outlined" @click="logout">
+      <button class="button is-light is-outlined" @click="logout">
         <strong>Logout</strong>
       </button>
     </div>

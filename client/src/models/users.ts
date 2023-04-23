@@ -9,6 +9,10 @@ export interface Users {
   username: string
   password: string
   isAdmin: boolean
+  stripe_data: {
+    stripe_location_id: string
+    stripe_reader_id: string
+  }
 }
 
 export function getUsers(): Promise<DataListEnvelope<Users>> {
