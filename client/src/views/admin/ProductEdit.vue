@@ -12,7 +12,7 @@ getProduct(+route.params.id).then((data) => {
   console.log(product.value)
 })
 function save() {
-  if (product.value.id) {
+  if (product.value._id) {
     console.log('update')
   } else {
     createProduct(product.value).then((data) => {
@@ -25,13 +25,13 @@ function save() {
 
 <template>
   <form class="admin-product-edit" @submit.prevent="save()">
-    <h1 class="title" v-if="product.id">Edit Product</h1>
+    <h1 class="title" v-if="product._id">Edit Product</h1>
     <h1 class="title" v-else>Add New Product</h1>
 
     <div class="field">
       <label class="label">Title</label>
       <div class="control">
-        <input class="input" type="text" placeholder="Title" v-model="product.title" />
+        <input class="input" type="text" placeholder="Title" v-model="product.name" />
       </div>
     </div>
 
@@ -61,16 +61,9 @@ function save() {
     </div>
 
     <div class="field">
-      <label class="label">Brand</label>
-      <div class="control">
-        <input class="input" type="text" placeholder="Brand" v-model="product.brand" />
-      </div>
-    </div>
-
-    <div class="field">
       <label class="label">Stock</label>
       <div class="control">
-        <input class="input" type="number" placeholder="Stock" v-model="product.stock" />
+        <input class="input" type="number" placeholder="Stock" v-model="product.quantity" />
       </div>
     </div>
 

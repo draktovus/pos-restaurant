@@ -68,44 +68,47 @@ async function changeLocation() {
 </script>
 
 <template>
-  <div class="field has-text-light">
-    <label class="label has-text-light">Select Location: </label>
-    <div class="field is-grouped">
-      <div class="control">
-        <div class="select">
-          <select v-model="locationId">
-            <option value="none" disabled>Select a reader</option>
-            <option v-for="location in locationsList" :value="location.id">
-              {{ location.display_name }} ({{ location.id }})
-            </option>
-          </select>
+  <div class="fields" v-if="session.user">
+    <div class="field has-text-light">
+      <label class="label has-text-light">Select Location: </label>
+      <div class="field is-grouped">
+        <div class="control">
+          <div class="select">
+            <select v-model="locationId">
+              <option value="none" disabled>Select a reader</option>
+              <option v-for="location in locationsList" :value="location.id">
+                {{ location.display_name }} ({{ location.id }})
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="control">
+          <button class="button" @click="changeLocation">Update location</button>
         </div>
       </div>
-      <div class="control">
-        <button class="button" @click="changeLocation">Update location</button>
+    </div>
+  
+    <div class="field has-text-light">
+      <label class="label has-text-light">Select Reader: </label>
+      <div class="field is-grouped">
+        <div class="control">
+          <div class="select">
+            <select v-model="readerId">
+              <option value="none" selected disabled>Select a reader</option>
+              <option v-for="reader in readersList" :value="reader.id">
+                {{ reader.label }} ({{ reader.id }})
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="control">
+          <button class="button" @click="changeReader">Update reader</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="field has-text-light">
-    <label class="label has-text-light">Select Reader: </label>
-    <div class="field is-grouped">
-      <div class="control">
-        <div class="select">
-          <select v-model="readerId">
-            <option value="none" selected disabled>Select a reader</option>
-            <option v-for="reader in readersList" :value="reader.id">
-              {{ reader.label }} ({{ reader.id }})
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="control">
-        <button class="button" @click="changeReader">Update reader</button>
-      </div>
-    </div>
-  </div>
-  <div class="content has-text-light has-text-centered">
+  <div class="content has-text-light has-text-centered" v-else>
     <h1 class="title has-text-light">Must be logged in.</h1>
     Please login.
   </div>
