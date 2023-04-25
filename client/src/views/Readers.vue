@@ -10,18 +10,18 @@ const readersList = ref<StripeReader[]>([])
 const locationId = ref('none')
 const readerId = ref('none')
 
-getLocations().then(res=>{
+getLocations().then((res) => {
   locationsList.value = res.data
-  const currentLocation = res.data.find(ele=>{
-    const u = session.user ? session.user.stripe_data.stripe_location_id:''
+  const currentLocation = res.data.find((ele) => {
+    const u = session.user ? session.user.stripe_data.stripe_location_id : ''
     return ele.id == u
   })
   locationId.value = currentLocation ? currentLocation.id : 'none'
 })
-getReaders().then(res=>{
-  readersList.value=res.data
-  const currentReader = res.data.find(ele => {
-    const u = session.user ? session.user.stripe_data.stripe_reader_id:''
+getReaders().then((res) => {
+  readersList.value = res.data
+  const currentReader = res.data.find((ele) => {
+    const u = session.user ? session.user.stripe_data.stripe_reader_id : ''
     return ele.id == u
   })
   readerId.value = currentReader ? currentReader.id : 'none'
@@ -87,7 +87,7 @@ async function changeLocation() {
         </div>
       </div>
     </div>
-  
+
     <div class="field has-text-light">
       <label class="label has-text-light">Select Reader: </label>
       <div class="field is-grouped">

@@ -8,7 +8,7 @@ const selectedProduct = ref<Product>()
 let isOfAge = ref(false)
 let isOfAge2 = ref(false)
 let isChecked = 0
-const sortDropdown = ref(false);
+const sortDropdown = ref(false)
 const input = ref('')
 const categories = ['Breakfast', 'Lunch', 'Dinner', 'Sides', 'Drinks', 'Requires ID']
 
@@ -61,7 +61,12 @@ function addProduct(product: Product) {
     </div>
     <div class="dropdown" :class="{ 'is-active': sortDropdown }">
       <div class="dropdown-trigger">
-        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" @click="toggleDropdown()">
+        <button
+          class="button"
+          aria-haspopup="true"
+          aria-controls="dropdown-menu"
+          @click="toggleDropdown()"
+        >
           <span>Sort</span>
           <span class="icon is-small">
             <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -73,8 +78,8 @@ function addProduct(product: Product) {
           <template v-for="category in categories">
             <div href="#" class="dropdown-item">
               <label class="checkbox">
-                <input type="checkbox" @click="toggle(category)">
-                  {{ category }}
+                <input type="checkbox" @click="toggle(category)" />
+                {{ category }}
               </label>
             </div>
           </template>

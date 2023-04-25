@@ -10,7 +10,7 @@ import LoginBadge from './LoginBadge.vue'
           <div class="buttons">
             <RouterLink class="button is-light" to="/">
               <strong>Home</strong>
-            </RouterLink>         
+            </RouterLink>
           </div>
         </div>
       </div>
@@ -22,16 +22,10 @@ import LoginBadge from './LoginBadge.vue'
           </RouterLink>
           <LoginBadge />
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link button is-light is-arrowless">
-              Admin
-            </a>
+            <a class="navbar-link button is-light is-arrowless"> Admin </a>
             <div class="navbar-dropdown">
-              <RouterLink class="navbar-item" to="/admin/products">
-                Products
-              </RouterLink>
-              <RouterLink class="navbar-item" to="/admin/users">
-                Users
-              </RouterLink>             
+              <RouterLink class="navbar-item" to="/admin/products"> Products </RouterLink>
+              <RouterLink class="navbar-item" to="/admin/users"> Users </RouterLink>
             </div>
           </div>
         </div>
