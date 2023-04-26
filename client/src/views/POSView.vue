@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addMessage, api, useSession } from '@/models/session'
+import { addMessage, api, deleteMessage, useSession } from '@/models/session'
 import ProductsVue from '../components/Products.vue'
 import Cart from '@/components/Cart.vue'
 import { total } from '@/models/cart'
@@ -7,7 +7,6 @@ import { amount } from '@/models/stripe'
 import { ref } from 'vue'
 import { toFixed } from '../models/utilities'
 
-const messages = ref<String[]>([])
 const cashModal = ref(false)
 const remainingTotal = ref(0)
 const cash = ref()
@@ -32,15 +31,15 @@ function checkCash(cash: number) {
   console.log('Total is: ' + remainingTotal.value)
   if (remainingTotal.value < 0) {
     console.log('Cash is greater than total')
-    messages.value.push('Cash is greater than total. Cash received: ' + cash + ', change is ' + change.value + '.')
+    addMessage('Cash is greater than total. Cash received: ' + cash + ', change is ' + change.value + '.', 'info')
     payCash()
   } else if (remainingTotal.value > 0) {
     console.log('Cash is less than remaining total')
-    messages.value.push('Cash is less than remainig total. Cash received: ' + cash + ', remaining total is ' + remainingTotal.value + '.')
+    addMessage('Cash is less than remaining total. Cash received: ' + cash + ', remaining total is ' + remainingTotal.value + '.', 'danger')
     payCash()
   } else {
     console.log('Cash is equal to remaining total')
-    messages.value.push('Cash is equal to remainin total, no change needed')
+    addMessage('Cash is equal to remaining total, no change needed', 'success')
     payCash()
   }
 }
@@ -62,9 +61,7 @@ function payCard() {
     ).then((response) => {
       console.log(response)
     })
-    messages.value.push(
-      `Processing payment of ${amt} for reader ${session.user.stripe_data.stripe_reader_id}`
-    )
+    addMessage(`Processing payment of ${amt} for reader ${session.user.stripe_data.stripe_reader_id}`, 'info')
   }
 }
 
@@ -83,6 +80,7 @@ function simulatePayment() {
       }).then((response) => {
         console.log(response)
         console.log('Payment has been captured. HECK YEAH.')
+        addMessage('Payment has been processed. Thanks!', 'success')
         transaction_state.value = 'none'
       })
     })
@@ -92,12 +90,12 @@ function simulatePayment() {
 
 <template>
   <div class="notifications box">
-    <template v-for="(msg, i) in messages">
-      <div class="notification is-info">
+    <template v-for="(msg, i) in session.messages">
+      <div class="notification" :class="`is-${msg.type}`">
         <p class="content">
-          {{ msg }}
+          {{ msg.msg }}
         </p>
-        <button class="delete" @click="messages.splice(i, 1)"></button>
+        <button class="delete" @click="deleteMessage(i)"></button>
         <button class="button" @click="simulatePayment">Simulate payment</button>
       </div>
     </template>
