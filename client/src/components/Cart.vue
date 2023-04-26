@@ -4,8 +4,6 @@ import { quantity } from '../models/cart'
 import { toFixed } from '../models/utilities'
 
 const cart = useCart()
-
-
 </script>
 
 <template>

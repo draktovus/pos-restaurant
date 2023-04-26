@@ -21,7 +21,7 @@ function barcodeScanner(e: KeyboardEvent) {
         console.log('Barcode entered: ' + upc)
         // Filter/find product based on code scanned.
         const productToAdd = prods.value.find((prod) => prod.UPC.toLowerCase().includes(upc))
-        if (productToAdd !== undefined){
+        if (productToAdd !== undefined) {
           addToCart(productToAdd)
         }
         console.log(productToAdd ? productToAdd.name : 'nothing' + ' will be added to cart')
@@ -29,12 +29,10 @@ function barcodeScanner(e: KeyboardEvent) {
         upc = ''
         // Set scan state to false.
         isScanning.value = false
-      } 
-      else if(e.key == 'NumLock'){
+      } else if (e.key == 'NumLock') {
         // If num lock is pressed, skip since already scanning.
-        console.log("Skipping numlock input since already scanning.")
-      }
-      else {
+        console.log('Skipping numlock input since already scanning.')
+      } else {
         upc += e.key
         console.log(e.key)
       }
@@ -52,23 +50,6 @@ function barcodeScanner(e: KeyboardEvent) {
 
 window.removeEventListener('keydown', barcodeScanner)
 window.addEventListener('keydown', barcodeScanner)
-/**
- * window.addEventListener('keypress', (e) => {
-  console.log(e.target ? (e.target as HTMLElement).localName : '')
-  if ((e.target as HTMLElement).localName !== 'input') {
-    if (e.key == "Enter") {
-      console.log("Barcode entered: " + upc)
-      const productToAdd = prods.value.find((prod)=>prod.UPC.toLowerCase().includes(upc))
-      console.log(productToAdd ? productToAdd.name : 'nothing' + ' will be added to cart')
-      upc = ''
-    }
-    else {
-      upc += e.key
-      console.log(e.key)
-    }
-  }
-})
-*/
 </script>
 
 <template>
