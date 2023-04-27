@@ -173,7 +173,7 @@ function simulatePayment() {
           </div>
         </div>
         <div class="field is-grouped">
-          <div class="control is-expanded">
+          <!-- <div class="control is-expanded">
             <button class="button is-dark is-fullwidth is-rounded">Save for later</button>
           </div>
           <div class="control is-expanded">
@@ -184,7 +184,7 @@ function simulatePayment() {
           </div>
           <div class="control is-expanded">
             <button class="button is-dark is-fullwidth is-rounded">Redo</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
