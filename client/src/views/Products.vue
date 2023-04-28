@@ -4,19 +4,17 @@ import { getProducts, type Product } from '@/models/products'
 import { addToCart, setShowIDModal } from '../models/cart'
 import IDModal from '@/components/IDModal.vue'
 
-const products = ref<Product[]>([]);
+const products = ref<Product[]>([])
 getProducts().then((data) => {
-    products.value = data.data;
- });
-
+  products.value = data.data
+})
 </script>
 
 <template>
   <div class="search block">
     <div class="control has-icons-left">
       <span class="searchbar">
-        <input
-          class="input is-rounded" type="text" placeholder="Search..."/>
+        <input class="input is-rounded" type="text" placeholder="Search..." />
       </span>
       <span class="icon is-small is-left">
         <i class="fas fa-search"></i>
@@ -26,10 +24,12 @@ getProducts().then((data) => {
   <div class="columns is-multiline is-mobile">
     <template v-for="(product, index) in products" :key="product.id">
       <div class="column is-full-mobile is-half-tablet is-one-quarter-desktop">
-        <div class="button is-dark is-inverted is-outlined is-fullwidth"
-          @click="addToCart(product)">
+        <div
+          class="button is-dark is-inverted is-outlined is-fullwidth"
+          @click="addToCart(product)"
+        >
           <p class="content has-text-centered has-text-justified is-clipped is-small-tablet">
-            {{ product.name}}
+            {{ product.name }}
           </p>
         </div>
       </div>

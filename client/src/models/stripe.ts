@@ -42,27 +42,27 @@ export interface StripeReader {
   id: string
   object: string
   action: {
-    failure_code: string,
-    failure_message: string,
+    failure_code: string
+    failure_message: string
     process_payment_intent: {
       payment_intent: string
-    },
-    status: string,
+    }
+    status: string
     type: string
-  },
-  device_sw_version: string,
-  device_type: string,
-  ip_address: string,
-  label: string,
-  last_seen_at: number,
-  livemode: boolean,
-  location: string,
-  metadata: {},
-  serial_number: string,
+  }
+  device_sw_version: string
+  device_type: string
+  ip_address: string
+  label: string
+  last_seen_at: number
+  livemode: boolean
+  location: string
+  metadata: {}
+  serial_number: string
   status: string
 }
 
-export function getReaders() : Promise<DataListEnvelope<StripeReader>>{
+export function getReaders(): Promise<DataListEnvelope<StripeReader>> {
   return api('stripe/readers')
 }
 
@@ -87,11 +87,11 @@ export interface StripeLocation {
   id: string
   object: string
   address: {
-    city: string,
-    country: string,
-    line1: string,
-    line2: string,
-    postal_code: string,
+    city: string
+    country: string
+    line1: string
+    line2: string
+    postal_code: string
     state: string
   }
   display_name: string

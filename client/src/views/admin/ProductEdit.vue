@@ -31,7 +31,18 @@ function save() {
     <div class="field">
       <label class="label">Name</label>
       <div class="control">
-        <input class="input" type="text" placeholder="Title" v-model="product.name" />
+        <input class="input" type="text" placeholder="Title" v-model="product.title" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Description</label>
+      <div class="control">
+        <textarea
+          class="textarea"
+          placeholder="Description"
+          v-model="product.description"
+        ></textarea>
       </div>
     </div>
 

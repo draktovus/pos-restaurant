@@ -37,13 +37,23 @@ async function loginUser() {
             <div class="field">
               <label class="label has-text-light">Username</label>
               <div class="control">
-                <input v-model="username" class="input has-background-dark has-text-light" type="text" placeholder="Username" />
+                <input
+                  v-model="username"
+                  class="input has-background-dark has-text-light"
+                  type="text"
+                  placeholder="Username"
+                />
               </div>
             </div>
             <div class="field">
               <label class="label has-text-light">Password</label>
               <div class="control">
-                <input v-model="password" class="input has-background-dark has-text-light" type="password" placeholder="Password" />
+                <input
+                  v-model="password"
+                  class="input has-background-dark has-text-light"
+                  type="password"
+                  placeholder="Password"
+                />
                 <p class="help is-danger" v-if="error">Invalid username or password</p>
               </div>
             </div>

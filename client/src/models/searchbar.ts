@@ -17,21 +17,27 @@ getProducts().then((data) => {
 
 export function filteredList(i: string) {
   let filtered = null
-  if (!breakfastBox.value && !lunchBox.value && !dinnerBox.value && !sidesBox.value && !drinksBox.value && !requiresIdBox.value) {
+  if (
+    !breakfastBox.value &&
+    !lunchBox.value &&
+    !dinnerBox.value &&
+    !sidesBox.value &&
+    !drinksBox.value &&
+    !requiresIdBox.value
+  ) {
     // fixes the case if no boxes are checked, make it so all boxes are checked so all show
     filtered = products.value
-  }
-  else {
-    filtered = products.value.filter(
-      (product) => {
-        return (product.category == (breakfastBox.value ? 'Breakfast' : ''))
-          || (product.category == (lunchBox.value ? "Lunch" : ''))
-          || (product.category == (dinnerBox.value ? "Dinner" : ''))
-          || (product.category == (sidesBox.value ? "Sides" : ''))
-          || (product.category == (drinksBox.value ? "Drinks" : ''))
-          || (requiresIdBox.value ? product.identification : false)
-      }
-    )
+  } else {
+    filtered = products.value.filter((product) => {
+      return (
+        product.category == (breakfastBox.value ? 'Breakfast' : '') ||
+        product.category == (lunchBox.value ? 'Lunch' : '') ||
+        product.category == (dinnerBox.value ? 'Dinner' : '') ||
+        product.category == (sidesBox.value ? 'Sides' : '') ||
+        product.category == (drinksBox.value ? 'Drinks' : '') ||
+        (requiresIdBox.value ? product.identification : false)
+      )
+    })
   }
 
   filtered = filtered.filter((product: Product) =>
@@ -44,24 +50,24 @@ export function filteredList(i: string) {
 
 export function toggle(s: string) {
   switch (s) {
-    case "Breakfast":
+    case 'Breakfast':
       breakfastBox.value = !breakfastBox.value
       break
-    case "Lunch":
+    case 'Lunch':
       lunchBox.value = !lunchBox.value
       break
-    case "Dinner":
+    case 'Dinner':
       dinnerBox.value = !dinnerBox.value
       break
-    case "Sides":
+    case 'Sides':
       sidesBox.value = !sidesBox.value
       break
-    case "Drinks":
+    case 'Drinks':
       drinksBox.value = !drinksBox.value
       break
-    case "Requires ID":
+    case 'Requires ID':
       requiresIdBox.value = !requiresIdBox.value
       break
   }
   filteredList(val.value)
-}  
+}
