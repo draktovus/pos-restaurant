@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addMessage, api, useSession } from '@/models/session'
+import { addMessage, api, deleteMessage, useSession } from '@/models/session'
 import ProductsVue from '../components/Products.vue'
 import Cart from '@/components/Cart.vue'
 import { total } from '@/models/cart'
@@ -8,47 +8,17 @@ import { ref } from 'vue'
 import { toFixed } from '../models/utilities'
 
 const messages = ref<String[]>([])
-const cashModal = ref(false)
-const remainingTotal = ref(0)
-const cash = ref()
-const change = ref()
-const insufficient = ref(false)
+
 const session = useSession()
 
 function payCash() {
-  if(total.value > 0) {
-    console.log('Paying with cash')
-    cashModal.value = !cashModal.value
-  } else {
-    console.log('Total is 0, no payment needed.')
-  }
-}
-function checkCash(cash: number) {
-  remainingTotal.value = total.value
-  change.value = cash - remainingTotal.value
-  change.value = toFixed(change.value, 2)
-  remainingTotal.value = remainingTotal.value - cash
-  console.log('Checking cash: ' + cash)
-  console.log('Total is: ' + remainingTotal.value)
-  if (remainingTotal.value < 0) {
-    console.log('Cash is greater than total')
-    messages.value.push('Cash is greater than total. Cash received: ' + cash + ', change is ' + change.value + '.')
-    payCash()
-  } else if (remainingTotal.value > 0) {
-    console.log('Cash is less than remaining total')
-    messages.value.push('Cash is less than remainig total. Cash received: ' + cash + ', remaining total is ' + remainingTotal.value + '.')
-    payCash()
-  } else {
-    console.log('Cash is equal to remaining total')
-    messages.value.push('Cash is equal to remainin total, no change needed')
-    payCash()
-  }
+  console.log('Paying with cash')
 }
 
 const transaction_state = ref('none')
 function payCard() {
-  if (session.user) {
-    console.log('Paying with card')
+  if (session.user && total.value !== 0) {
+    console.log('Paying with card, user is signed in and cart total is not 0.')
     transaction_state.value = 'loading'
     const amt = Math.floor(total.value * 100)
     console.log('Amount is' + amt)
@@ -62,8 +32,9 @@ function payCard() {
     ).then((response) => {
       console.log(response)
     })
-    messages.value.push(
-      `Processing payment of ${amt} for reader ${session.user.stripe_data.stripe_reader_id}`
+    addMessage(
+      `Processing payment of ${amt} for reader ${session.user.stripe_data.stripe_reader_id}`,
+      'info'
     )
   }
 }
@@ -83,6 +54,7 @@ function simulatePayment() {
       }).then((response) => {
         console.log(response)
         console.log('Payment has been captured. HECK YEAH.')
+        addMessage('Payment has been processed. Thanks!', 'success')
         transaction_state.value = 'none'
       })
     })
@@ -92,12 +64,12 @@ function simulatePayment() {
 
 <template>
   <div class="notifications box">
-    <template v-for="(msg, i) in messages">
-      <div class="notification is-info">
+    <template v-for="(msg, i) in session.messages">
+      <div class="notification" :class="`is-${msg.type}`">
         <p class="content">
-          {{ msg }}
+          {{ msg.msg }}
         </p>
-        <button class="delete" @click="messages.splice(i, 1)"></button>
+        <button class="delete" @click="deleteMessage(i)"></button>
         <button class="button" @click="simulatePayment">Simulate payment</button>
       </div>
     </template>
@@ -126,26 +98,6 @@ function simulatePayment() {
           <div class="control is-expanded">
             <button class="button is-success is-fullwidth" @click="payCash">Pay Cash</button>
           </div>
-            <div>
-              <div class="modal" :class="{ 'is-active': cashModal }">
-                <div class="modal-background"></div>
-                <div class="modal-content">
-                  <div class="box">
-                    <h1 class="title">Cash Payment</h1>
-                    <div class="field">
-                      <label class="label">Cash Received:</label>
-                      <div class="control has-icons-left">
-                        <input class="input" v-model="cash" type="number" placeholder="Cash Received" />
-                        <span class="icon is-small is-left">
-                          <i class="fas fa-dollar-sign"></i>
-                        </span>                    
-                      </div>
-                    </div>
-                    <button class="button is-success" @click="checkCash(cash)" >Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
           <div class="control is-expanded">
             <button
               class="button is-info is-fullwidth"
@@ -157,7 +109,7 @@ function simulatePayment() {
           </div>
         </div>
         <div class="field is-grouped">
-          <div class="control is-expanded">
+          <!-- <div class="control is-expanded">
             <button class="button is-dark is-fullwidth is-rounded">Save for later</button>
           </div>
           <div class="control is-expanded">
@@ -168,7 +120,7 @@ function simulatePayment() {
           </div>
           <div class="control is-expanded">
             <button class="button is-dark is-fullwidth is-rounded">Redo</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

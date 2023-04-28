@@ -31,7 +31,7 @@ function save() {
     <div class="field">
       <label class="label">Name</label>
       <div class="control">
-        <input class="input" type="text" placeholder="Title" v-model="product.title" />
+        <input class="input" type="text" placeholder="Title" v-model="product.name" />
       </div>
     </div>
 
