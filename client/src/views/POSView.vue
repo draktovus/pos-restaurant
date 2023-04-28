@@ -7,12 +7,51 @@ import { amount } from '@/models/stripe'
 import { ref } from 'vue'
 import { toFixed } from '../models/utilities'
 
-const messages = ref<String[]>([])
-
+const cashModal = ref(false)
+const remainingTotal = ref(0)
+const cash = ref()
+const change = ref()
+const insufficient = ref(false)
 const session = useSession()
 
 function payCash() {
-  console.log('Paying with cash')
+  if (total.value > 0) {
+    console.log('Paying with cash')
+    cashModal.value = !cashModal.value
+  } else {
+    console.log('Total is 0, no payment needed.')
+  }
+}
+
+function checkCash(cash: number) {
+  remainingTotal.value = total.value
+  change.value = cash - remainingTotal.value
+  change.value = toFixed(change.value, 2)
+  remainingTotal.value = remainingTotal.value - cash
+  console.log('Checking cash: ' + cash)
+  console.log('Total is: ' + remainingTotal.value)
+
+  if (remainingTotal.value < 0) {
+    console.log('Cash is greater than total')
+    addMessage(
+      'Cash is greater than total. Cash received: ' + cash + ', change is ' + change.value + '.',
+      'info'
+    )
+  } else if (remainingTotal.value > 0) {
+    console.log('Cash is less than remaining total')
+    addMessage(
+      'Cash is less than remaining total. Cash received: ' +
+        cash +
+        ', remaining total is ' +
+        remainingTotal.value +
+        '.',
+      'danger'
+    )
+  } else {
+    console.log('Cash is equal to remaining total')
+    addMessage('Cash is equal to remaining total, no change needed', 'success')
+  }
+  payCash()
 }
 
 const transaction_state = ref('none')
@@ -97,6 +136,31 @@ function simulatePayment() {
         <div class="field is-grouped">
           <div class="control is-expanded">
             <button class="button is-success is-fullwidth" @click="payCash">Pay Cash</button>
+          </div>
+          <div>
+            <div class="modal" :class="{ 'is-active': cashModal }">
+              <div class="modal-background"></div>
+              <div class="modal-content">
+                <div class="box">
+                  <h1 class="title">Cash Payment</h1>
+                  <div class="field">
+                    <label class="label">Cash Received:</label>
+                    <div class="control has-icons-left">
+                      <input
+                        class="input"
+                        v-model="cash"
+                        type="number"
+                        placeholder="Cash Received"
+                      />
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-dollar-sign"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <button class="button is-success" @click="checkCash(cash)">Save changes</button>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="control is-expanded">
             <button

@@ -29,7 +29,7 @@ function save() {
     <h1 class="title" v-else>Add New Product</h1>
 
     <div class="field">
-      <label class="label">Name</label>
+      <label class="label">Title</label>
       <div class="control">
         <input class="input" type="text" placeholder="Title" v-model="product.name" />
       </div>
