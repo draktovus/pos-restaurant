@@ -2,18 +2,21 @@
 import type { Product } from '@/models/products'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { getProduct, createProduct } from '@/models/products'
+import { getProduct, createProduct, updateProduct } from '@/models/products'
 import { useSession, addMessage } from '@/models/session'
 const session = useSession()
 const route = useRoute()
+
 const product = ref<Product>({} as Product)
-getProduct(+route.params.id).then((data) => {
+console.log(route.params.id)
+getProduct(route.params.id as string).then((data) => {
   product.value = data.data ?? ({} as Product)
   console.log(product.value)
 })
+
 function save() {
   if (product.value._id) {
-    console.log('update')
+    updateProduct(product.value)
   } else {
     createProduct(product.value).then((data) => {
       console.log(data)
@@ -36,6 +39,27 @@ function save() {
     </div>
 
     <div class="field">
+      <label class="label">Id</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="id" v-model="product._id" disabled />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">SKU</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="SKU" v-model="product.SKU" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">UPC</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="UPC" v-model="product.UPC" />
+      </div>
+    </div>
+
+    <div class="field">
       <label class="label">Description</label>
       <div class="control">
         <textarea
@@ -49,7 +73,7 @@ function save() {
     <div class="field">
       <label class="label">Price</label>
       <div class="control">
-        <input class="input" type="number" placeholder="Price" v-model="product.price" />
+        <input class="input" type="number" placeholder="Price" step="0.01" v-model="product.price" />
       </div>
     </div>
 
