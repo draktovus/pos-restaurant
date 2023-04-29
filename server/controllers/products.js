@@ -20,7 +20,7 @@ router.get("/", async (req, res, next) => {
 //Get by ID
 router.get("/:id", async (req, res, next) => {
   try {
-    const data = await Product.findOne({ id: +req.params.id });
+    const data = await Product.findOne({ _id: req.params.id });
     //const data = await User.findById(req.params.id);
     const dataEnvelope = {
       data: data,

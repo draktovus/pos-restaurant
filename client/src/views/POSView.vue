@@ -6,6 +6,7 @@ import { total } from '@/models/cart'
 import { amount } from '@/models/stripe'
 import { ref } from 'vue'
 import { toFixed } from '../models/utilities'
+import Notifications from '@/components/Notification.vue'
 
 const cashModal = ref(false)
 const remainingTotal = ref(0)
@@ -103,14 +104,16 @@ function simulatePayment() {
 
 <template>
   <div class="notifications box">
+    <button class="button" @click="simulatePayment">Simulate payment</button>
     <template v-for="(msg, i) in session.messages">
-      <div class="notification" :class="`is-${msg.type}`">
+      <Notifications />
+      <!-- <div class="notification" :class="`is-${msg.type}`">
         <p class="content">
           {{ msg.msg }}
         </p>
-        <button class="delete" @click="deleteMessage(i)"></button>
-        <button class="button" @click="simulatePayment">Simulate payment</button>
-      </div>
+        <button class="delete" @click="deleteMessage(i)"></button> -->
+        <!-- <button class="button" @click="simulatePayment">Simulate payment</button> -->
+      <!-- </div> -->
     </template>
     <div class="message"></div>
   </div>
@@ -173,7 +176,7 @@ function simulatePayment() {
           </div>
         </div>
         <div class="field is-grouped">
-          <div class="control is-expanded">
+          <!-- <div class="control is-expanded">
             <button class="button is-dark is-fullwidth is-rounded">Save for later</button>
           </div>
           <div class="control is-expanded">
@@ -184,7 +187,7 @@ function simulatePayment() {
           </div>
           <div class="control is-expanded">
             <button class="button is-dark is-fullwidth is-rounded">Redo</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

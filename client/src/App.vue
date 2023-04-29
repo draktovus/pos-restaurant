@@ -20,11 +20,16 @@ function barcodeScanner(e: KeyboardEvent) {
       if (e.key == 'Enter') {
         console.log('Barcode entered: ' + upc)
         // Filter/find product based on code scanned.
-        const productToAdd = prods.value.find((prod) => prod.UPC.toLowerCase().includes(upc))
-        if (productToAdd !== undefined) {
-          addToCart(productToAdd)
+        if (upc = ''){
+          console.log("Blank code")
         }
-        console.log(productToAdd ? productToAdd.name : 'nothing' + ' will be added to cart')
+        else{
+          const productToAdd = prods.value.find((prod) => prod.UPC.toLowerCase().includes(upc))
+          if (productToAdd !== undefined) {
+            addToCart(productToAdd)
+          }
+          console.log(productToAdd ? productToAdd.name : 'nothing' + ' will be added to cart')
+        }
         // Reset upc variable.
         upc = ''
         // Set scan state to false.
