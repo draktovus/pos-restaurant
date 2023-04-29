@@ -36,6 +36,7 @@ router.get("/:id", async (req, res, next) => {
 //Post Method
 router.post("/create", async (req, res, next) => {
   try {
+    console.log(req.body)
     const data = new Product({
       ...req.body,
     });
@@ -74,8 +75,8 @@ router.patch("/update/:id", async (req, res, next) => {
 //Delete by ID Method
 router.delete("/delete/:id", async (req, res, next) => {
   try {
-    const id = +req.params.id;
-    const data = await Product.findOneAndDelete({ id: id });
+    const id = req.params.id;
+    const data = await Product.findOneAndDelete({ _id: id });
     const dataEnvelope = {
       data: data,
       total: 1,

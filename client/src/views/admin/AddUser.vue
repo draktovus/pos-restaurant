@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { createUser, getUsersLength, getUsers } from '@/models/users'
+import { addMessage } from '@/models/session'
 import router from '@/router'
-
 
 async function getId() {
   await getUsers().then((data) => {
@@ -26,15 +26,19 @@ function createUserFunc(
   password: string,
   isAdmin: boolean
 ) {
-  getId().then(async () => {
-    await createUser(id.value, firstName, lastName, username, password, isAdmin).then((response) => {
-      if (response) {
-        router.push('/admin/users')
-        error.value = false
-      }else{
-        error.value = true
+  getId().then(() => {
+    createUser(id.value, firstName, lastName, username, password, isAdmin).then((response) => {
+        if (response) {
+          console.log("THIS IS THE RESPOSNE FOR CREATING NEW USER:", response)
+          addMessage(`Sucessfully created a new user: ${response.data.username}`, 'success')
+          router.push('/admin/users')
+          error.value = false
+        } else {
+          error.value = true
+          addMessage(`Error! There was a problem and could not create a new user. ${response.data}`, 'danger')
+        }
       }
-    })
+    )
   })
 }
 </script>

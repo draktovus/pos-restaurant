@@ -32,6 +32,7 @@ import LoginBadge from './LoginBadge.vue'
       </div>
     </div>
   </nav>
+  <slot name="notifications"> </slot>
 </template>
 
 <style scoped>

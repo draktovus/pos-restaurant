@@ -1,33 +1,44 @@
 <script setup lang="ts">
 import type { Product } from '@/models/products'
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, inject , type Ref} from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { getProduct, createProduct, updateProduct } from '@/models/products'
 import { useSession, addMessage } from '@/models/session'
 const session = useSession()
 const route = useRoute()
+const router = useRouter()
 
-const product = ref<Product>({} as Product)
+const product = ref<Product>({
+} as Product)
 console.log(route.params.id)
-getProduct(route.params.id as string).then((data) => {
-  product.value = data.data ?? ({} as Product)
-  console.log(product.value)
+if (route.params.id !== undefined && route.params.id !== '') {
+  getProduct(route.params.id as string).then((data) => {
+  product.value = data ? data.data : {} as Product
+  console.log("got this as product for admin", product.value)
 })
+}
 
 function save() {
   if (product.value._id) {
-    updateProduct(product.value)
+    updateProduct(product.value).then((response)=>{
+      addMessage('Producted updated', 'success')
+    })
   } else {
     createProduct(product.value).then((data) => {
-      console.log(data)
       addMessage('Product created', 'success')
     })
   }
+  router.push('/admin/products')
+}
+
+function cancel(){
+  addMessage("Canceled product", 'info')
+  router.push('/admin/products')
 }
 </script>
 
 <template>
-  <form class="admin-product-edit" @submit.prevent="save()">
+  <form class="admin-product-edit" @submit.prevent>
     <h1 class="title" v-if="product._id">Edit Product</h1>
     <h1 class="title" v-else>Add New Product</h1>
 
@@ -73,7 +84,13 @@ function save() {
     <div class="field">
       <label class="label">Price</label>
       <div class="control">
-        <input class="input" type="number" placeholder="Price" step="0.01" v-model="product.price" />
+        <input
+          class="input"
+          type="number"
+          placeholder="Price"
+          step="0.01"
+          v-model="product.price"
+        />
       </div>
     </div>
 
@@ -93,10 +110,10 @@ function save() {
 
     <div class="field is-grouped">
       <div class="control">
-        <button class="button is-link">Submit</button>
+        <button class="button is-link" @click="save">Submit</button>
       </div>
       <div class="control">
-        <button class="button is-link is-light">Cancel</button>
+        <button class="button is-link is-light" @click="cancel">Cancel</button>
       </div>
     </div>
   </form>

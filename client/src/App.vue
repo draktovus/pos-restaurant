@@ -1,9 +1,32 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { ref } from 'vue'
+import { provide, ref, watch } from 'vue'
 import { getProducts, type Product } from './models/products'
 import { addToCart } from './models/cart'
 import NavBar from './components/NavBar.vue'
+import NotificationsOverlay from './components/NotificationsOverlay.vue'
+import { useSession } from './models/session'
+
+const session = useSession()
+
+const notificationsIsActive = ref(false)
+function updateNotification(bool = false) {
+  notificationsIsActive.value = bool
+}
+provide('notifications', { notificationsIsActive, updateNotification })
+
+watch(session.messages, (msg) => {
+  console.log('watching', msg)
+  console.log(msg.length)
+  if (msg.length == 0) {
+    updateNotification(false)
+  } else {
+    if (!notificationsIsActive.value) {
+      console.log('set notifications active')
+      updateNotification(true)
+    }
+  }
+})
 
 const prods = ref<Product[]>([])
 getProducts().then((res) => {
@@ -20,10 +43,9 @@ function barcodeScanner(e: KeyboardEvent) {
       if (e.key == 'Enter') {
         console.log('Barcode entered: ' + upc)
         // Filter/find product based on code scanned.
-        if (upc = ''){
-          console.log("Blank code")
-        }
-        else{
+        if (upc == ''|| upc === undefined) {
+          console.log('Blank code')
+        } else {
           const productToAdd = prods.value.find((prod) => prod.UPC.toLowerCase().includes(upc))
           if (productToAdd !== undefined) {
             addToCart(productToAdd)
@@ -58,10 +80,32 @@ window.addEventListener('keydown', barcodeScanner)
 </script>
 
 <template>
-  <NavBar />
+  <NavBar>
+    <template #notifications>
+      <transition>
+        <NotificationsOverlay :is-active="notificationsIsActive" />
+      </transition>
+    </template>
+  </NavBar>
   <div class="section">
-    <RouterView />
+    <RouterView v-slot="{ Component, route }">
+      <transition name="fade" mode="out-in">
+        <div :key="route.path">
+          <component :is="Component" />
+        </div>
+      </transition>
+    </RouterView>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

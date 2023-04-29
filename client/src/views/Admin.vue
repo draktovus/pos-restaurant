@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import GenModals from '@/components/GeneralModals.vue'
 import { closeModal, confirm } from '@/models/generalModals'
 import { RouterLink } from 'vue-router'
-import { useSession } from '@/models/session'
+import { addMessage, useSession } from '@/models/session'
 
 const users = ref<Users[]>([])
 const session = useSession()
@@ -13,13 +13,16 @@ getUsers().then((data) => {
   users.value = data.data
 })
 
-function deleteUserFunc(id: number) {
+function deleteUserFunc(id: string) {
   confirm('Are you sure you want remove this user?', 'Delete User')
     .then(() => {
-      deleteUser(id)
-      console.log('delete: ' + id)
+      console.log('DELETING USER: ' + id)
+      deleteUser(id).then((res)=>{
+        const index = users.value.findIndex(u => u._id === id)
+        users.value.splice(index, 1)
+        addMessage(`Deleted user with id: ${id}`, 'success')
+      })
       closeModal()
-      location.reload()
     })
     .catch(() => {
       console.log("didn't do it to: " + id)
@@ -29,7 +32,7 @@ function deleteUserFunc(id: number) {
 
 <template>
   <gen-modals></gen-modals>
-  <h1 class="title">Users</h1>
+  <h1 class="title has-text-light">Users</h1>
   <div class="icon">
     <i class="fas fa-plus"></i>
   </div>
@@ -43,20 +46,18 @@ function deleteUserFunc(id: number) {
   <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
     <thead>
       <tr>
-        <th></th>
         <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Username</th>
         <th>Password</th>
         <th>Admin Status</th>
-        <th></th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="user in users" :key="user.id">
-        <td></td>
-        <td>{{ user.id }}</td>
+      <tr v-for="user in users" :key="user._id">
+        <td>{{ user._id }}</td>
         <td>{{ user.firstName }}</td>
         <td>{{ user.lastName }}</td>
         <td>{{ user.username }}</td>
@@ -64,7 +65,7 @@ function deleteUserFunc(id: number) {
         <td>{{ user.isAdmin }}</td>
         <td>
           <button class="button is-primary">Edit</button>
-          <button class="button is-danger" @click="deleteUserFunc(user.id)">Delete</button>
+          <button class="button is-danger" @click="deleteUserFunc(user._id)">Delete</button>
         </td>
       </tr>
     </tbody>

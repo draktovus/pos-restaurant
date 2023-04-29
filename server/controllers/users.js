@@ -125,8 +125,8 @@ router.patch("/update/stripe-data", async (req, res, next) => {
 //Delete by ID Method
 router.delete("/delete/:id", async (req, res, next) => {
   try {
-    const id = +req.params.id;
-    const data = await User.findOneAndDelete({ id: id });
+    const id = req.params.id;
+    const data = await User.findOneAndDelete({ _id: id });
     const dataEnvelope = {
       data: data,
       total: 1,

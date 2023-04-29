@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Modal from '@/components/Modal.vue'
-import { ref } from 'vue'
 import { state } from '@/models/generalModals'
 </script>
 
