@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { createUser, getUsersLength, getUsers } from '@/models/users'
-import { useSession } from '@/models/session'
+import router from '@/router'
 
-const session = useSession()
 
 async function getId() {
   await getUsers().then((data) => {
@@ -18,6 +17,8 @@ const username = ref('')
 const password = ref('')
 const isAdmin = ref(false)
 
+let error = ref(false)
+
 function createUserFunc(
   firstName: string,
   lastName: string,
@@ -25,10 +26,14 @@ function createUserFunc(
   password: string,
   isAdmin: boolean
 ) {
-  getId().then(() => {
-    createUser(id.value, firstName, lastName, username, password, isAdmin).then(() => {
-      session.redirectUrl = '/admin/users'
-      console.log('User created')
+  getId().then(async () => {
+    await createUser(id.value, firstName, lastName, username, password, isAdmin).then((response) => {
+      if (response) {
+        router.push('/admin/users')
+        error.value = false
+      }else{
+        error.value = true
+      }
     })
   })
 }
@@ -90,6 +95,7 @@ function createUserFunc(
       </div>
     </div>
   </form>
+  <p class="help is-danger" v-if="error">User already exists</p>
 </template>
 
 <style scoped>
@@ -103,5 +109,36 @@ function createUserFunc(
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.125;
+}
+.help {
+  text-shadow: 1px 1px 2px, 0 0 1em darkred;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 18px;
+  animation: fade 1.5s infinite;
+  -webkit-animation: fade 1.5s infinite;
+}
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

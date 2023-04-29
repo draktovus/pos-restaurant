@@ -20,7 +20,7 @@ export function getUsers(): Promise<DataListEnvelope<Users>> {
 }
 
 export function deleteUser(id: number) {
-  api('users/delete/' + id, null, 'DELETE')
+  return api('users/delete/' + id, null, 'DELETE')
 }
 
 export async function createUser(
@@ -31,7 +31,7 @@ export async function createUser(
   password: string,
   isAdmin: boolean
 ) {
-  api(
+  const respose = await api(
     'users/create',
     {
       id: id,
@@ -47,6 +47,7 @@ export async function createUser(
     },
     'POST'
   )
+  return respose
 }
 
 export function getUsersLength(): Promise<Number> {
