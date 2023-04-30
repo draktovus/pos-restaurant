@@ -70,9 +70,5 @@ export function editUser(id: number, firstName: string, lastName: string, passwo
   'PATCH')
 }
 
-export function editInfo(user: Users) {
-  user = {
-    ...user,
-  }
-}
+
 
