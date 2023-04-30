@@ -65,8 +65,16 @@ function deleteUserFunc(id: string) {
         <td>{{ user.password }}</td>
         <td>{{ user.isAdmin }}</td>
         <td>
-          <button class="button is-primary">Edit</button>
-          <button class="button is-danger" @click="deleteUserFunc(user._id)">Delete</button>
+          <router-link :to="'/admin/users/edit/' + user._id" class="button">
+              <div class="icon">
+                <i class="fas fa-edit"></i>
+              </div>
+            </router-link>
+            <button class="button" @click="deleteUserFunc(user._id)">
+              <div class="icon">
+                <i class="fas fa-trash"></i>
+              </div>
+            </button>
         </td>
       </tr>
     </tbody>
