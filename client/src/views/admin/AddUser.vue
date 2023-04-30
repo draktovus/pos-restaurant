@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { createUser, getUsersLength, getUsers } from '@/models/users'
+import { createUser, getUsers } from '@/models/users'
 import router from '@/router'
 
 

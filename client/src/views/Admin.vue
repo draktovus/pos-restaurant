@@ -4,10 +4,8 @@ import { ref } from 'vue'
 import GenModals from '@/components/GeneralModals.vue'
 import { closeModal, confirm } from '@/models/generalModals'
 import { RouterLink } from 'vue-router'
-import { useSession } from '@/models/session'
 
 const users = ref<Users[]>([])
-const session = useSession()
 
 getUsers().then((data) => {
   users.value = data.data
@@ -25,6 +23,8 @@ function deleteUserFunc(id: number) {
       console.log("didn't do it to: " + id)
     })
 }
+
+
 </script>
 
 <template>
@@ -63,12 +63,18 @@ function deleteUserFunc(id: number) {
         <td>{{ user.password }}</td>
         <td>{{ user.isAdmin }}</td>
         <td>
-          <button class="button is-primary">Edit</button>
+          
+          <router-link :to="'/admin/users/edit/' + user._id" class="button">
+            <div class="icon">
+              <i class="fas fa-edit"></i>
+            </div>
+          </router-link>
           <button class="button is-danger" @click="deleteUserFunc(user.id)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
+  
 </template>
 
 <style scoped>

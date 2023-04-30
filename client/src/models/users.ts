@@ -19,6 +19,10 @@ export function getUsers(): Promise<DataListEnvelope<Users>> {
   return api('users')
 }
 
+export function getUser(id: string): Promise<DataEnvelope<Users>> {
+  return api('users/' + id)
+}
+
 export function deleteUser(id: number) {
   return api('users/delete/' + id, null, 'DELETE')
 }
@@ -55,3 +59,22 @@ export function getUsersLength(): Promise<Number> {
     return res.data.length
   })
 }
+
+export function editUser(id: number, firstName: string, lastName: string, password: string, isAdmin: boolean, _id: string) {
+  return api('users/update/' + _id,
+  {
+    "id": id,
+    "firstName": firstName,
+    "lastName": lastName,
+    "password": password,
+    "isAdmin": isAdmin
+  },
+  'PATCH')
+}
+
+export function editInfo(user: Users) {
+  user = {
+    ...user,
+  }
+}
+

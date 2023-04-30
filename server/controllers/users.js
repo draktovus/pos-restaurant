@@ -20,7 +20,8 @@ router.get("/", async (req, res, next) => {
 //Get by ID
 router.get("/:id", async (req, res, next) => {
   try {
-    const data = await User.findOne({ id: +req.params.id });
+    const id = req.params.id;
+    const data = await User.findById(id);
     //const data = await User.findById(req.params.id);
     const dataEnvelope = {
       data: data,
@@ -80,15 +81,17 @@ router.post("/login", async (req, res, next) => {
 
 
 //Update by ID Method
-router.patch("/update/password", async (req, res, next) => {
+router.patch("/update/:id", async (req, res, next) => {
   try {
+    const id = req.params.id;
     const data = { ...req.body };
 
-    const user = await User.findOne({
-      username: data.username,
-      id: data.id,
-    }).exec();
+    const user = await User.findByIdAndUpdate(id).exec();
+    user.id = data.id;
     user.password = data.password;
+    user.firstName = data.firstName;
+    user.lastName = data.lastName;
+    user.isAdmin = data.isAdmin;
     await user.save();
     const dataEnvelope = {
       data: user,
