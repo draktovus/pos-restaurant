@@ -19,15 +19,11 @@ export function getUsers(): Promise<DataListEnvelope<Users>> {
   return api('users')
 }
 
-<<<<<<< HEAD
 export function getUser(id: string): Promise<DataEnvelope<Users>> {
   return api('users/' + id)
 }
 
-export function deleteUser(id: number) {
-=======
 export function deleteUser(id: string) {
->>>>>>> d1ee8042b5f5db7cce12c40f25f94ff34dfc85a0
   return api('users/delete/' + id, null, 'DELETE')
 }
 

@@ -4,10 +4,7 @@ import { ref } from 'vue'
 import GenModals from '@/components/GeneralModals.vue'
 import { closeModal, confirm } from '@/models/generalModals'
 import { RouterLink } from 'vue-router'
-<<<<<<< HEAD
-=======
 import { addMessage, useSession } from '@/models/session'
->>>>>>> d1ee8042b5f5db7cce12c40f25f94ff34dfc85a0
 
 const users = ref<Users[]>([])
 
@@ -68,18 +65,8 @@ function deleteUserFunc(id: string) {
         <td>{{ user.password }}</td>
         <td>{{ user.isAdmin }}</td>
         <td>
-<<<<<<< HEAD
-          
-          <router-link :to="'/admin/users/edit/' + user._id" class="button">
-            <div class="icon">
-              <i class="fas fa-edit"></i>
-            </div>
-          </router-link>
-          <button class="button is-danger" @click="deleteUserFunc(user.id)">Delete</button>
-=======
           <button class="button is-primary">Edit</button>
           <button class="button is-danger" @click="deleteUserFunc(user._id)">Delete</button>
->>>>>>> d1ee8042b5f5db7cce12c40f25f94ff34dfc85a0
         </td>
       </tr>
     </tbody>
