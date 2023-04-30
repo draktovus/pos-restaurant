@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-<<<<<<< HEAD
-import { createUser, getUsers } from '@/models/users'
-=======
 import { createUser, getUsersLength, getUsers } from '@/models/users'
 import { addMessage } from '@/models/session'
->>>>>>> d1ee8042b5f5db7cce12c40f25f94ff34dfc85a0
 import router from '@/router'
 
 async function getId() {
