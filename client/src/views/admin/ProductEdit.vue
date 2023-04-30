@@ -39,39 +39,39 @@ function cancel(){
 
 <template>
   <form class="admin-product-edit" @submit.prevent>
-    <h1 class="title" v-if="product._id">Edit Product</h1>
-    <h1 class="title" v-else>Add New Product</h1>
+    <h1 class="title has-text-light" v-if="product._id">Edit Product</h1>
+    <h1 class="title has-text-light" v-else>Add New Product</h1>
 
     <div class="field">
-      <label class="label">Title</label>
-      <div class="control">
+      <label class="label has-text-light">Title</label>
+      <div class="control has-text-light">
         <input class="input" type="text" placeholder="Title" v-model="product.name" />
       </div>
     </div>
 
     <div class="field">
-      <label class="label">Id</label>
+      <label class="label has-text-light">Id</label>
       <div class="control">
         <input class="input" type="text" placeholder="id" v-model="product._id" disabled />
       </div>
     </div>
 
     <div class="field">
-      <label class="label">SKU</label>
+      <label class="label has-text-light">SKU</label>
       <div class="control">
         <input class="input" type="text" placeholder="SKU" v-model="product.SKU" />
       </div>
     </div>
 
     <div class="field">
-      <label class="label">UPC</label>
+      <label class="label has-text-light">UPC</label>
       <div class="control">
         <input class="input" type="text" placeholder="UPC" v-model="product.UPC" />
       </div>
     </div>
 
     <div class="field">
-      <label class="label">Description</label>
+      <label class="label has-text-light">Description</label>
       <div class="control">
         <textarea
           class="textarea"
@@ -82,7 +82,7 @@ function cancel(){
     </div>
 
     <div class="field">
-      <label class="label">Price</label>
+      <label class="label has-text-light">Price</label>
       <div class="control">
         <input
           class="input"
@@ -95,14 +95,14 @@ function cancel(){
     </div>
 
     <div class="field">
-      <label class="label">Category</label>
+      <label class="label has-text-light">Category</label>
       <div class="control">
         <input class="input" type="text" placeholder="Category" v-model="product.category" />
       </div>
     </div>
 
     <div class="field">
-      <label class="label">Stock</label>
+      <label class="label has-text-light">Stock</label>
       <div class="control">
         <input class="input" type="number" placeholder="Stock" v-model="product.quantity" />
       </div>
@@ -110,7 +110,7 @@ function cancel(){
 
     <div class="field is-grouped">
       <div class="control">
-        <button class="button is-link" @click="save">Submit</button>
+        <button class="button is-primary" @click="save">Submit</button>
       </div>
       <div class="control">
         <button class="button is-link is-light" @click="cancel">Cancel</button>
