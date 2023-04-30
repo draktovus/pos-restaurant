@@ -2,8 +2,17 @@
 import { useCart, total, removeFromCart } from '@/models/cart'
 import { quantity } from '../models/cart'
 import { toFixed } from '../models/utilities'
+import type { Product } from '@/models/products'
+import { ref } from 'vue'
 
 const cart = useCart()
+const quantityModal = ref(false)
+const newQuantity = ref(0)
+
+function editQuantity(index: number, product: Product) {
+  cart.value[index].quantity = newQuantity.value
+  quantityModal.value = !quantityModal.value
+}
 </script>
 
 <template>
@@ -31,11 +40,29 @@ const cart = useCart()
         <div class="column is-auto">
           <div class="field is-grouped">
             <p class="control is-expanded">
-              <button class="button is-light is-outlined is-fullwidth">
+              <button class="button is-light is-outlined is-fullwidth" @click="quantityModal = !quantityModal">
                 <span class="icon">
                   <i class="fas fa-edit" />
                 </span>
               </button>
+              <div class="modal" :class="{ 'is-active': quantityModal }">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                  <div class="box">
+                    <h1 class="title">Edit Quantity</h1>
+                    <div class="field">
+                      <label class="label">New quantity:</label>
+                        <input
+                          class="input"
+                          v-model="newQuantity"
+                          type="number"
+                          placeholder="New quantity..."
+                        />
+                    </div>
+                    <button class="button is-success" @click="editQuantity(i, item.product)">Save changes</button>
+                  </div>
+                </div>
+              </div>
             </p>
             <p class="control is-expanded">
               <button

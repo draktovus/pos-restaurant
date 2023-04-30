@@ -16,12 +16,6 @@ getProducts().then((res) => {
   products.value = res.data
   filteredProducts.value = res.data
 })
-function toggleDropdown() {
-  sortDropdown.value = !sortDropdown.value
-}
-function closeDropdown() {
-  sortDropdown.value = false
-}
 function canBuy(ofAge: boolean) {
   isOfAge.value = ofAge
   isOfAge2.value = ofAge
@@ -52,42 +46,44 @@ function addProduct(product: Product) {
           v-model="input"
           placeholder="Search"
           @input="filteredList(input)"
-          @click="closeDropdown()"
         />
       </span>
       <span class="icon is-small is-left">
         <i class="fas fa-search"></i>
       </span>
     </div>
-    <div class="dropdown" :class="{ 'is-active': sortDropdown }">
-      <div class="dropdown-trigger">
-        <button
-          class="button"
-          aria-haspopup="true"
-          aria-controls="dropdown-menu"
-          @click="toggleDropdown()"
-        >
-          <span>Sort</span>
-          <span class="icon is-small">
-            <i class="fas fa-angle-down" aria-hidden="true"></i>
-          </span>
-        </button>
-      </div>
-      <div class="dropdown-menu" id="dropdown-menu" role="menu">
-        <div class="dropdown-content">
-          <template v-for="category in categories">
-            <div href="#" class="dropdown-item">
-              <label class="checkbox">
-                <input type="checkbox" @click="toggle(category)" />
-                {{ category }}
-              </label>
-            </div>
-          </template>
-        </div>
-      </div>
+  </div>
+
+  <IDModal @can-buy="canBuy" />
+
+  <div class="columns is-multiline is-mobile">
+    <div>
+      <label class="checkbox">
+        <input type="checkbox" @click="toggle('Breakfast')" />
+        Breakfast
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" @click="toggle('Lunch')" />
+        Lunch
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" @click="toggle('Dinner')" />
+        Dinner
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" @click="toggle('Sides')" />
+        Sides
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" @click="toggle('Drinks')" />
+        Drinks
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" @click="toggle('Requires ID')" />
+        Requires ID
+      </label>
     </div>
   </div>
-  <IDModal @can-buy="canBuy" />
 
   <div class="columns is-multiline is-mobile">
     <template v-for="(product, index) in filteredProducts" :key="product.id">
@@ -138,7 +134,13 @@ function addProduct(product: Product) {
   font-size: 1.5rem;
   font-weight: bold;
 }
-.dropdown {
+.checkbox {
+  flex-basis: 12rem;
+  flex-grow: 1;
+  padding: 0.5rem;
   margin: 1rem;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
 }
 </style>
