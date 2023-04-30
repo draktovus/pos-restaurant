@@ -3,6 +3,12 @@ import { getProducts, type Product } from '@/models/products'
 
 export const products = ref<Product[]>([])
 export const filteredProducts = ref<Product[]>([])
+export const check1 = ref(false)
+export const check2 = ref(false)
+export const check3 = ref(false)
+export const check4 = ref(false)
+export const check5 = ref(false)
+export const check6 = ref(false)
 const breakfastBox = ref(false)
 const lunchBox = ref(false)
 const dinnerBox = ref(false)
@@ -69,5 +75,22 @@ export function toggle(s: string) {
       requiresIdBox.value = !requiresIdBox.value
       break
   }
+  filteredList(val.value)
+}
+
+export function toggleOff() {
+  check1.value = false
+  check2.value = false
+  check3.value = false
+  check4.value = false
+  check5.value = false
+  check6.value = false
+  breakfastBox.value = false
+  lunchBox.value = false
+  dinnerBox.value = false
+  sidesBox.value = false
+  drinksBox.value = false
+  requiresIdBox.value = false
+  console.log('toggleOff')
   filteredList(val.value)
 }

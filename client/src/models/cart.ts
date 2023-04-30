@@ -3,6 +3,7 @@ import type { Product } from './products'
 
 const cart = ref([] as CartItem[])
 const showIDModal = ref(false)
+export const newQuantity = ref(1)
 
 export function useCart() {
   return cart
@@ -40,6 +41,16 @@ export function removeFromCart(index: number, product: Product) {
   if (product.identification) {
     setShowIDModal(false)
   }
+}
+
+export function removeAll(){
+  for(let i = cart.value.length - 1; i >= 0; i--){
+    removeFromCart(i, cart.value[i].product)
+  }
+}
+
+export function resetEditQuantity() {
+  newQuantity.value = 0
 }
 
 export const quantity = computed(() => cart.value.reduce((total, item) => total + item.quantity, 0))

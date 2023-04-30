@@ -2,15 +2,13 @@
 import { ref } from 'vue'
 import { getProducts, type Product } from '@/models/products'
 import { addToCart, setShowIDModal } from '../models/cart'
-import { toggle, filteredList, filteredProducts, products } from '../models/searchbar'
+import { toggle, filteredList, filteredProducts, products, check1, check2, check3, check4, check5, check6 } from '../models/searchbar'
 import IDModal from '@/components/IDModal.vue'
 const selectedProduct = ref<Product>()
 let isOfAge = ref(false)
 let isOfAge2 = ref(false)
 let isChecked = 0
-const sortDropdown = ref(false)
 const input = ref('')
-const categories = ['Breakfast', 'Lunch', 'Dinner', 'Sides', 'Drinks', 'Requires ID']
 
 getProducts().then((res) => {
   products.value = res.data
@@ -59,27 +57,27 @@ function addProduct(product: Product) {
   <div class="columns is-multiline is-mobile">
     <div>
       <label class="checkbox">
-        <input type="checkbox" @click="toggle('Breakfast')" />
+        <input type="checkbox" v-model="check1" @click="toggle('Breakfast')" />
         Breakfast
       </label>
       <label class="checkbox">
-        <input type="checkbox" @click="toggle('Lunch')" />
+        <input type="checkbox" v-model="check2" @click="toggle('Lunch')" />
         Lunch
       </label>
       <label class="checkbox">
-        <input type="checkbox" @click="toggle('Dinner')" />
+        <input type="checkbox" v-model="check3" @click="toggle('Dinner')" />
         Dinner
       </label>
       <label class="checkbox">
-        <input type="checkbox" @click="toggle('Sides')" />
+        <input type="checkbox" v-model="check4" @click="toggle('Sides')" />
         Sides
       </label>
       <label class="checkbox">
-        <input type="checkbox" @click="toggle('Drinks')" />
+        <input type="checkbox" v-model="check5" @click="toggle('Drinks')" />
         Drinks
       </label>
       <label class="checkbox">
-        <input type="checkbox" @click="toggle('Requires ID')" />
+        <input type="checkbox" v-model="check6" @click="toggle('Requires ID')" />
         Requires ID
       </label>
     </div>
