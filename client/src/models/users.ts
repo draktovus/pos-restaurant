@@ -2,7 +2,7 @@ import { api } from './session'
 import type { DataEnvelope, DataListEnvelope } from './fetch'
 
 export interface Users {
-  _id?: string
+  _id: string
   id: number
   firstName: string
   lastName: string
@@ -19,15 +19,19 @@ export function getUsers(): Promise<DataListEnvelope<Users>> {
   return api('users')
 }
 
+<<<<<<< HEAD
 export function getUser(id: string): Promise<DataEnvelope<Users>> {
   return api('users/' + id)
 }
 
 export function deleteUser(id: number) {
+=======
+export function deleteUser(id: string) {
+>>>>>>> d1ee8042b5f5db7cce12c40f25f94ff34dfc85a0
   return api('users/delete/' + id, null, 'DELETE')
 }
 
-export async function createUser(
+export function createUser(
   id: number,
   firstName: string,
   lastName: string,
@@ -35,8 +39,7 @@ export async function createUser(
   password: string,
   isAdmin: boolean
 ) {
-  const respose = await api(
-    'users/create',
+  return api('users/create',
     {
       id: id,
       firstName: firstName,
@@ -45,13 +48,12 @@ export async function createUser(
       password: password,
       isAdmin: isAdmin,
       stripe_data: {
-        stripe_location_id: 'string',
-        stripe_reader_id: 'string'
+        stripe_location_id: 'none',
+        stripe_reader_id: 'none'
       }
     },
     'POST'
   )
-  return respose
 }
 
 export function getUsersLength(): Promise<Number> {

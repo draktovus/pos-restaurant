@@ -1,19 +1,28 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getProducts, type Product } from '@/models/products'
+import { getProducts, type Product, deleteProduct } from '@/models/products'
 import GenModals from '@/components/GeneralModals.vue'
 import { confirm } from '@/models/generalModals'
+import { addMessage } from '@/models/session'
+
 const products = ref<Product[]>([])
 getProducts().then((data) => {
   products.value = data.data
 })
-function deleteProduct(id: string) {
+
+function delProduct(product:Product) {
   confirm('Are you sure you want to delete this?', 'Question')
     .then(() => {
-      console.log('delete: ' + id)
+      console.log('DELETING PRODUCT: ' + product._id)
+      deleteProduct(product).then((res)=>{
+        addMessage(`Deleted product, ${product.name}, ${product._id}`, 'success')
+        const index = products.value.findIndex(p => p._id === product._id)
+        products.value.splice(index, 1)
+      })
     })
     .catch(() => {
-      console.log("didn't do it to: " + id)
+      console.log("NOT DELETING PRODUCT: " + product._id)
+      addMessage(`Did not delete, ${product.name}, ${product._id}`, 'info')
     })
 }
 </script>
@@ -28,25 +37,29 @@ function deleteProduct(id: string) {
       <span>Add a Product</span>
     </router-link>
 
-    <h1 class="title">Products</h1>
+    <h1 class="title has-text-light">Products</h1>
 
     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
       <thead>
         <tr>
-          <th></th>
+          <th scope="col">ID</th>
           <th scope="col">Title</th>
+          <th scope="col">SKU</th>
+          <th scope="col">UPC</th>
           <th scope="col">Price</th>
           <th scope="col">Category</th>
-          <th>Stock</th>
-          <th></th>
+          <th scope="col">Stock</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="product in products">
           <td>
-            <!-- <img :src="product.thumbnail" alt="" class="admin-product-img"> -->
+            {{ product._id }}
           </td>
           <td>{{ product.name }}</td>
+          <td>{{ product.SKU }}</td>
+          <td>{{ product.UPC }}</td>
           <td>${{ product.price }}</td>
           <td>{{ product.category }}</td>
           <td>{{ product.quantity }}</td>
@@ -56,7 +69,7 @@ function deleteProduct(id: string) {
                 <i class="fas fa-edit"></i>
               </div>
             </router-link>
-            <button class="button" @click="deleteProduct(product._id)">
+            <button class="button" @click="delProduct(product)">
               <div class="icon">
                 <i class="fas fa-trash"></i>
               </div>

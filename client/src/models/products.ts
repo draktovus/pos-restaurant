@@ -50,9 +50,13 @@ export function getProduct(id: string): Promise<DataEnvelope<Product>> {
 }
 
 export function createProduct(product: Product): Promise<DataEnvelope<Product>> {
-  return api('products', product)
+  return api('products/create', product, "POST")
 }
 
-export function updateProduct(product: Product): Promise<DataEnvelope<Product>>{
-  return api(`products/update/${product._id}`, product, "PATCH")
+export function updateProduct(product: Product): Promise<DataEnvelope<Product>> {
+  return api(`products/update/${product._id}`, product, 'PATCH')
+}
+
+export function deleteProduct(product:Product): Promise<DataEnvelope<Product>>{
+  return api(`products/delete/${product._id}`, product, "DELETE")
 }

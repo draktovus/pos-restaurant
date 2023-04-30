@@ -17,10 +17,6 @@ const port = process.env.PORT || 3000;
   })
   const database = mongoose.connection;
 
-app.get("/", (req, res) => {
-  res.send("Server was accessed");
-});
-
 // Creates a middleware for json.
 app
   .use(express.json())

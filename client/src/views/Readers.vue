@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { getLocations, getReaders, type StripeLocation, type StripeReader } from '@/models/stripe'
+import { getLocations, getReaders, type StripeLocation, type StripeReader, updateReader } from '@/models/stripe'
 import { ref } from 'vue'
-import { useSession, api } from '@/models/session'
+import { useSession, api, addMessage } from '@/models/session'
 const session = useSession()
 
 const locationsList = ref<StripeLocation[]>([])
@@ -30,38 +30,14 @@ getReaders().then((res) => {
 
 // will tell the server to update the user's reader, user must be logged in.
 async function changeReader() {
-  await api(
-    'users/update/stripe-data',
-    {
-      ...session.user,
-      stripe_data: {
-        stripe_location_id: locationId.value,
-        stripe_reader_id: readerId.value
-      }
-    },
-    'PATCH'
-  ).then((res) => {
+  updateReader(readerId.value, locationId.value).then((res) => {
     console.log(res)
     if (session.user) {
       session.user.stripe_data = res.data.stripe_data
+      addMessage("Updated reader to " + readerId.value + ". Updated location to " + locationId.value, 'success')
     }
-  })
-}
-async function changeLocation() {
-  await api(
-    'users/update/stripe-data',
-    {
-      ...session.user,
-      stripe_data: {
-        stripe_location_id: locationId.value,
-        stripe_reader_id: readerId.value
-      }
-    },
-    'PATCH'
-  ).then((res) => {
-    console.log(res)
-    if (session.user) {
-      session.user.stripe_data = res.data.stripe_data
+    else {
+      addMessage("No user is logged in to change reader!", 'danger')
     }
   })
 }
@@ -81,9 +57,6 @@ async function changeLocation() {
               </option>
             </select>
           </div>
-        </div>
-        <div class="control">
-          <button class="button" @click="changeLocation">Update location</button>
         </div>
       </div>
     </div>

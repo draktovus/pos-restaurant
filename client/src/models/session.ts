@@ -1,6 +1,6 @@
 /*  B"H
  */
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import * as myFetch from './fetch'
 import type { Users } from './users'
@@ -11,6 +11,7 @@ const session = reactive({
   messages: [] as {
     msg: string
     type: 'success' | 'danger' | 'warning' | 'info'
+    state: string
   }[],
   redirectUrl: null as string | null
 })
@@ -27,7 +28,8 @@ export function api(url: string, data?: any, method?: string, headers?: any) {
       console.error({ err })
       session.messages.push({
         msg: err.message ?? JSON.stringify(err),
-        type: 'danger'
+        type: 'danger',
+        state: 'none'
       })
     })
     .finally(() => {
@@ -58,14 +60,20 @@ export function useLogout() {
   }
 }
 
-export function addMessage(msg: string, type: 'success' | 'danger' | 'warning' | 'info') {
-  console.log({ msg, type })
+export function addMessage(
+  msg: string,
+  type: 'success' | 'danger' | 'warning' | 'info',
+  state: string = 'none'
+) {
+  console.log({ msg, type, state })
   session.messages.push({
     msg,
-    type
+    type,
+    state
   })
 }
 
 export function deleteMessage(index: number) {
+  console.log("deleted message at index:", index)
   session.messages.splice(index, 1)
 }

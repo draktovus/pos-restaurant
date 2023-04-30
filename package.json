@@ -1,14 +1,18 @@
 {
   "name": "pos-restaurant",
   "version": "1.0.0",
-  "description": "Product Owner: Manuel",
+  "description": "A web based POS System",
   "private": true,
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/index.js",
-    "dev": "nodemon server/index.js --watch server"
+    "dev": "nodemon server/index.js --watch server",
+    "build": "npm i -ws && npm run build -ws"
   },
+  "workspaces":[
+    "client"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/draktovus/pos-restaurant.git"

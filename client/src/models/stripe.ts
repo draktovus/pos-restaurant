@@ -1,7 +1,9 @@
-import { computed, ref } from 'vue'
-import { api } from './session'
-import type { DataListEnvelope } from './fetch'
+import { ref } from 'vue'
+import { api, useSession, addMessage, deleteMessage } from './session'
+import type { DataEnvelope, DataListEnvelope } from './fetch'
+import type { Users } from './users'
 
+const session = useSession()
 export const readersList = ref()
 
 export const locationsList = ref()
@@ -11,7 +13,9 @@ export const reader = ref()
 // Amount should be computed from cart total.
 export const amount = ref()
 
-export const paymentIntent = ref()
+export const transaction_state = ref('none')
+
+export const currentPaymentIntent = ref()
 
 /**
  * {
@@ -101,4 +105,92 @@ export interface StripeLocation {
 
 export function getLocations(): Promise<DataListEnvelope<StripeLocation>> {
   return api('stripe/locations')
+}
+
+export function payCard(total: number) {
+  if (session.user && total !== 0) {
+    console.log('Paying with card, user is signed in and cart total is not 0.')
+    transaction_state.value = 'loading'
+    const amt = Math.floor(total * 100)
+    console.log('Amount is' + amt)
+    api(
+      'stripe/readers/process-payment',
+      {
+        amount: amt,
+        stripe_reader_id: session.user.stripe_data.stripe_reader_id
+      },
+      'POST'
+    ).then((response) => {
+      console.log('This is the returned payment_intent,', response)
+      currentPaymentIntent.value = response.data.payment_intent
+    }).catch((err)=>{
+      transaction_state.value = 'none'
+    })
+    addMessage(
+      `Processing payment of ${amt} for reader ${session.user.stripe_data.stripe_reader_id}`,
+      'info',
+      'cardPaymentProcessing'
+    )
+  } else {
+    if (total === 0 ){
+      addMessage('There must be something in the cart.', 'warning')
+    }else {
+      addMessage('You must be logged in to pay card.', 'warning', 'none')
+    }
+  }
+}
+
+export function simulatePayment() {
+  if (session.user) {
+    console.log('Simulating payment')
+    api(
+      'stripe/readers/simulate-payment',
+      { stripe_reader_id: session.user.stripe_data.stripe_reader_id },
+      'POST'
+    ).then((res) => {
+      console.log(res)
+      console.log('Capturing payment now.')
+      api('stripe/capture-payment-intent', {
+        payment_intent_id: res.data.action.process_payment_intent.payment_intent
+      }).then((response) => {
+        console.log(response)
+        console.log('Payment has been captured. HECK YEAH.')
+        addMessage('Payment has been processed. Thanks!', 'success')
+        transaction_state.value = 'none'
+      })
+    })
+  } else {
+    addMessage('Please sign in to simulate payment.', 'info')
+  }
+}
+
+export function cancelPayment() {
+  if (session.user) {
+    console.log('Simulating payment')
+    api(
+      'stripe/cancel-payment-intent',
+      { payment_intent_id: currentPaymentIntent.value.id },
+      'POST'
+    ).then((response) => {
+      console.log(response)
+      addMessage('Payment has been canceled', 'danger')
+      transaction_state.value = 'none'
+    })
+  } else {
+    addMessage('You must be logged in to cancel a payment.', 'danger')
+  }
+}
+
+export function updateReader(readerId:string, locationId:string):Promise<DataEnvelope<Users>>{
+  return api(
+    'users/update/stripe-data',
+    {
+      ...session.user,
+      stripe_data: {
+        stripe_location_id: locationId,
+        stripe_reader_id: readerId
+      }
+    },
+    'PATCH'
+  )
 }

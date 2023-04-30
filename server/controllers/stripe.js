@@ -107,4 +107,20 @@ router.post("/capture-payment-intent", async (req, res, next) => {
   }
 });
 
+router.post('/cancel-payment-intent', async(req,res,next) => {
+  try{
+    const {payment_intent_id} = req.body;
+    const paymentIntent = await stripe.paymentIntents.cancel(payment_intent_id);
+  
+    res.send({
+      data: paymentIntent,
+      total: 1,
+      isSuccess: true,
+    });
+  }
+  catch(err){
+    next(err)
+  }
+})
+
 module.exports = router;
