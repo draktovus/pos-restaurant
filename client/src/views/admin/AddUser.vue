@@ -41,6 +41,12 @@ function createUserFunc(
     )
   })
 }
+
+function cancel(){
+  addMessage("Canceled Adding User", 'info')
+  router.push('/admin/users')
+}
+
 </script>
 
 <template>
@@ -95,7 +101,7 @@ function createUserFunc(
         <button type="submit" class="button is-link is-primary">Submit</button>
       </div>
       <div class="control">
-        <button class="button is-link is-danger">Cancel</button>
+        <button class="button is-danger" @click="cancel">Cancel</button>
       </div>
     </div>
   </form>
@@ -104,9 +110,16 @@ function createUserFunc(
 
 <style scoped>
 .radio {
-  color: #FFFFFF;
   margin-top: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.label{
+  color: #FFFFFF;
 }
 .admin-status {
   font-size: 1rem;

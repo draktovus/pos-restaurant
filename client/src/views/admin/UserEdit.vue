@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { addMessage } from '@/models/session'
 import { editUser , getUser, type Users } from '@/models/users'
 import router from '@/router'
 import { ref } from 'vue'
@@ -25,6 +26,11 @@ function editInfo(id: number, firstName: string, lastName: string, password: str
   })
 }
 
+function cancel(){
+  addMessage("Canceled product", 'info')
+  router.push('/admin/users')
+}
+
 </script>
 
 <template>
@@ -33,7 +39,7 @@ function editInfo(id: number, firstName: string, lastName: string, password: str
       <div class="field">
         <label class="label">Id</label>
         <div class="control">
-          <input class="input" type="text" :placeholder="user.id ? user.id.toString() : ''" v-model="id">
+          <input class="input" type="number" :placeholder="user.id ? user.id.toString() : ''" v-model="id">
         </div>
       </div>
 
@@ -77,11 +83,15 @@ function editInfo(id: number, firstName: string, lastName: string, password: str
       </label>
     </div>
 
-      <div class="field">
-        <div class="control">
-          <button class="button is-primary" type="submit">Submit</button>
-        </div>
+    <div class="field is-grouped">
+      <div class="control">
+        <button type="submit" class="button is-link is-primary">Submit</button>
       </div>
+      <div class="control">
+        <button class="button is-danger" @click="cancel">Cancel</button>
+      </div>
+    </div>
+
 
     </form>
   </div>
