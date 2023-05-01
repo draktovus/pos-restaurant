@@ -66,6 +66,7 @@ function editInfo(id: number, firstName: string, lastName: string, password: str
       </div>
 
       <div class="control">
+        <label class="label">Make Admin</label>
       <label class="radio">
         <input type="radio" name="answer" value="true" v-model="isAdmin" />
         true
@@ -88,9 +89,12 @@ function editInfo(id: number, firstName: string, lastName: string, password: str
 
 <style scoped>
 .radio {
-  color: #FFFFFF;
   margin-top: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
 }
 .label {
   color: #FFFFFF;
