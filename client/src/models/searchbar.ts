@@ -9,6 +9,7 @@ export const check3 = ref(false)
 export const check4 = ref(false)
 export const check5 = ref(false)
 export const check6 = ref(false)
+export const input = ref('')
 const breakfastBox = ref(false)
 const lunchBox = ref(false)
 const dinnerBox = ref(false)
@@ -85,6 +86,8 @@ export function toggleOff() {
   check4.value = false
   check5.value = false
   check6.value = false
+  input.value = ''
+  filteredList('')
   breakfastBox.value = false
   lunchBox.value = false
   dinnerBox.value = false
