@@ -52,10 +52,10 @@ function editInfo(id: number, firstName: string, lastName: string, password: str
       </div>
 
       <div calss="field">
-        <label class="label">
-          Username
+        <label class="label">Username</label>
+        <div class="control">
           <input class="input" type="text" :placeholder=user.username  disabled>
-        </label>
+        </div>
       </div>
 
       <div class="field">
@@ -86,4 +86,13 @@ function editInfo(id: number, firstName: string, lastName: string, password: str
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.radio {
+  color: #FFFFFF;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+.label {
+  color: #FFFFFF;
+}
+</style>
