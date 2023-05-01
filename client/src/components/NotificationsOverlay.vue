@@ -3,10 +3,10 @@ import { useSession, deleteMessage } from '@/models/session'
 import { simulatePayment, cancelPayment } from '@/models/stripe'
 import Notification from './Notification.vue'
 
-/**const props = defineProps<{
+const props = defineProps<{
   isActive: boolean
 }>()
-*/
+
 const session = useSession()
 
 </script>
@@ -16,7 +16,7 @@ const session = useSession()
   <div class="notifications">
     <transition-group name="list">
         <template v-for="(msg, i) in session.messages" :key="msg">
-          <Notification :title="msg.type" :message="msg.msg" :type="msg.type" :msg="msg" :index="i" @delete="(index) => deleteMessage(i)">
+          <Notification :title="msg.type" :message="msg.msg" :type="msg.type" :msg="msg" :index="i" @delete="(index) => deleteMessage(i)" v-show="props.isActive">
             <template #body>
               <template v-if="msg.state == 'cardPaymentProcessing'">
                 <div class="container mt-5">
