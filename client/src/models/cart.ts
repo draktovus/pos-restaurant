@@ -4,6 +4,15 @@ import type { Product } from './products'
 const cart = ref([] as CartItem[])
 const showIDModal = ref(false)
 export const newQuantity = ref(1)
+export const birthday = ref('')
+export const ofAge = ref(false)
+export let isOfAge = ref(false)
+export let isOfAge2 = ref(false)
+export let isChecked = ref(0)
+export let showModal = ref(false)
+export const checkAge = () => {
+  showModal.value = false
+}
 
 export function useCart() {
   return cart
@@ -51,6 +60,19 @@ export function removeAll(){
 
 export function resetEditQuantity() {
   newQuantity.value = 0
+}
+
+export function resetAge() {
+  ofAge.value = false
+  isOfAge.value = false
+  isOfAge2.value = false
+  isChecked.value = 0
+  showIDModal.value = false
+  birthday.value = ''
+}
+
+export function setIsChecked(value: number) {
+  isChecked.value = value
 }
 
 export const quantity = computed(() => cart.value.reduce((total, item) => total + item.quantity, 0))

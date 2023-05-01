@@ -2,7 +2,7 @@
 import { addMessage } from '@/models/session'
 import ProductsVue from '../components/Products.vue'
 import Cart from '@/components/Cart.vue'
-import { removeFromCart, resetEditQuantity, total, removeAll } from '@/models/cart'
+import { removeFromCart, resetEditQuantity, total, removeAll, resetAge } from '@/models/cart'
 import { transaction_state, payCard } from '@/models/stripe'
 import { inject, ref } from 'vue'
 import { toFixed } from '../models/utilities'
@@ -66,6 +66,8 @@ function newCustomer() {
   resetEditQuantity()
   //reset filters
   toggleOff()
+  //reset birthday
+  resetAge()
 }
 </script>
 

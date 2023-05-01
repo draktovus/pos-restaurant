@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getProducts, type Product } from '@/models/products'
-import { addToCart, setShowIDModal } from '../models/cart'
+import { addToCart, setShowIDModal, isOfAge, isOfAge2, isChecked, setIsChecked } from '../models/cart'
 import { toggle, filteredList, filteredProducts, products, check1, check2, check3, check4, check5, check6 } from '../models/searchbar'
 import IDModal from '@/components/IDModal.vue'
+
 const selectedProduct = ref<Product>()
-let isOfAge = ref(false)
-let isOfAge2 = ref(false)
-let isChecked = 0
 const input = ref('')
 
 getProducts().then((res) => {
@@ -17,10 +15,10 @@ getProducts().then((res) => {
 function canBuy(ofAge: boolean) {
   isOfAge.value = ofAge
   isOfAge2.value = ofAge
-  isChecked = 1
+  setIsChecked(1)
 }
 function setIsOfAge(product: Product) {
-  if (isChecked < 1) {
+  if (isChecked.value < 1) {
     setShowIDModal(true)
   }
   selectedProduct.value = product

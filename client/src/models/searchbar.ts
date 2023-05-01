@@ -91,6 +91,5 @@ export function toggleOff() {
   sidesBox.value = false
   drinksBox.value = false
   requiresIdBox.value = false
-  console.log('toggleOff')
   filteredList(val.value)
 }
