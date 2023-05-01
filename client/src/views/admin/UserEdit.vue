@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {editUser , getUser, type Users } from '@/models/users'
+import { editUser , getUser, type Users } from '@/models/users'
 import router from '@/router'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -33,7 +33,7 @@ function editInfo(id: number, firstName: string, lastName: string, password: str
       <div class="field">
         <label class="label">Id</label>
         <div class="control">
-          <input class="input" type="text" :placeholder=user.id.toString v-model="id">
+          <input class="input" type="text" :placeholder="user.id ? user.id.toString() : ''" v-model="id">
         </div>
       </div>
 
