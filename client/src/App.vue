@@ -82,9 +82,8 @@ window.addEventListener('keydown', barcodeScanner)
 <template>
   <NavBar>
     <template #notifications>
-      <transition>
-        <NotificationsOverlay :is-active="notificationsIsActive" />
-      </transition>
+        <NotificationsOverlay />
+        <!-- /NotificationsOverlay>:is-active="notificationsIsActive" /> -->
     </template>
   </NavBar>
   <div class="section">
