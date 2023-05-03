@@ -46,7 +46,7 @@ function checkCash(cash: number) {
       'Cash is less than remaining total. Cash received: ' +
         cash +
         ', remaining total is ' +
-        remainingTotal.value +
+        remainingTotal.value.toFixed(2) +
         '.',
       'danger'
     )
