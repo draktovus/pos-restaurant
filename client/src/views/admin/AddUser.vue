@@ -70,7 +70,7 @@ function cancel(){
         true
       </label>
       <label class="radio has-text-light">
-        <input type="radio" name="answer" value="false" v-model="user.isAdmin" checked />
+        <input class="input-text" type="radio" name="answer" value="false" v-model="user.isAdmin" checked />
         false
       </label>
     </div>
@@ -88,11 +88,14 @@ function cancel(){
 </template>
 
 <style scoped>
+.input-text {
+  color: black;
+}
 .radio {
   margin-top: 0.5rem;
   margin-bottom: 1rem;
   padding: 0.5rem;
-  background-color: white;
+  background-color: grey;
   border-radius: 5px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
 }

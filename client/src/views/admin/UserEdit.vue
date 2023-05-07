@@ -36,35 +36,35 @@ function cancel(){
   <div>
     <form @submit.prevent>
       <div class="field">
-        <label class="label">Id</label>
+        <label class="label has-text-light">Id</label>
         <div class="control">
           <input class="input" type="text" placeholder="ID" v-model="user._id" disabled>
         </div>
       </div>
 
       <div class="field">
-        <label class="label">First Name</label>
+        <label class="label has-text-light">First Name</label>
         <div class="control">
           <input class="input" type="text" placeholder="First Name" v-model="user.firstName">
         </div>
       </div>
 
       <div class="field">
-        <label class="label">Last Name</label>
+        <label class="label has-text-light">Last Name</label>
         <div class="control">
           <input class="input" type="text" placeholder="Last Name" v-model="user.lastName">
         </div>
       </div>
 
       <div calss="field">
-        <label class="label">
+        <label class="label has-text-light">
           Username
           <input class="input" type="text" placeholder="Username" v-model="user.username">
         </label>
       </div>
 
       <div class="field">
-        <label class="label">Password</label>
+        <label class="label has-text-light">Password</label>
         <div class="control">
           <input class="input" type="password" placeholder="Password" v-model="user.password">
         </div>
@@ -73,7 +73,6 @@ function cancel(){
       <p class="admin-status has-text-light">Admin Status</p>
 
       <div class="control">
-        <label class="label">Make Admin</label>
       <label class="radio">
         <input type="radio" name="answer" value="true" v-model="user.isAdmin" />
         true
@@ -100,9 +99,12 @@ function cancel(){
 
 <style scoped>
 .radio {
-  color: #FFFFFF;
   margin-top: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: grey;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
 }
 .admin-status {
   font-size: 1rem;
