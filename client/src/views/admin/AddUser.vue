@@ -1,79 +1,63 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { createUser, getUsersLength, getUsers } from '@/models/users'
+import { type Users , createUser, getUsersLength, getUsers } from '@/models/users'
 import { addMessage } from '@/models/session'
 import router from '@/router'
 
-async function getId() {
-  await getUsers().then((data) => {
-    return (id.value = data.data.length + 1)
-  })
-}
-
-let id = ref(0)
-const firstName = ref('')
-const lastName = ref('')
-const username = ref('')
-const password = ref('')
-const isAdmin = ref(false)
+const user = ref<Users>({
+} as Users)
 
 let error = ref(false)
 
-function createUserFunc(
-  firstName: string,
-  lastName: string,
-  username: string,
-  password: string,
-  isAdmin: boolean
-) {
-  getId().then(() => {
-    createUser(id.value, firstName, lastName, username, password, isAdmin).then((response) => {
-        if (response) {
-          console.log("THIS IS THE RESPOSNE FOR CREATING NEW USER:", response)
-          addMessage(`Sucessfully created a new user: ${response.data.username}`, 'success')
-          router.push('/admin/users')
-          error.value = false
-        } else {
-          error.value = true
-          addMessage(`Error! There was a problem and could not create a new user. ${response.data}`, 'danger')
-        }
-      }
-    )
-  })
+function save() {
+    createUser(user.value).then((response) => {
+      console.log("THIS IS THE RESPOSNE FOR CREATING NEW USER:", response)
+      addMessage(`Sucessfully created a new user: ${response.data.username}`, 'success')
+      router.push('/admin/users')
+      error.value = false
+    }).catch((err) => {
+      error.value = true
+      addMessage(`Error! There was a problem and could not create a new user. ${err.data}`, 'danger')
+    })
+  }
+  
+function cancel(){
+  addMessage("Canceled user", 'info')
+  router.push('/admin/users')
 }
 </script>
 
 <template>
   <form
-    @submit.prevent="createUserFunc(firstName, lastName, username, password, isAdmin)"
+    @submit.prevent
     class="add-user"
   >
     <h1 class="title has-text-light">Add New User</h1>
     <div class="field">
       <label class="label has-text-light">First Name</label>
       <div class="control">
-        <input class="input" type="text" placeholder="First Name" v-model="firstName" />
+        <input class="input" type="text" placeholder="First Name" v-model="user.firstName" />
       </div>
     </div>
 
     <div class="field">
       <label class="label has-text-light">Last Name</label>
       <div class="control">
-        <input class="input" type="text" placeholder="Last Name" v-model="lastName" />
+        <input class="input" type="text" placeholder="Last Name" v-model="user.lastName" />
       </div>
     </div>
 
     <div class="field">
       <label class="label has-text-light">Username</label>
       <div class="control">
-        <input class="input" type="text" placeholder="Username" v-model="username" />
+        <input class="input" type="text" placeholder="Username" v-model="user.username" />
       </div>
     </div>
 
     <div class="field">
       <label class="label has-text-light">Password</label>
       <div class="control">
-        <input class="input" type="password" placeholder="Password" v-model="password" />
+        <input class="input" type="password" placeholder="Password" v-model="user.password" />
       </div>
     </div>
 
@@ -81,21 +65,21 @@ function createUserFunc(
 
     <div class="control has-text-light">
       <label class="radio has-text-light">
-        <input type="radio" name="answer" value="true" v-model="isAdmin" />
+        <input type="radio" name="answer" value="true" v-model="user.isAdmin" />
         true
       </label>
       <label class="radio has-text-light">
-        <input type="radio" name="answer" value="false" v-model="isAdmin" checked />
+        <input type="radio" name="answer" value="false" v-model="user.isAdmin" checked />
         false
       </label>
     </div>
 
     <div class="field is-grouped">
       <div class="control">
-        <button type="submit" class="button is-link is-primary">Submit</button>
+        <button class="button is-link is-primary" @click="save()">Submit</button>
       </div>
       <div class="control">
-        <button class="button is-link is-danger">Cancel</button>
+        <button class="button is-link is-danger" @click="cancel()">Cancel</button>
       </div>
     </div>
   </form>

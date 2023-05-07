@@ -65,7 +65,7 @@ function deleteUserFunc(id: string) {
         <td>{{ user.password }}</td>
         <td>{{ user.isAdmin }}</td>
         <td>
-          <button class="button is-primary">Edit</button>
+          <button class="button is-primary" @click="$router.push('/admin/users/edit/' + user._id)">Edit</button>
           <button class="button is-danger" @click="deleteUserFunc(user._id)">Delete</button>
         </td>
       </tr>

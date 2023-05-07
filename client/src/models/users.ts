@@ -3,15 +3,15 @@ import type { DataEnvelope, DataListEnvelope } from './fetch'
 
 export interface Users {
   _id: string
-  id: number
+  id?: number
   firstName: string
   lastName: string
   username: string
   password: string
   isAdmin: boolean
-  stripe_data: {
-    stripe_location_id: string
-    stripe_reader_id: string
+  stripe_data?: {
+    stripe_location_id?: string
+    stripe_reader_id?: string
   }
 }
 
@@ -27,30 +27,8 @@ export function deleteUser(id: string) {
   return api('users/delete/' + id, null, 'DELETE')
 }
 
-export function createUser(
-  id: number,
-  firstName: string,
-  lastName: string,
-  username: string,
-  password: string,
-  isAdmin: boolean
-) {
-  return api('users/create',
-    {
-      id: id,
-      firstName: firstName,
-      lastName: lastName,
-      username: username,
-      password: password,
-      isAdmin: isAdmin,
-      stripe_data: {
-        stripe_location_id: 'none',
-        stripe_reader_id: 'none'
-      }
-    },
-    'POST'
-  )
-}
+export function createUser(user: Users): Promise<DataEnvelope<Users>> {
+  return api('users/create', user, 'POST')}
 
 export function getUsersLength(): Promise<Number> {
   return api('users').then((res) => {
@@ -58,17 +36,8 @@ export function getUsersLength(): Promise<Number> {
   })
 }
 
-export function editUser(id: number, firstName: string, lastName: string, password: string, isAdmin: boolean, _id: string) {
-  return api('users/update/' + _id,
-  {
-    "id": id,
-    "firstName": firstName,
-    "lastName": lastName,
-    "password": password,
-    "isAdmin": isAdmin
-  },
-  'PATCH')
-}
+export function editUser(user : Users) {
+  return api('users/update/' + user._id, user,'PATCH')}
 
 export function editInfo(user: Users) {
   user = {

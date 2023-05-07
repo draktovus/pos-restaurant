@@ -6,7 +6,7 @@ const { Schema, model } = mongoose;
 const userSchema = new Schema({
   id: {
     type: Number,
-    required: true,
+    required: false,
   },
   firstName: {
     type: String,
@@ -35,10 +35,12 @@ const userSchema = new Schema({
     stripe_location_id:{
       type:String,
       required: true,
+      default: "tml_FDqTIgnlajdmGs",
     },
     stripe_reader_id:{
       type:String,
       required: true,
+      default: "tmr_FD0uvQNycDMoY3",
     },
   }
 });
