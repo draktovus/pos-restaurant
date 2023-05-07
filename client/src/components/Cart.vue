@@ -1,9 +1,29 @@
 <script setup lang="ts">
 import { useCart, total, removeFromCart } from '@/models/cart'
-import { quantity } from '../models/cart'
+import { quantity, newQuantity } from '../models/cart'
 import { toFixed } from '../models/utilities'
+import type { Product } from '@/models/products'
+import { ref } from 'vue'
+import { closeModal } from '@/models/generalModals'
 
 const cart = useCart()
+const quantityModal = ref(false)
+const indexRef = ref(0)
+const productRef = ref<Product>()
+const oldQuantityRef = ref(1)
+
+function editModal(index: number, product: Product, oldQuantity: number) {
+  indexRef.value = index
+  productRef.value = product
+  oldQuantityRef.value = oldQuantity
+  quantityModal.value = true
+}
+
+function closeEditModal() {
+  cart.value[indexRef.value].quantity = newQuantity.value
+  oldQuantityRef.value = newQuantity.value
+  quantityModal.value = false
+}
 </script>
 
 <template>
@@ -31,7 +51,7 @@ const cart = useCart()
         <div class="column is-auto">
           <div class="field is-grouped">
             <p class="control is-expanded">
-              <button class="button is-light is-outlined is-fullwidth">
+              <button class="button is-light is-outlined is-fullwidth" @click="editModal(i, item.product, item.quantity)">
                 <span class="icon">
                   <i class="fas fa-edit" />
                 </span>
@@ -48,6 +68,24 @@ const cart = useCart()
               </button>
             </p>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" :class="{ 'is-active': quantityModal }">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box">
+          <h1 class="title">Edit Quantity</h1>
+          <div class="field">
+            <label class="label">New quantity:</label>
+              <input
+                class="input"
+                v-model="newQuantity"
+                type="number"
+                placeholder="New quantity..."
+              />
+          </div>
+          <button class="button is-success" @click="closeEditModal()">Save changes</button>
         </div>
       </div>
     </div>

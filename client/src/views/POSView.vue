@@ -2,10 +2,12 @@
 import { addMessage } from '@/models/session'
 import ProductsVue from '../components/Products.vue'
 import Cart from '@/components/Cart.vue'
-import { total } from '@/models/cart'
+import { removeFromCart, resetEditQuantity, total, removeAll, resetAge } from '@/models/cart'
 import { transaction_state, payCard } from '@/models/stripe'
 import { inject, ref } from 'vue'
 import { toFixed } from '../models/utilities'
+import { toggleOff } from '@/models/searchbar'
+
 
 const { notificationsIsActive, updateNotification } = inject<any>('notifications')
 
@@ -13,7 +15,7 @@ const cashModal = ref(false)
 const remainingTotal = ref(0)
 const cash = ref()
 const change = ref()
-const insufficient = ref(false)
+const categories = ['Breakfast', 'Lunch', 'Dinner', 'Sides', 'Drinks', 'Requires ID']
 
 function payCash() {
   if (total.value > 0) {
@@ -44,7 +46,7 @@ function checkCash(cash: number) {
       'Cash is less than remaining total. Cash received: ' +
         cash +
         ', remaining total is ' +
-        remainingTotal.value +
+        remainingTotal.value.toFixed(2) +
         '.',
       'danger'
     )
@@ -53,6 +55,19 @@ function checkCash(cash: number) {
     addMessage('Cash is equal to remaining total, no change needed', 'success')
   }
   payCash()
+}
+
+function newCustomer() {
+  cash.value = 0
+  change.value = 0
+  //remove all products from cart
+  removeAll()
+  //reset edit quantity
+  resetEditQuantity()
+  //reset filters and search
+  toggleOff()
+  //reset birthday
+  resetAge()
 }
 </script>
 
@@ -105,14 +120,24 @@ function checkCash(cash: number) {
             </button>
           </div>
         </div>
-        <div class="field is-grouped">
-          <div class="control is-expanded">
-            <button
-              class="button is-dark is-fullwidth is-rounded"
-              @click="updateNotification(!notificationsIsActive)"
-            >
-              Toggle notifications
-            </button>
+        <div class="container">
+          <div class="field is-grouped">
+            <div class="control is-expanded">
+              <button
+                class="button is-dark is-fullwidth is-rounded"
+                @click="updateNotification(!notificationsIsActive)"
+              >
+                Toggle notifications
+              </button>
+            </div>
+            <div class="control is-expanded">
+              <button
+                class="button is-dark is-fullwidth is-rounded"
+                @click="newCustomer()"
+              >
+                New Customer
+              </button>
+            </div>
           </div>
         </div>
       </div>

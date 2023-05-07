@@ -27,22 +27,19 @@ function deleteUserFunc(id: string) {
       console.log("didn't do it to: " + id)
     })
 }
-
-
 </script>
 
 <template>
   <gen-modals></gen-modals>
-  <h1 class="title has-text-light">Users</h1>
-  <div class="icon">
-    <i class="fas fa-plus"></i>
-  </div>
+  
   <RouterLink to="/admin/users/addUser" class="button is-primary add-user">
     <div class="icon">
       <i class="fas fa-plus"></i>
     </div>
     <span>Add User</span>
   </RouterLink>
+
+  <h1 class="title has-text-light">Users</h1>
 
   <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
     <thead>

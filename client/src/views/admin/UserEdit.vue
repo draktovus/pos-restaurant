@@ -73,6 +73,7 @@ function cancel(){
       <p class="admin-status has-text-light">Admin Status</p>
 
       <div class="control">
+        <label class="label">Make Admin</label>
       <label class="radio">
         <input type="radio" name="answer" value="true" v-model="user.isAdmin" />
         true

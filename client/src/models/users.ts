@@ -39,9 +39,5 @@ export function getUsersLength(): Promise<Number> {
 export function editUser(user : Users) {
   return api('users/update/' + user._id, user,'PATCH')}
 
-export function editInfo(user: Users) {
-  user = {
-    ...user,
-  }
-}
+
 

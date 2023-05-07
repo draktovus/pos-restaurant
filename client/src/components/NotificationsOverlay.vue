@@ -6,16 +6,17 @@ import Notification from './Notification.vue'
 const props = defineProps<{
   isActive: boolean
 }>()
+
 const session = useSession()
 
 </script>
 
 <template>
   <!-- v-show="props.isActive" -->
-  <div class="notifications" v-show="props.isActive">
+  <div class="notifications">
     <transition-group name="list">
         <template v-for="(msg, i) in session.messages" :key="msg">
-          <Notification :title="msg.type" :message="msg.msg" :type="msg.type" :msg="msg" :index="i" @delete="(index) => deleteMessage(i)">
+          <Notification :title="msg.type" :message="msg.msg" :type="msg.type" :msg="msg" :index="i" @delete="(index) => deleteMessage(i)" v-show="props.isActive">
             <template #body>
               <template v-if="msg.state == 'cardPaymentProcessing'">
                 <div class="container mt-5">

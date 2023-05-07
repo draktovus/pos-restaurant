@@ -9,7 +9,7 @@ import { useSession } from './models/session'
 
 const session = useSession()
 
-const notificationsIsActive = ref(false)
+const notificationsIsActive = ref(true)
 function updateNotification(bool = false) {
   notificationsIsActive.value = bool
 }
@@ -82,9 +82,8 @@ window.addEventListener('keydown', barcodeScanner)
 <template>
   <NavBar>
     <template #notifications>
-      <transition>
-        <NotificationsOverlay :is-active="notificationsIsActive" />
-      </transition>
+        <NotificationsOverlay :is-active="notificationsIsActive"/>
+        <!-- /NotificationsOverlay>:is-active="notificationsIsActive" /> -->
     </template>
   </NavBar>
   <div class="section">

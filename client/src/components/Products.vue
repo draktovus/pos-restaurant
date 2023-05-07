@@ -1,34 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getProducts, type Product } from '@/models/products'
-import { addToCart, setShowIDModal } from '../models/cart'
-import { toggle, filteredList, filteredProducts, products } from '../models/searchbar'
+import { addToCart, setShowIDModal, isOfAge, isOfAge2, isChecked, setIsChecked } from '../models/cart'
+import { toggle, filteredList, filteredProducts, products, check1, check2, check3, check4, check5, check6, input } from '../models/searchbar'
 import IDModal from '@/components/IDModal.vue'
+
 const selectedProduct = ref<Product>()
-let isOfAge = ref(false)
-let isOfAge2 = ref(false)
-let isChecked = 0
-const sortDropdown = ref(false)
-const input = ref('')
-const categories = ['Breakfast', 'Lunch', 'Dinner', 'Sides', 'Drinks', 'Requires ID']
 
 getProducts().then((res) => {
   products.value = res.data
   filteredProducts.value = res.data
 })
-function toggleDropdown() {
-  sortDropdown.value = !sortDropdown.value
-}
-function closeDropdown() {
-  sortDropdown.value = false
-}
 function canBuy(ofAge: boolean) {
   isOfAge.value = ofAge
   isOfAge2.value = ofAge
-  isChecked = 1
+  setIsChecked(1)
 }
 function setIsOfAge(product: Product) {
-  if (isChecked < 1) {
+  if (isChecked.value < 1) {
     setShowIDModal(true)
   }
   selectedProduct.value = product
@@ -52,42 +41,44 @@ function addProduct(product: Product) {
           v-model="input"
           placeholder="Search"
           @input="filteredList(input)"
-          @click="closeDropdown()"
         />
       </span>
       <span class="icon is-small is-left">
         <i class="fas fa-search"></i>
       </span>
     </div>
-    <div class="dropdown" :class="{ 'is-active': sortDropdown }">
-      <div class="dropdown-trigger">
-        <button
-          class="button"
-          aria-haspopup="true"
-          aria-controls="dropdown-menu"
-          @click="toggleDropdown()"
-        >
-          <span>Sort</span>
-          <span class="icon is-small">
-            <i class="fas fa-angle-down" aria-hidden="true"></i>
-          </span>
-        </button>
-      </div>
-      <div class="dropdown-menu" id="dropdown-menu" role="menu">
-        <div class="dropdown-content">
-          <template v-for="category in categories">
-            <div href="#" class="dropdown-item">
-              <label class="checkbox">
-                <input type="checkbox" @click="toggle(category)" />
-                {{ category }}
-              </label>
-            </div>
-          </template>
-        </div>
-      </div>
+  </div>
+
+  <IDModal @can-buy="canBuy" />
+
+  <div class="columns is-multiline is-mobile">
+    <div>
+      <label class="checkbox">
+        <input type="checkbox" v-model="check1" @click="toggle('Breakfast')" />
+        Breakfast
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="check2" @click="toggle('Lunch')" />
+        Lunch
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="check3" @click="toggle('Dinner')" />
+        Dinner
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="check4" @click="toggle('Sides')" />
+        Sides
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="check5" @click="toggle('Drinks')" />
+        Drinks
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="check6" @click="toggle('Requires ID')" />
+        Requires ID
+      </label>
     </div>
   </div>
-  <IDModal @can-buy="canBuy" />
 
   <div class="columns is-multiline is-mobile">
     <template v-for="(product, index) in filteredProducts" :key="product.id">
@@ -138,7 +129,13 @@ function addProduct(product: Product) {
   font-size: 1.5rem;
   font-weight: bold;
 }
-.dropdown {
+.checkbox {
+  flex-basis: 12rem;
+  flex-grow: 1;
+  padding: 0.5rem;
   margin: 1rem;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
 }
 </style>

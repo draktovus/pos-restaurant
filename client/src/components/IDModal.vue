@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { ref, watch, reactive } from 'vue'
-import { getShowIDModal } from '@/models/cart'
+import { getShowIDModal, ofAge, showModal, checkAge, birthday } from '@/models/cart'
 import type { Product } from '@/models/products'
 import { computed } from '@vue/reactivity'
 
-let showModal = ref(false)
-let showSecondModal = ref(false)
-const birthday = ref('')
-const ofAge = ref(false)
 const maxDate = computed(() => {
   const currentDate = new Date()
   const year = currentDate.getFullYear() + 1
@@ -51,11 +47,6 @@ function isOver21(birthday: string) {
   }
   checkAge()
   emit('canBuy', ofAge.value)
-  showSecondModal.value = true
-}
-
-const checkAge = () => {
-  showModal.value = false
 }
 </script>
 
