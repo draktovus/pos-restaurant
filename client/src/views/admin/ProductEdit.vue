@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Product } from '@/models/products'
-import { ref, inject , type Ref} from 'vue'
+import { ref, inject, type Ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getProduct, createProduct, updateProduct } from '@/models/products'
 import { useSession, addMessage } from '@/models/session'
@@ -8,19 +8,18 @@ const session = useSession()
 const route = useRoute()
 const router = useRouter()
 
-const product = ref<Product>({
-} as Product)
+const product = ref<Product>({} as Product)
 console.log(route.params.id)
 if (route.params.id !== undefined && route.params.id !== '') {
   getProduct(route.params.id as string).then((data) => {
-  product.value = data ? data.data : {} as Product
-  console.log("got this as product for admin", product.value)
-})
+    product.value = data ? data.data : ({} as Product)
+    console.log('got this as product for admin', product.value)
+  })
 }
 
 function save() {
   if (product.value._id) {
-    updateProduct(product.value).then((response)=>{
+    updateProduct(product.value).then((response) => {
       addMessage('Producted updated', 'success')
     })
   } else {
@@ -31,8 +30,8 @@ function save() {
   router.push('/admin/products')
 }
 
-function cancel(){
-  addMessage("Canceled product", 'info')
+function cancel() {
+  addMessage('Canceled product', 'info')
   router.push('/admin/products')
 }
 </script>

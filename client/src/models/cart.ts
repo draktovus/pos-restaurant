@@ -52,8 +52,8 @@ export function removeFromCart(index: number, product: Product) {
   }
 }
 
-export function removeAll(){
-  for(let i = cart.value.length - 1; i >= 0; i--){
+export function removeAll() {
+  for (let i = cart.value.length - 1; i >= 0; i--) {
     removeFromCart(i, cart.value[i].product)
   }
 }

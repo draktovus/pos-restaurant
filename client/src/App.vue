@@ -43,7 +43,7 @@ function barcodeScanner(e: KeyboardEvent) {
       if (e.key == 'Enter') {
         console.log('Barcode entered: ' + upc)
         // Filter/find product based on code scanned.
-        if (upc == ''|| upc === undefined) {
+        if (upc == '' || upc === undefined) {
           console.log('Blank code')
         } else {
           const productToAdd = prods.value.find((prod) => prod.UPC.toLowerCase().includes(upc))
@@ -82,8 +82,8 @@ window.addEventListener('keydown', barcodeScanner)
 <template>
   <NavBar>
     <template #notifications>
-        <NotificationsOverlay :is-active="notificationsIsActive"/>
-        <!-- /NotificationsOverlay>:is-active="notificationsIsActive" /> -->
+      <NotificationsOverlay :is-active="notificationsIsActive" />
+      <!-- /NotificationsOverlay>:is-active="notificationsIsActive" /> -->
     </template>
   </NavBar>
   <div class="section">

@@ -1,8 +1,27 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getProducts, type Product } from '@/models/products'
-import { addToCart, setShowIDModal, isOfAge, isOfAge2, isChecked, setIsChecked } from '../models/cart'
-import { toggle, filteredList, filteredProducts, products, check1, check2, check3, check4, check5, check6, input } from '../models/searchbar'
+import {
+  addToCart,
+  setShowIDModal,
+  isOfAge,
+  isOfAge2,
+  isChecked,
+  setIsChecked
+} from '../models/cart'
+import {
+  toggle,
+  filteredList,
+  filteredProducts,
+  products,
+  check1,
+  check2,
+  check3,
+  check4,
+  check5,
+  check6,
+  input
+} from '../models/searchbar'
 import IDModal from '@/components/IDModal.vue'
 
 const selectedProduct = ref<Product>()

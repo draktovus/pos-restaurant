@@ -74,6 +74,6 @@ export function addMessage(
 }
 
 export function deleteMessage(index: number) {
-  console.log("deleted message at index:", index)
+  console.log('deleted message at index:', index)
   session.messages.splice(index, 1)
 }

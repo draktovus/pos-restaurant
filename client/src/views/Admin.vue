@@ -16,8 +16,8 @@ function deleteUserFunc(id: string) {
   confirm('Are you sure you want remove this user?', 'Delete User')
     .then(() => {
       console.log('DELETING USER: ' + id)
-      deleteUser(id).then((res)=>{
-        const index = users.value.findIndex(u => u._id === id)
+      deleteUser(id).then((res) => {
+        const index = users.value.findIndex((u) => u._id === id)
         users.value.splice(index, 1)
         addMessage(`Deleted user with id: ${id}`, 'success')
       })
@@ -31,7 +31,7 @@ function deleteUserFunc(id: string) {
 
 <template>
   <gen-modals></gen-modals>
-  
+
   <RouterLink to="/admin/users/addUser" class="button is-primary add-user">
     <div class="icon">
       <i class="fas fa-plus"></i>
@@ -62,13 +62,14 @@ function deleteUserFunc(id: string) {
         <td>{{ user.password }}</td>
         <td>{{ user.isAdmin }}</td>
         <td>
-          <button class="button is-primary" @click="$router.push('/admin/users/edit/' + user._id)">Edit</button>
+          <button class="button is-primary" @click="$router.push('/admin/users/edit/' + user._id)">
+            Edit
+          </button>
           <button class="button is-danger" @click="deleteUserFunc(user._id)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
-  
 </template>
 
 <style scoped>

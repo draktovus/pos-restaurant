@@ -24,7 +24,9 @@ const session = useSession()
           </RouterLink>
           <LoginBadge />
           <div class="navbar-item has-dropdown is-hoverable">
-            <a v-if="session.user?.isAdmin" class="navbar-link button is-light is-arrowless"> Admin </a>
+            <a v-if="session.user?.isAdmin" class="navbar-link button is-light is-arrowless">
+              Admin
+            </a>
             <div class="navbar-dropdown">
               <RouterLink class="navbar-item" to="/admin/products"> Products </RouterLink>
               <RouterLink class="navbar-item" to="/admin/users"> Users </RouterLink>

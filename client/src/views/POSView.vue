@@ -8,7 +8,6 @@ import { inject, ref } from 'vue'
 import { toFixed } from '../models/utilities'
 import { toggleOff } from '@/models/searchbar'
 
-
 const { notificationsIsActive, updateNotification } = inject<any>('notifications')
 
 const cashModal = ref(false)
@@ -131,10 +130,7 @@ function newCustomer() {
               </button>
             </div>
             <div class="control is-expanded">
-              <button
-                class="button is-dark is-fullwidth is-rounded"
-                @click="newCustomer()"
-              >
+              <button class="button is-dark is-fullwidth is-rounded" @click="newCustomer()">
                 New Customer
               </button>
             </div>

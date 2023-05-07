@@ -120,21 +120,23 @@ export function payCard(total: number) {
         stripe_reader_id: session.user.stripe_data.stripe_reader_id
       },
       'POST'
-    ).then((response) => {
-      console.log('This is the returned payment_intent,', response)
-      currentPaymentIntent.value = response.data.payment_intent
-    }).catch((err)=>{
-      transaction_state.value = 'none'
-    })
+    )
+      .then((response) => {
+        console.log('This is the returned payment_intent,', response)
+        currentPaymentIntent.value = response.data.payment_intent
+      })
+      .catch((err) => {
+        transaction_state.value = 'none'
+      })
     addMessage(
       `Processing payment of ${amt} for reader ${session.user.stripe_data.stripe_reader_id}`,
       'info',
       'cardPaymentProcessing'
     )
   } else {
-    if (total === 0 ){
+    if (total === 0) {
       addMessage('There must be something in the cart.', 'warning')
-    }else {
+    } else {
       addMessage('You must be logged in to pay card.', 'warning', 'none')
     }
   }
@@ -181,7 +183,7 @@ export function cancelPayment() {
   }
 }
 
-export function updateReader(readerId:string, locationId:string):Promise<DataEnvelope<Users>>{
+export function updateReader(readerId: string, locationId: string): Promise<DataEnvelope<Users>> {
   return api(
     'users/update/stripe-data',
     {

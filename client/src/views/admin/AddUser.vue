@@ -1,38 +1,38 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { type Users , createUser, getUsersLength, getUsers } from '@/models/users'
+import { type Users, createUser, getUsersLength, getUsers } from '@/models/users'
 import { addMessage } from '@/models/session'
 import router from '@/router'
 
-const user = ref<Users>({
-} as Users)
+const user = ref<Users>({} as Users)
 
 let error = ref(false)
 
 function save() {
-    createUser(user.value).then((response) => {
-      console.log("THIS IS THE RESPOSNE FOR CREATING NEW USER:", response)
-      addMessage(`Sucessfully created a new user: ${response.data.username}`, 'success')
+  createUser(user.value)
+    .then((response) => {
+      console.log('THIS IS THE RESPOSNE FOR CREATING NEW USER:', response)
+      addMessage(`Successfully created a new user: ${response.data.username}`, 'success')
       router.push('/admin/users')
       error.value = false
-    }).catch((err) => {
-      error.value = true
-      addMessage(`Error! There was a problem and could not create a new user. ${err.data}`, 'danger')
     })
-  }
-  
-function cancel(){
-  addMessage("Canceled user", 'info')
-  router.push('/admin/users')
+    .catch((err) => {
+      error.value = true
+      addMessage(
+        `Error! There was a problem and could not create a new user. ${err.data}`,
+        'danger'
+      )
+    })
 }
 
+function cancel() {
+  addMessage('Canceled user', 'info')
+  router.push('/admin/users')
+}
 </script>
 
 <template>
-  <form
-    @submit.prevent
-    class="add-user"
-  >
+  <form @submit.prevent class="add-user">
     <h1 class="title has-text-light">Add New User</h1>
     <div class="field">
       <label class="label has-text-light">First Name</label>
@@ -70,7 +70,14 @@ function cancel(){
         true
       </label>
       <label class="radio has-text-light">
-        <input class="input-text" type="radio" name="answer" value="false" v-model="user.isAdmin" checked />
+        <input
+          class="input-text"
+          type="radio"
+          name="answer"
+          value="false"
+          v-model="user.isAdmin"
+          checked
+        />
         false
       </label>
     </div>
@@ -100,8 +107,8 @@ function cancel(){
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
 }
 
-.label{
-  color: #FFFFFF;
+.label {
+  color: #ffffff;
 }
 .admin-status {
   font-size: 1rem;

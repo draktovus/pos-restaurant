@@ -51,7 +51,10 @@ function closeEditModal() {
         <div class="column is-auto">
           <div class="field is-grouped">
             <p class="control is-expanded">
-              <button class="button is-light is-outlined is-fullwidth" @click="editModal(i, item.product, item.quantity)">
+              <button
+                class="button is-light is-outlined is-fullwidth"
+                @click="editModal(i, item.product, item.quantity)"
+              >
                 <span class="icon">
                   <i class="fas fa-edit" />
                 </span>
@@ -78,12 +81,12 @@ function closeEditModal() {
           <h1 class="title">Edit Quantity</h1>
           <div class="field">
             <label class="label">New quantity:</label>
-              <input
-                class="input"
-                v-model="newQuantity"
-                type="number"
-                placeholder="New quantity..."
-              />
+            <input
+              class="input"
+              v-model="newQuantity"
+              type="number"
+              placeholder="New quantity..."
+            />
           </div>
           <button class="button is-success" @click="closeEditModal()">Save changes</button>
         </div>

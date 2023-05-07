@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { getLocations, getReaders, type StripeLocation, type StripeReader, updateReader } from '@/models/stripe'
+import {
+  getLocations,
+  getReaders,
+  type StripeLocation,
+  type StripeReader,
+  updateReader
+} from '@/models/stripe'
 import { ref } from 'vue'
 import { useSession, api, addMessage } from '@/models/session'
 const session = useSession()
@@ -34,10 +40,12 @@ async function changeReader() {
     console.log(res)
     if (session.user) {
       session.user.stripe_data = res.data.stripe_data
-      addMessage("Updated reader to " + readerId.value + ". Updated location to " + locationId.value, 'success')
-    }
-    else {
-      addMessage("No user is logged in to change reader!", 'danger')
+      addMessage(
+        'Updated reader to ' + readerId.value + '. Updated location to ' + locationId.value,
+        'success'
+      )
+    } else {
+      addMessage('No user is logged in to change reader!', 'danger')
     }
   })
 }

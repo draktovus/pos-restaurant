@@ -8,38 +8,44 @@ const props = defineProps<{
 }>()
 
 const session = useSession()
-
 </script>
 
 <template>
   <!-- v-show="props.isActive" -->
   <div class="notifications">
     <transition-group name="list">
-        <template v-for="(msg, i) in session.messages" :key="msg">
-          <Notification :title="msg.type" :message="msg.msg" :type="msg.type" :msg="msg" :index="i" @delete="(index) => deleteMessage(i)" v-show="props.isActive">
-            <template #body>
-              <template v-if="msg.state == 'cardPaymentProcessing'">
-                <div class="container mt-5">
-                  <div class="field is-grouped">
-                    <div class="control is-expanded">
-                      <div class="button is-fullwidth is-success is-rounded" @click="simulatePayment">
-                        Simulate Payment
-                      </div>
+      <template v-for="(msg, i) in session.messages" :key="msg">
+        <Notification
+          :title="msg.type"
+          :message="msg.msg"
+          :type="msg.type"
+          :msg="msg"
+          :index="i"
+          @delete="(index) => deleteMessage(i)"
+          v-show="props.isActive"
+        >
+          <template #body>
+            <template v-if="msg.state == 'cardPaymentProcessing'">
+              <div class="container mt-5">
+                <div class="field is-grouped">
+                  <div class="control is-expanded">
+                    <div class="button is-fullwidth is-success is-rounded" @click="simulatePayment">
+                      Simulate Payment
                     </div>
-                    <div class="control is-expanded">
-                      <div class="button is-fullwidth is-danger is-rounded" @click="cancelPayment">
-                        Cancel Payment
-                      </div>
+                  </div>
+                  <div class="control is-expanded">
+                    <div class="button is-fullwidth is-danger is-rounded" @click="cancelPayment">
+                      Cancel Payment
                     </div>
                   </div>
                 </div>
-              </template>
+              </div>
             </template>
-          </Notification>
-        </template>
+          </template>
+        </Notification>
+      </template>
     </transition-group>
   </div>
-  
 </template>
 
 <style scoped>

@@ -9,9 +9,9 @@ export interface Users {
   username: string
   password: string
   isAdmin: boolean
-  stripe_data?: {
-    stripe_location_id?: string
-    stripe_reader_id?: string
+  stripe_data: {
+    stripe_location_id: string | 'none'
+    stripe_reader_id: string | 'none'
   }
 }
 
@@ -28,7 +28,8 @@ export function deleteUser(id: string) {
 }
 
 export function createUser(user: Users): Promise<DataEnvelope<Users>> {
-  return api('users/create', user, 'POST')}
+  return api('users/create', user, 'POST')
+}
 
 export function getUsersLength(): Promise<Number> {
   return api('users').then((res) => {
@@ -36,8 +37,6 @@ export function getUsersLength(): Promise<Number> {
   })
 }
 
-export function editUser(user : Users) {
-  return api('users/update/' + user._id, user,'PATCH')}
-
-
-
+export function editUser(user: Users) {
+  return api('users/update/' + user._id, user, 'PATCH')
+}

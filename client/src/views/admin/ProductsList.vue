@@ -10,18 +10,18 @@ getProducts().then((data) => {
   products.value = data.data
 })
 
-function delProduct(product:Product) {
+function delProduct(product: Product) {
   confirm('Are you sure you want to delete this?', 'Question')
     .then(() => {
       console.log('DELETING PRODUCT: ' + product._id)
-      deleteProduct(product).then((res)=>{
+      deleteProduct(product).then((res) => {
         addMessage(`Deleted product, ${product.name}, ${product._id}`, 'success')
-        const index = products.value.findIndex(p => p._id === product._id)
+        const index = products.value.findIndex((p) => p._id === product._id)
         products.value.splice(index, 1)
       })
     })
     .catch(() => {
-      console.log("NOT DELETING PRODUCT: " + product._id)
+      console.log('NOT DELETING PRODUCT: ' + product._id)
       addMessage(`Did not delete, ${product.name}, ${product._id}`, 'info')
     })
 }
