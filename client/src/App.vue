@@ -28,13 +28,15 @@ watch(session.messages, (msg) => {
   }
 })
 
-const prods = ref<Product[]>([])
+/**const prods = ref<Product[]>([])
 if (session.user){
   getProducts().then((res) => {
   prods.value = res.data
 })
 }
+*/
 
+/**
 let upc = ''
 const isScanning = ref(false)
 function barcodeScanner(e: KeyboardEvent) {
@@ -76,9 +78,11 @@ function barcodeScanner(e: KeyboardEvent) {
     }
   }
 }
+*/
 
-window.removeEventListener('keydown', barcodeScanner)
+/**window.removeEventListener('keydown', barcodeScanner)
 window.addEventListener('keydown', barcodeScanner)
+*/
 </script>
 
 <template>
