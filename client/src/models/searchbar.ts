@@ -17,10 +17,13 @@ const sidesBox = ref(false)
 const drinksBox = ref(false)
 const requiresIdBox = ref(false)
 const val = ref('')
-getProducts().then((data) => {
-  products.value = data.data
-  filteredProducts.value = data.data
-})
+
+export function updateProducts(){
+  return getProducts().then((data) => {
+    products.value = data.data
+    filteredProducts.value = data.data
+  })
+}
 
 export function filteredList(i: string) {
   let filtered = null

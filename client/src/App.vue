@@ -29,9 +29,11 @@ watch(session.messages, (msg) => {
 })
 
 const prods = ref<Product[]>([])
-getProducts().then((res) => {
+if (session.user){
+  getProducts().then((res) => {
   prods.value = res.data
 })
+}
 
 let upc = ''
 const isScanning = ref(false)

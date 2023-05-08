@@ -6,7 +6,7 @@ import { removeFromCart, resetEditQuantity, total, removeAll, resetAge } from '@
 import { transaction_state, payCard } from '@/models/stripe'
 import { inject, ref } from 'vue'
 import { toFixed } from '../models/utilities'
-import { toggleOff } from '@/models/searchbar'
+import { toggleOff, updateProducts } from '@/models/searchbar'
 
 const { notificationsIsActive, updateNotification } = inject<any>('notifications')
 
@@ -68,6 +68,8 @@ function newCustomer() {
   //reset birthday
   resetAge()
 }
+
+updateProducts();
 </script>
 
 <template>
