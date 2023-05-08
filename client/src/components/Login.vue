@@ -19,7 +19,7 @@ async function loginUser() {
     'POST'
   )
   if (response != undefined) {
-    session.redirectUrl = '/'
+    //session.redirectUrl = '/'
     login(response.data)
     error.value = false
   } else {
