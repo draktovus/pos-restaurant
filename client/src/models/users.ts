@@ -12,7 +12,8 @@ export interface Users {
   stripe_data: {
     stripe_location_id: string | 'none'
     stripe_reader_id: string | 'none'
-  }
+  },
+  token: string
 }
 
 export function getUsers(): Promise<DataListEnvelope<Users>> {

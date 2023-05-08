@@ -22,6 +22,14 @@ export function useSession() {
 
 export function api(url: string, data?: any, method?: string, headers?: any) {
   session.isLoading = true
+
+  if (session.user?.token) {
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${session.user?.token}`
+    }
+  }
+
   return myFetch
     .api(url, data, method, headers)
     .catch((err) => {

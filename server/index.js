@@ -9,6 +9,10 @@ const app = express();
 const products = require("./controllers/products");
 const users = require("./controllers/users");
 const stripeController = require("./controllers/stripe");
+const {
+  parseAuthorizationHeader,
+  requireLogin,
+} = require("./middleware/authorization");
 const hostname = "127.0.0.1";
 const port = process.env.PORT || 3000;
 
@@ -25,23 +29,29 @@ app
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    )
     res.header(
       "Access-Control-Allow-Methods",
       "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-    );
+    )
+    // Make sure OPTIONS request are always allowed
+    // That way pre-flight requests don't fail
+    if (req.method === "OPTIONS") {
+      return res.status(200).send({});
+    }
     next();
-  });
+  })
+  .use(parseAuthorizationHeader());
 
 // Actions
 app.get("/", (req, res) => {
   res.send("Server was accessed");
 });
 app
-  .use("/api/v1/products", products)
+  .use("/api/v1/products", requireLogin(), products)
   .use("/api/v1/users", users)
-  .use("/api/v1/stripe", stripeController);
+  .use("/api/v1/stripe", requireLogin(), stripeController);
 
 // Catch all (called deep linking)
 app.get("*", (req, res) => {

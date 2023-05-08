@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const SALT_ROUNDS = 10;
 const { Schema, model } = mongoose;
 
@@ -32,18 +33,42 @@ const userSchema = new Schema({
     default: false,
   },
   stripe_data: {
-    stripe_location_id:{
-      type:String,
+    stripe_location_id: {
+      type: String,
       required: true,
       default: "tml_FDqTIgnlajdmGs",
     },
-    stripe_reader_id:{
-      type:String,
+    stripe_reader_id: {
+      type: String,
       required: true,
       default: "tmr_FD0uvQNycDMoY3",
     },
-  }
+  },
 });
+
+userSchema.statics.generateTokenAsync = function (user, expiresIn) {
+  return new Promise((resolve, reject) => {
+    jwt.sign(user, process.env.JWT_SECRET, { expiresIn }, (err, token) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(token);
+      }
+    });
+  });
+};
+
+userSchema.statics.verifyTokenAsync = function (token) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(user);
+      }
+    });
+  });
+};
 
 userSchema.methods.comparePassword = function (password, callback) {
   bcrypt.compare(password, this.password, function (error, isMatch) {

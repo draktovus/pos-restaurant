@@ -185,7 +185,7 @@ export function cancelPayment() {
 
 export function updateReader(readerId: string, locationId: string): Promise<DataEnvelope<Users>> {
   return api(
-    'users/update/stripe-data',
+    'users/update-stripe',
     {
       ...session.user,
       stripe_data: {

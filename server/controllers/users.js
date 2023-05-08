@@ -1,9 +1,11 @@
 const express = require("express");
 const User = require("../models/users");
 const router = express.Router();
+const { requireLogin } = require("../middleware/authorization");
+
 
 //Get all
-router.get("/", async (req, res, next) => {
+router.get("/", requireLogin(true), async (req, res, next) => {
   try {
     const data = await User.find();
     const dataEnvelope = {
@@ -18,7 +20,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //Get by ID
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", requireLogin(false), async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = await User.findById(id);
@@ -35,7 +37,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //Post Method
-router.post("/create", async (req, res, next) => {
+router.post("/create", requireLogin(true), async (req, res, next) => {
   try {
     const data = new User({
       ...req.body,
@@ -59,12 +61,14 @@ router.post("/login", async (req, res, next) => {
 
     const user = await User.findOne({ username: data.username }).exec();
 
-    user.comparePassword(data.password, (err, isMatch) => {
+    user.comparePassword(data.password, async (err, isMatch) => {
       if (err) {
         next(err);
       } else if (isMatch) {
+        const token = await User.generateTokenAsync(JSON.parse(JSON.stringify(user)), '1d')
+        const cleanUser = {...JSON.parse(JSON.stringify(user)), token:token}
         const dataEnvelope = {
-          data: user,
+          data: cleanUser,
           total: 1,
           isSuccess: true,
         };
@@ -81,7 +85,7 @@ router.post("/login", async (req, res, next) => {
 
 
 //Update by ID Method
-router.patch("/update/:id", async (req, res, next) => {
+router.patch("/update/:id", requireLogin(true), async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = { ...req.body };
@@ -105,10 +109,9 @@ router.patch("/update/:id", async (req, res, next) => {
 });
 
 //Update by ID Method
-router.patch("/update/stripe-data", async (req, res, next) => {
+router.patch("/update-stripe", requireLogin(), async (req, res, next) => {
   try {
     const data = { ...req.body };
-    console.log(data)
     const user = await User.findOne({_id:data._id}).exec();
 
     await user.updateOne({stripe_data:data.stripe_data}).exec();
@@ -126,7 +129,7 @@ router.patch("/update/stripe-data", async (req, res, next) => {
 });
 
 //Delete by ID Method
-router.delete("/delete/:id", async (req, res, next) => {
+router.delete("/delete/:id", requireLogin(true) ,async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = await User.findOneAndDelete({ _id: id });
