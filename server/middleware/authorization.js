@@ -31,7 +31,6 @@ module.exports = {
                 }
             }
             else {
-                console.log({req})
                 next({
                     code: 401,
                     message: "You must be logged in to access this resource."
